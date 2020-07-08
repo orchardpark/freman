@@ -1,0 +1,5 @@
+database:
+        db_url: "localhost:5432"
+        db_name: "freman"
+        db_user: "sa-freman"
+        db_password: "23k43j2KLK"
