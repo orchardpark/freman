@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from entities.entity import Session, engine, Base
 from entities.bookedtime import BookedTime, BookedTimeSchema
+from entities.loggedtime import LoggedTime, LoggedTimeSchema
 from entities.task import Task, TaskSchema
 
 # creating the Flask application
@@ -12,6 +13,22 @@ CORS(app)
 # if needed, generate database schema
 Base.metadata.create_all(engine)
 
+
+# ------- LOGGED TIME
+
+@app.route('/loggedtime')
+def get_logged_time():
+    # fetching from the database
+    session = Session()
+    logged_time_objects = session.query(LoggedTime).all()
+
+    # transforming into JSON-serializable objects
+    schema = LoggedTimeSchema(many=True)
+    logged_time = schema.dump(logged_time_objects)
+
+    # serializing as JSON
+    session.close()
+    return jsonify(logged_time)
 
 # ------- BOOKED TIME
 
@@ -37,7 +54,6 @@ def book_time():
         .load(request.get_json())
 
     booked_time_objects = BookedTime(**booked_time.data)
-
     session = Session()
     session.add(booked_time_objects)
     session.commit()
@@ -46,6 +62,27 @@ def book_time():
 
 
 # ------- TASKS
+
+@app.route('/removetask', methods=['POST'])
+def remove_task():
+    id_object = request.get_json()
+
+    session = Session()
+    session.query(Task).filter(Task.id == id_object['id']).delete()
+    session.commit()
+    session.close()
+    return 'OK'
+
+
+@app.route('/togglecompletetask', methods=['POST'])
+def toggle_complete_task():
+    id_object = request.get_json()
+    session = Session()
+    task = session.query(Task).filter(Task.id == id_object['id']).first()
+    task.is_finished = not task.is_finished
+    session.commit()
+    session.close()
+    return 'OK'
 
 
 @app.route('/createtask', methods=['POST'])

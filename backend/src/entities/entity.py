@@ -11,6 +11,7 @@ db_url = database_config['db_url']
 db_name = database_config['db_name']
 db_user = database_config['db_user']
 db_password = database_config['db_password']
+
 engine = create_engine(f'postgresql://{db_user}:{db_password}@{db_url}/{db_name}')
 Session = sessionmaker(bind=engine)
 
