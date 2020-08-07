@@ -1,0 +1,14 @@
+.topbar{
+    background-color: rgb(62, 62, 252);
+    position: absolute;
+    height: 5%;
+    width: 100%;
+    border-bottom: 1px solid;
+    z-index: 2;
+}
+.topbar-header-text {
+    color: white;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}

@@ -1,0 +1,38 @@
+.todo-item{
+    border-style: solid;
+    border-width: 1px;
+    float: left;
+    width: 99%;
+    height: 60px;
+}
+
+.selected-todo-item{
+    border-style: solid;
+    border-width: 1px;
+    background-color: grey;
+    float: left;
+    width: 99%;
+    height: 60px;
+}
+
+.completed-todo-item{
+    border-style: solid;
+    border-width: 1px;
+    background-color: grey;
+    float: left;
+    width: 99%;
+    height: 60px;
+    opacity: 0.5;
+}
+
+.todo-field-left{
+    float: left;
+    width: 10%;
+    height: 50px;
+}
+
+.todo-field-left-2{
+    float: left;
+    width: 80%;
+    height: 50px;
+}

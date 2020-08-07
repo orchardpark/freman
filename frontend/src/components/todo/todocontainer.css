@@ -1,0 +1,19 @@
+.todo-container {
+    position: absolute;
+    z-index: 3;
+    top: 5%;
+    left: 5%;
+    width: 40%;
+    height: 100%;
+}
+
+.todo-container-header{
+    float: left;
+}
+
+@media all and (max-width: 980px) {
+    .todo-container{
+        margin-left: 0;
+        left: 64px;
+    }
+}
