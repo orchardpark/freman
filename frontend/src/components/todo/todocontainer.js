@@ -49,7 +49,6 @@ class TodoContainer extends React.Component {
             .then(res => res.json())
             .then((data) => {
                 this.setState({todoItems: data, loading: false})
-                console.log(data)
             })
             .catch(console.log)
     }
@@ -127,10 +126,13 @@ class TodoContainer extends React.Component {
         )
     }
 
-    todoList(){
+    todoList(filter_completed){
         const result = []
         for (const [index, value] of this.state.todoItems.entries()){
-            result.push(this.renderItem(index, value['id']))
+            if(!filter_completed || !value['is_finished'])
+            {
+                result.push(this.renderItem(index, value['id']))
+            }
         }
         return result
     }
@@ -145,7 +147,7 @@ class TodoContainer extends React.Component {
                 </div>
                 <br/>
                 <div style={{ overflow: 'auto', maxHeight: '80%' }}>
-                    {this.todoList()}
+                    {this.todoList(this.isCompletedChecked())}
                 </div>
             </div>
         )

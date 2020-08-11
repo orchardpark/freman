@@ -6,7 +6,7 @@ function TodoComponent(props){
 
     const isSelected = props['selected']
     const isCompleted = props['is_finished']
-    const todoClass = (isCompleted) ? 'completed-todo-item': (isSelected) ? 'selected-todo-item' : 'todo-item'
+    const todoClass = (isCompleted) ? 'completed-todo-item': 'todo-item'
 
     function componentContent(){
         return (
