@@ -31,6 +31,18 @@ def get_logged_time():
     session.close()
     return jsonify(logged_time)
 
+@app.route('/logtime', methods=['POST'])
+def log_time():
+    logged_time = LoggedTimeSchema(only=('application_name', 'category', 'logged_time_minutes')) \
+        .load(request.get_json())
+    logged_time_objects = LoggedTime(**logged_time.data)
+
+    session = Session()
+    session.add(logged_time_objects)
+    session.commit()
+    session.close()
+    return 'OK'
+
 # ------- BOOKED TIME
 
 
