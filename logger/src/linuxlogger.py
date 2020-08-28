@@ -2,6 +2,10 @@ import subprocess
 import time
 import psutil
 import requests
+import yaml
+import application_classifier
+import logging
+log = logging.getLogger(__name__)
 
 def get_pname(id) -> str:
     p = subprocess.Popen(["ps -o cmd= {}".format(id)], stdout=subprocess.PIPE, shell=True)
@@ -35,10 +39,25 @@ def get_idle_time_s() -> int:
     output, _ = p.communicate()
     return int(output)/1000
 
-def send_to_database(tracked_programs):
-    print(tracked_programs)
+def send_to_database(tracked_programs: dict, server_url: str, server_port: str):
+    classifier = application_classifier.ApplicationClassifier()
+    data = []
+    for program in tracked_programs.keys():
+        category = classifier.classify(program)
+        data.append(
+            {
+                'application_name': program,
+                'category': category,
+                'logged_time_minutes': int(tracked_programs[program]/60)
+            }
+        )
+    log.info('Sending tracked data to backend: {data}'.format(str(data)))
+    requests.put("{}:{}".format(server_port, server_url), data)
 
 def log_linux():
+    with open('config.yaml') as f:
+        config = yaml.safe_load(f)
+
     start_time = time.time()
     tracked_programs = {} # Dict: application_name -> seconds active
     while True:
@@ -55,7 +74,7 @@ def log_linux():
         elapsed_time = time.time() - start_time
 
         # Every ten minutes write results to database and clear the current records
-        if round(elapsed_time) % 600 == 0:
-            send_to_database(tracked_programs)
+        if round(elapsed_time) % 70 == 0:
+            send_to_database(tracked_programs, config['server_url'], config['server_port'])
             tracked_programs = {}
 

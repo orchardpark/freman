@@ -1,9 +1,15 @@
 import React from "react"
+import "../container.css"
+
 
 function ReportContainer() {
 
     return (
-        <div/>
+        <div className="container">
+            <div>
+                <h1>Reports</h1>
+            </div>
+        </div>
     )
 }
 

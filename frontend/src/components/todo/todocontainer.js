@@ -1,6 +1,6 @@
 import React from "react"
 import config from "../app/config"
-import './todocontainer.css'
+import "../container.css"
 import TodoComponent from "./todocomponent"
 import NewTodoModal from "./newtodomodal";
 import CheckBox from "./checkbox"
@@ -139,7 +139,7 @@ class TodoContainer extends React.Component {
 
     render() {
         return(
-            <div className='todo-container'>
+            <div className='container'>
                 <div>
                     <h1>Tasks</h1>
                     <NewTodoModal AddTodoItem={this.AddNewTodoItem}/>

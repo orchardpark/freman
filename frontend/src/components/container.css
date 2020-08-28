@@ -1,4 +1,4 @@
-.todo-container {
+.container {
     position: absolute;
     z-index: 3;
     top: 5%;
@@ -7,12 +7,12 @@
     height: 100%;
 }
 
-.todo-container-header{
+.container-header{
     float: left;
 }
 
 @media all and (max-width: 980px) {
-    .todo-container{
+    .container{
         margin-left: 0;
         left: 64px;
     }
