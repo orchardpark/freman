@@ -5,7 +5,7 @@ import modalStyle from "./modalstyle"
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement(document.getElementById('root'))
 
-function NewTodoModal(props){
+function NewTaskModal(props){
     var subtitle;
     const [modalIsOpen,setIsOpen] = React.useState(false)
     const [title, setTitle] = React.useState("")
@@ -85,4 +85,4 @@ function NewTodoModal(props){
     );
 }
 
-export default NewTodoModal
+export default NewTaskModal

@@ -33,12 +33,12 @@ def get_logged_time():
 
 @app.route('/logtime', methods=['POST'])
 def log_time():
-    logged_time = LoggedTimeSchema(only=('application_name', 'category', 'logged_time_minutes')) \
+    logged_time = LoggedTimeSchema(only=('application_name', 'category', 'logged_time_minutes', 'window_title'), many=True) \
         .load(request.get_json())
-    logged_time_objects = LoggedTime(**logged_time.data)
+    logged_time_objects = list(map(lambda x: LoggedTime(**x), logged_time))
 
     session = Session()
-    session.add(logged_time_objects)
+    session.bulk_save_objects(logged_time_objects)
     session.commit()
     session.close()
     return 'OK'

@@ -1,15 +1,18 @@
 import subprocess
 import time
 import psutil
-import requests
 import yaml
-import application_classifier
 import logging
+import database
+import tracked_application
 log = logging.getLogger(__name__)
+
+
+# Active window functions
 
 def get_pname(id) -> str:
     p = subprocess.Popen(["ps -o cmd= {}".format(id)], stdout=subprocess.PIPE, shell=True)
-    return p.communicate()[0].decode('ascii').strip()
+    return p.communicate()[0].decode('utf-8').strip()
 
 def get_active_application_name() -> str:
     p = subprocess.Popen(['xdotool', 'getwindowfocus'], stdout=subprocess.PIPE)
@@ -31,7 +34,7 @@ def get_active_window_title() -> str:
     p = subprocess.Popen(['xdotool', 'getwindowfocus', 'getwindowname'], stdin=subprocess.PIPE,
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output, _ = p.communicate()
-    wname = output.decode('ascii').strip()
+    wname = output.decode('utf-8').strip()
     return wname
 
 def get_idle_time_s() -> int:
@@ -39,42 +42,37 @@ def get_idle_time_s() -> int:
     output, _ = p.communicate()
     return int(output)/1000
 
-def send_to_database(tracked_programs: dict, server_url: str, server_port: str):
-    classifier = application_classifier.ApplicationClassifier()
-    data = []
-    for program in tracked_programs.keys():
-        category = classifier.classify(program)
-        data.append(
-            {
-                'application_name': program,
-                'category': category,
-                'logged_time_minutes': int(tracked_programs[program]/60)
-            }
-        )
-    log.info('Sending tracked data to backend: {data}'.format(str(data)))
-    requests.put("{}:{}".format(server_port, server_url), data)
+
+# Logging Loop
 
 def log_linux():
+    logging.info('Starting Linux logging')
     with open('config.yaml') as f:
         config = yaml.safe_load(f)
+        log.info('Loaded config')
 
     start_time = time.time()
-    tracked_programs = {} # Dict: application_name -> seconds active
+    last_measured_time = time.time()
+    tracked = {} # Dict: (application_name, window_title) -> seconds active
     while True:
 
         # only log time if user is active
         idle_time = get_idle_time_s()
-        if idle_time <= 300:
+        if idle_time <= config['max_idle_time']:
             application_name = get_active_application_name()
-            if application_name not in tracked_programs:
-                tracked_programs[application_name] = 0
-            tracked_programs[application_name] = tracked_programs[application_name] + 1
+            window_title = get_active_window_title()
+            key = (application_name, window_title)
+            if key not in tracked:
+                tracked[key] = 0
+            tracked[key] = tracked[key] + 1
         
         time.sleep(1)
         elapsed_time = time.time() - start_time
 
-        # Every ten minutes write results to database and clear the current records
-        if round(elapsed_time) % 70 == 0:
-            send_to_database(tracked_programs, config['server_url'], config['server_port'])
-            tracked_programs = {}
-
+        # Every sync interval write results to database and clear the current records
+        if elapsed_time > 0 and round(elapsed_time) % config['sync_interval'] == 0:
+            tracked_programs = tracked_application.combine_tracked(tracked)
+            database_sync_success = database.send_to_database(
+                tracked_programs, config['server_url'], config['server_port'])
+            if database_sync_success:
+                tracked = {}

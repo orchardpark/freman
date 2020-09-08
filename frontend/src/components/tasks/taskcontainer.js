@@ -1,11 +1,11 @@
 import React from "react"
 import config from "../app/config"
 import "../container.css"
-import TodoComponent from "./todocomponent"
-import NewTodoModal from "./newtodomodal";
+import TaskComponent from "./taskcomponent"
+import NewTaskModal from "./newtaskmodal";
 import CheckBox from "./checkbox"
 
-class TodoContainer extends React.Component {
+class TaskContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +14,7 @@ class TodoContainer extends React.Component {
             isCompletedChecked: false,
         }
         this.renderItem = this.renderItem.bind(this)
-        this.AddNewTodoItem = this.AddNewTodoItem.bind(this)
+        this.AddNewTodoItem = this.AddNewTask.bind(this)
         this.setSelected = this.setSelected.bind(this)
         this.toggleCompleteTask = this.toggleCompleteTask.bind(this)
     }
@@ -22,7 +22,7 @@ class TodoContainer extends React.Component {
 
     // Backend calls
 
-    AddNewTodoItem(title, description, estimatedTimeMinutes){
+    AddNewTask(title, description, estimatedTimeMinutes){
         const newTodoItem = {
                 'title': title,
                 'description': description,
@@ -117,7 +117,7 @@ class TodoContainer extends React.Component {
             <div key={key}>
                 {
                     this.state.loading ? 'loading' :
-                        <TodoComponent {...this.state.todoItems[index]}
+                        <TaskComponent {...this.state.todoItems[index]}
                                        setSelected={this.setSelected}
                                        toggleCompleteTask={this.toggleCompleteTask}
                         />
@@ -126,7 +126,7 @@ class TodoContainer extends React.Component {
         )
     }
 
-    todoList(filter_completed){
+    taskList(filter_completed){
         const result = []
         for (const [index, value] of this.state.todoItems.entries()){
             if(!filter_completed || !value['is_finished'])
@@ -142,16 +142,16 @@ class TodoContainer extends React.Component {
             <div className='container'>
                 <div>
                     <h1>Tasks</h1>
-                    <NewTodoModal AddTodoItem={this.AddNewTodoItem}/>
+                    <NewTaskModal AddTodoItem={this.AddNewTask}/>
                     <CheckBox isChecked={this.isCompletedChecked} toggleChecked={this.toggleCompletedFilter}/>
                 </div>
                 <br/>
                 <div style={{ overflow: 'auto', maxHeight: '80%' }}>
-                    {this.todoList(this.isCompletedChecked())}
+                    {this.taskList(this.isCompletedChecked())}
                 </div>
             </div>
         )
     }
 }
 
-export default TodoContainer
+export default TaskContainer

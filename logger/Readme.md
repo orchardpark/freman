@@ -12,3 +12,5 @@ On Linux you need the [xdotool](http://manpages.ubuntu.com/manpages/trusty/man1/
 
 
 ## How to use
+
+On Linux run the `launch.sh` script to start the logger.

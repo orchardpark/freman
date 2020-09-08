@@ -12,12 +12,12 @@ function SideNavContainer(props) {
             }}
         >
             <SideNav.Toggle />
-            <SideNav.Nav defaultSelected="todo">
-                <NavItem eventKey="todo">
+            <SideNav.Nav defaultSelected="tasks">
+                <NavItem eventKey="tasks">
                     <NavIcon>
                         <i className="fa fa-fw fa-tasks" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
-                    <NavText>Todo</NavText>
+                    <NavText>Tasks</NavText>
                 </NavItem>
                 <NavItem eventKey="logged">
                     <NavIcon>

@@ -21,7 +21,7 @@ function LoggedContainer() {
     return(
         <div className='container'>
             <div>
-                <h1>Logged events</h1>
+                <h1>Logged time</h1>
             </div>
             <br/>
             <LoggedList/>
