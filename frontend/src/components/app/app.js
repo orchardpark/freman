@@ -1,44 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TopBar from "./topbar"
 import SideNavContainer from "./sidenavcontainer"
 import TaskContainer from '../tasks/taskcontainer'
 import LoggedContainer from "../logged/loggedcontainer"
 import ReportContainer from "../report/reportcontainer";
 
-class App extends React.Component{
+function App(){
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentSelected: "tasks"
-        }
-        this.setSelected = this.setSelected.bind(this)
-    }
+    const [currentSelected, setSelected] = useState("tasks")
 
-    setSelected(selected){
-        this.setState({
-            currentSelected: selected
-        })
-    }
-
-    render()
-    {
-        const getContainer = () => {
-            if(this.state.currentSelected === 'tasks')
+    const getContainer = () => {
+            if(currentSelected === 'tasks')
                 return(<TaskContainer/>)
-            if(this.state.currentSelected === 'logged')
+            if(currentSelected === 'logged')
                 return(<LoggedContainer/>)
-            if(this.state.currentSelected === 'report')
+            if(currentSelected === 'report')
                 return(<ReportContainer/>)
-        }
-        return (
-            <div>
-                <TopBar/>
-                <SideNavContainer setSelected={this.setSelected}/>
-                {getContainer()}
-            </div>
-        );
-    }
+        };
+
+    return( 
+        <div>
+            <TopBar/>
+            <SideNavContainer setSelected={setSelected}/>
+            {getContainer()}
+        </div>
+    )
 }
 
 export default App;
