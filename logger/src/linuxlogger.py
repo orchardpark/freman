@@ -52,7 +52,6 @@ def log_linux():
         log.info('Loaded config')
 
     start_time = time.time()
-    last_measured_time = time.time()
     tracked = {} # Dict: (application_name, window_title) -> seconds active
     while True:
 
