@@ -4,25 +4,32 @@ import SideNavContainer from "./sidenavcontainer"
 import TaskContainer from '../tasks/taskcontainer'
 import LoggedContainer from "../logged/loggedcontainer"
 import ReportContainer from "../report/reportcontainer";
+import {Route, Switch, Redirect, useHistory} from "react-router-dom"
 
 function App(){
-
-    const [currentSelected, setSelected] = useState("tasks")
-
-    const getContainer = () => {
-            if(currentSelected === 'tasks')
-                return(<TaskContainer/>)
-            if(currentSelected === 'logged')
-                return(<LoggedContainer/>)
-            if(currentSelected === 'report')
-                return(<ReportContainer/>)
-        };
+    const history = useHistory()
 
     return( 
         <div>
             <TopBar/>
-            <SideNavContainer setSelected={setSelected}/>
-            {getContainer()}
+            <SideNavContainer history={history}/>
+            <Switch>
+                <Route path="/tasks">
+                    <TaskContainer/>
+                </Route>
+                <Route path="/logged">
+                    <LoggedContainer/>
+                </Route>
+                <Route path="/report">
+                    <ReportContainer/>
+                </Route>
+                <Route path="/">
+                    <Redirect to={{
+                        pathname: "/tasks",
+                        state: { referrer: "/" }
+                    }} />
+                </Route>
+            </Switch>
         </div>
     )
 }

@@ -8,7 +8,7 @@ function SideNavContainer(props) {
     return (
         <SideNav
             onSelect={(selected) => {
-                props.setSelected(selected)
+                props.history.push("/"+selected)
             }}
         >
             <SideNav.Toggle />
