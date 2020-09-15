@@ -4,7 +4,6 @@ import "./taskcomponent.css"
 
 function TaskComponent(props){
 
-    const isSelected = props['selected']
     const isCompleted = props['is_finished']
     const todoClass = (isCompleted) ? 'completed-task': 'task'
 
