@@ -1,28 +1,14 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import config from "../app/config"
-import "../container.css"
-import TaskComponent from "./taskcomponent"
-import NewTaskModal from "./newtaskmodal";
-import CheckBox from "./checkbox"
+import TaskContainerDisplay from './taskcontainerdisplay'
 
-class TaskContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            todoItems: [],
-            loading: true,
-            isCompletedChecked: false,
-        }
-        this.renderItem = this.renderItem.bind(this)
-        this.AddNewTodoItem = this.AddNewTask.bind(this)
-        this.setSelected = this.setSelected.bind(this)
-        this.toggleCompleteTask = this.toggleCompleteTask.bind(this)
-    }
+function TaskContainer() {
 
+    const [todoItems, setTodoItems] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [isCompletedChecked, setCompleteChecked] = useState(false)
 
-    // Backend calls
-
-    AddNewTask(title, description, estimatedTimeMinutes){
+    const addNewTask = (title, description, estimatedTimeMinutes) =>{
         const newTodoItem = {
                 'title': title,
                 'description': description,
@@ -35,29 +21,27 @@ class TaskContainer extends React.Component {
             headers: {'Content-Type': 'application/json'}
         }
         fetch(request, requestOptions)
-            .then(data=> this.setState((prevState)=>(
-                {
-                    todoItems: prevState.todoItems.concat([newTodoItem]),
-                }
+            .then(data=> this.setTodoItems((prevTodoItems)=>(
+                prevTodoItems.concat([newTodoItem])
             )))
             .catch(console.log)
     }
 
-    getTasks = () => {
+
+    const getTasks = () => {
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/tasks'
         fetch(request)
             .then(res => res.json())
             .then((data) => {
-                this.setState({todoItems: data, loading: false})
+                setTodoItems(data)
+                setLoading(false)
             })
             .catch(console.log)
     }
 
-    componentDidMount() {
-        this.getTasks()
-    }
+    useEffect( () => getTasks())
 
-    toggleCompleteTask(id){
+    const toggleCompleteTask = (id) =>{
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
         const id_object = {
             id: id
@@ -69,7 +53,7 @@ class TaskContainer extends React.Component {
         }
         fetch(request, requestOptions)
             .then((data)=>{
-                const newTodoList = this.state.todoItems.map((todoItem)=> {
+                const newTodoList = todoItems.map((todoItem)=> {
                     if(todoItem.id === id){
                         return {
                             ...todoItem,
@@ -79,79 +63,26 @@ class TaskContainer extends React.Component {
                         return todoItem
                     }
                 })
-                this.setState({todoItems: newTodoList})
+                setTodoItems(newTodoList)
             })
             .catch(console.log)
     }
-
-    // Rendering
-
-    isCompletedChecked = () => {
-        return this.state.isCompletedChecked
+    
+    const toggleCompletedFilter = () => {
+        setCompleteChecked(isCompletedChecked => !isCompletedChecked)
     }
 
-    toggleCompletedFilter = () => {
-        this.setState((prevState)=>{
-            return {
-                ...prevState,
-                isCompletedChecked: !prevState.isCompletedChecked
-            }
-        })
-    }
-
-    setSelected(id){
-        const newTodoList = this.state.todoItems.map((todoItem)=> {
-            return {
-                    ...todoItem,
-                    selected: todoItem.id === id
-                }
-            }
-        )
-        this.setState({
-            todoItems: newTodoList
-        })
-    }
-
-    renderItem(index, key){
-        return(
-            <div key={key}>
-                {
-                    this.state.loading ? 'loading' :
-                        <TaskComponent {...this.state.todoItems[index]}
-                                       setSelected={this.setSelected}
-                                       toggleCompleteTask={this.toggleCompleteTask}
-                        />
-                }
-            </div>
-        )
-    }
-
-    taskList(filter_completed){
-        const result = []
-        for (const [index, value] of this.state.todoItems.entries()){
-            if(!filter_completed || !value['is_finished'])
-            {
-                result.push(this.renderItem(index, value['id']))
-            }
-        }
-        return result
-    }
-
-    render() {
-        return(
-            <div className='container'>
-                <div>
-                    <h1>Tasks</h1>
-                    <NewTaskModal AddTodoItem={this.AddNewTask}/>
-                    <CheckBox isChecked={this.isCompletedChecked} toggleChecked={this.toggleCompletedFilter}/>
-                </div>
-                <br/>
-                <div style={{ overflow: 'auto', maxHeight: '80%' }}>
-                    {this.taskList(this.isCompletedChecked())}
-                </div>
-            </div>
-        )
-    }
+    
+    return (
+        <TaskContainerDisplay 
+            addNewTask={addNewTask}
+            todoItems={todoItems}
+            loading={loading}
+            toggleCompleteTask={toggleCompleteTask}
+            isCompletedChecked={isCompletedChecked}
+            toggleCompletedFilter={toggleCompletedFilter}
+        />
+    );
 }
 
 export default TaskContainer

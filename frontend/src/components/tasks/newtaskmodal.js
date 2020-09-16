@@ -25,8 +25,8 @@ function NewTaskModal(props){
         setIsOpen(false);
     }
 
-    function confirmNewTodoItem(){
-        props.AddTodoItem(title, description, estimatedTimeMinutes)
+    function confirmNewTask() {
+        props.addNewTask(title, description, estimatedTimeMinutes)
         closeModal()
     }
 
@@ -54,7 +54,7 @@ function NewTaskModal(props){
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 style={modalStyle}
-                contentLabel="New Todo Modal">
+                contentLabel="New Task Modal">
 
                 <h2 ref={_subtitle => (subtitle = _subtitle)}>Add new Task</h2>
                 <form>
@@ -78,7 +78,7 @@ function NewTaskModal(props){
                 <br/>
                 <div>
                     <button style={{float: 'left'}}  onClick={closeModal}>Cancel</button>
-                    <button style={{float: 'right'}} onClick={confirmNewTodoItem}>Confirm</button>
+                    <button style={{float: 'right'}} onClick={confirmNewTask}>Confirm</button>
                 </div>
             </Modal>
         </div>
