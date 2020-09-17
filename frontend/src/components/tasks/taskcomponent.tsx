@@ -2,19 +2,26 @@ import React from "react"
 import {Circle} from "react-circle";
 import "./taskcomponent.css"
 
-function TaskComponent(props){
+type Props = {
+    is_finished: boolean,
+    toggleCompleteTask: (id: number) => void,
+    title: string,
+    id: number
+}
 
-    const isCompleted = props['is_finished']
+function TaskComponent({is_finished, toggleCompleteTask, title, id}: Props){
+
+    const isCompleted = is_finished
     const todoClass = (isCompleted) ? 'completed-task': 'task'
 
     return (
         <div className={todoClass} >
             <div className={'task-field-left'}>
-                <Circle progress={100} size={50} progressColor={"blue"} />
+                <Circle progress={100} size={"50"} progressColor={"blue"} />
             </div>
-            <p className={'task-field-left-2'}>{props['title']}</p>
+            <p className={'task-field-left-2'}>{title}</p>
             <button style={{ float: "right", color: "green" }} className={'fa  fa-check'}
-                onClick={e => props.toggleCompleteTask(props['id'])} />
+                onClick={e => toggleCompleteTask(id)} />
             <button style={{ float: 'right', color: "red" }} className={'fa fa-times'} />
         </div>
     )

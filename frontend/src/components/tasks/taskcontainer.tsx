@@ -1,29 +1,28 @@
 import React, {useState, useEffect} from "react"
 import config from "../app/config"
 import TaskContainerDisplay from './taskcontainerdisplay'
+import Task from "./task"
 
 function TaskContainer() {
 
-    const [todoItems, setTodoItems] = useState([])
+    const [tasks, setTasks] = useState<Task[]>([])
     const [loading, setLoading] = useState(true)
     const [isCompletedChecked, setCompleteChecked] = useState(false)
 
-    const addNewTask = (title, description, estimatedTimeMinutes) =>{
-        const newTodoItem = {
+    const addNewTask = (title: string, description: string, estimatedTimeMinutes: number) =>{
+        const newTask = {
                 'title': title,
                 'description': description,
-                'estimated_time_minutes': estimatedTimeMinutes
+                'estimated_time_minutes': estimatedTimeMinutes,
             }
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/createtask'
         const requestOptions = {
             method: 'POST',
-            body: JSON.stringify(newTodoItem),
+            body: JSON.stringify(newTask),
             headers: {'Content-Type': 'application/json'}
         }
         fetch(request, requestOptions)
-            .then(data=> this.setTodoItems((prevTodoItems)=>(
-                prevTodoItems.concat([newTodoItem])
-            )))
+            .then(()=>getTasks())
             .catch(console.log)
     }
 
@@ -33,7 +32,7 @@ function TaskContainer() {
         fetch(request)
             .then(res => res.json())
             .then((data) => {
-                setTodoItems(data)
+                setTasks(data)
                 setLoading(false)
             })
             .catch(console.log)
@@ -41,7 +40,7 @@ function TaskContainer() {
 
     useEffect( () => getTasks())
 
-    const toggleCompleteTask = (id) =>{
+    const toggleCompleteTask = (id: number) =>{
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
         const id_object = {
             id: id
@@ -53,17 +52,17 @@ function TaskContainer() {
         }
         fetch(request, requestOptions)
             .then((data)=>{
-                const newTodoList = todoItems.map((todoItem)=> {
-                    if(todoItem.id === id){
+                const newTasks = tasks.map((task)=> {
+                    if(task.id === id){
                         return {
-                            ...todoItem,
-                            is_finished: !todoItem.is_finished
+                            ...task,
+                            is_finished: !task.is_finished
                         }
                     } else{
-                        return todoItem
+                        return task
                     }
                 })
-                setTodoItems(newTodoList)
+                setTasks(newTasks)
             })
             .catch(console.log)
     }
@@ -76,7 +75,7 @@ function TaskContainer() {
     return (
         <TaskContainerDisplay 
             addNewTask={addNewTask}
-            todoItems={todoItems}
+            todoItems={tasks}
             loading={loading}
             toggleCompleteTask={toggleCompleteTask}
             isCompletedChecked={isCompletedChecked}

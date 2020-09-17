@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import Modal from 'react-modal';
 import modalStyle from "./modalstyle"
 
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement(document.getElementById('root'))
+Modal.setAppElement(document?.getElementById('root') ?? "root")
 
-function NewTaskModal(props){
-    var subtitle;
+type Props = {
+    addNewTask: (title: string, description: string, estimatedTimeMinutes: number) => void
+}
+
+function NewTaskModal({addNewTask}: Props){
+    var subtitle: HTMLHeadingElement | null;
     const [modalIsOpen,setIsOpen] = React.useState(false)
     const [title, setTitle] = React.useState("")
     const [description, setDescription] = React.useState("")
@@ -17,8 +20,8 @@ function NewTaskModal(props){
     }
 
     function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
+        if(subtitle != null)
+            subtitle.style.color = '#f00';
     }
 
     function closeModal(){
@@ -26,11 +29,11 @@ function NewTaskModal(props){
     }
 
     function confirmNewTask() {
-        props.addNewTask(title, description, estimatedTimeMinutes)
+        addNewTask(title, description, estimatedTimeMinutes)
         closeModal()
     }
 
-    function changeHandler(event){
+    function changeHandler(event: ChangeEvent<HTMLInputElement>){
         const name = event.target.name
         const value = event.target.value
         if(name === "title"){
@@ -40,7 +43,7 @@ function NewTaskModal(props){
             setDescription(value)
         }
         if(name === "estimatedtimeminutes"){
-            setEstimatedTimeMinutes(value)
+            setEstimatedTimeMinutes(Number.parseInt(value))
         }
     }
 
