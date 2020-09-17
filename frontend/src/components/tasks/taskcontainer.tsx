@@ -75,7 +75,7 @@ function TaskContainer() {
     return (
         <TaskContainerDisplay 
             addNewTask={addNewTask}
-            todoItems={tasks}
+            tasks={tasks}
             loading={loading}
             toggleCompleteTask={toggleCompleteTask}
             isCompletedChecked={isCompletedChecked}

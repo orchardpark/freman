@@ -33,7 +33,7 @@ function NewTaskModal({addNewTask}: Props){
         closeModal()
     }
 
-    function changeHandler(event: ChangeEvent<HTMLInputElement>){
+    function changeHandler(event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>){
         const name = event.target.name
         const value = event.target.value
         if(name === "title"){

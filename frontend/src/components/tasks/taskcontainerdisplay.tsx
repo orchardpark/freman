@@ -8,7 +8,7 @@ import Task from './task'
 type Props = {
     tasks: Task[],
     loading: boolean,
-    toggleCompleteTask: () => void,
+    toggleCompleteTask: (id: number) => void,
     isCompletedChecked: boolean,
     toggleCompletedFilter: () => void,
     addNewTask: (title: string, description: string, estimated_time_minutes: number) => void,
