@@ -22,23 +22,22 @@ function TaskContainer() {
             headers: {'Content-Type': 'application/json'}
         }
         fetch(request, requestOptions)
-            .then(()=>getTasks())
+            .then(()=>setLoading(true))
             .catch(console.log)
     }
-
 
     const getTasks = () => {
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/tasks'
         fetch(request)
             .then(res => res.json())
-            .then((data) => {
-                setTasks(data)
+            .then((tasks) => {
+                setTasks(tasks)
                 setLoading(false)
             })
             .catch(console.log)
     }
 
-    useEffect( () => getTasks())
+    useEffect(getTasks, [loading])
 
     const toggleCompleteTask = (id: number) =>{
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
