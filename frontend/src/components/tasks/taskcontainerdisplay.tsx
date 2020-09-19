@@ -3,7 +3,7 @@ import NewTaskModal from "./newtaskmodal";
 import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
 import "../container.css"
-import Task from './task'
+import {Task} from './task'
 
 type Props = {
     tasks: Task[],

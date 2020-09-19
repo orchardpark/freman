@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react"
 import config from "../app/config"
 import TaskContainerDisplay from './taskcontainerdisplay'
-import Task from "./task"
+import {Task} from "./task"
+import { store } from "../app/store"
+import { SET_TASKS } from "./taskslice"
 
 function TaskContainer() {
 
@@ -30,14 +32,13 @@ function TaskContainer() {
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/tasks'
         fetch(request)
             .then(res => res.json())
-            .then((tasks) => {
+            .then((tasks: Task[]) => {
                 setTasks(tasks)
                 setLoading(false)
+                store.dispatch({type: SET_TASKS, payload: tasks})
             })
             .catch(console.log)
     }
-
-    useEffect(getTasks, [loading])
 
     const toggleCompleteTask = (id: number) =>{
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
@@ -62,6 +63,7 @@ function TaskContainer() {
                     }
                 })
                 setTasks(newTasks)
+                store.dispatch({type: SET_TASKS, payload: newTasks})
             })
             .catch(console.log)
     }
@@ -69,7 +71,8 @@ function TaskContainer() {
     const toggleCompletedFilter = () => {
         setCompleteChecked(isCompletedChecked => !isCompletedChecked)
     }
-
+    
+    useEffect(getTasks, [loading])
     
     return (
         <TaskContainerDisplay 
