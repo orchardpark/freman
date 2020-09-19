@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 import config from "../app/config"
 import TaskContainerDisplay from './taskcontainerdisplay'
-import {Task} from "./task"
+import {Task, CREATE_TASK_ENDPOINT, GET_TASK_ENDPOINT, TOGGLE_COMPLETE_TASK_ENDPOINT, REMOVE_TASK_ENDPOINT} from "./task"
 import { store } from "../app/store"
 import { SET_TASKS } from "./taskslice"
 
@@ -17,7 +17,7 @@ function TaskContainer() {
                 'description': description,
                 'estimated_time_minutes': estimatedTimeMinutes,
             }
-        const request = 'http://'+config.serverURL + ':' + config.serverPort + '/createtask'
+        const request = 'http://'+config.serverURL + ':' + config.serverPort + CREATE_TASK_ENDPOINT
         const requestOptions = {
             method: 'POST',
             body: JSON.stringify(newTask),
@@ -29,7 +29,7 @@ function TaskContainer() {
     }
 
     const getTasks = () => {
-        const request = 'http://'+config.serverURL + ':' + config.serverPort + '/tasks'
+        const request = 'http://'+config.serverURL + ':' + config.serverPort + GET_TASK_ENDPOINT
         fetch(request)
             .then(res => res.json())
             .then((tasks: Task[]) => {
@@ -41,7 +41,7 @@ function TaskContainer() {
     }
 
     const toggleCompleteTask = (id: number) =>{
-        const request = 'http://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
+        const request = 'http://'+config.serverURL + ':' + config.serverPort + TOGGLE_COMPLETE_TASK_ENDPOINT
         const id_object = {
             id: id
         }
@@ -71,17 +71,36 @@ function TaskContainer() {
     const toggleCompletedFilter = () => {
         setCompleteChecked(isCompletedChecked => !isCompletedChecked)
     }
-    
+
+    const removeTask = (id: number) => {
+        const request = 'http://' + config.serverURL + ':' + config.serverPort + REMOVE_TASK_ENDPOINT
+        const id_object = {
+            id: id
+        }
+        const requestOptions = {
+            method: 'POST',
+            body: JSON.stringify(id_object),
+            headers: { 'Content-Type': 'application/json' }
+        }
+        fetch(request, requestOptions)
+            .then(() => {
+                setLoading(true)
+            })
+            .catch(console.log)
+
+    }
+
     useEffect(getTasks, [loading])
-    
+
     return (
-        <TaskContainerDisplay 
+        <TaskContainerDisplay
             addNewTask={addNewTask}
             tasks={tasks}
             loading={loading}
             toggleCompleteTask={toggleCompleteTask}
             isCompletedChecked={isCompletedChecked}
             toggleCompletedFilter={toggleCompletedFilter}
+            removeTask={removeTask}
         />
     );
 }

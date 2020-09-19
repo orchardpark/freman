@@ -12,9 +12,10 @@ type Props = {
     isCompletedChecked: boolean,
     toggleCompletedFilter: () => void,
     addNewTask: (title: string, description: string, estimated_time_minutes: number) => void,
+    removeTask: (id: number) => void
 }
 
-function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){
+function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask, removeTask}: Props){
 
     const taskList = (filter_completed: boolean)=>{
         const result = []
@@ -34,6 +35,7 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
                     loading ? 'loading' :
                         <TaskComponent {...tasks[index]}
                                        toggleCompleteTask={toggleCompleteTask}
+                                       removeTask={removeTask}
                         />
                 }
             </div>

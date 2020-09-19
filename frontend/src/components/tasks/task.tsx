@@ -14,3 +14,7 @@ export type TaskMessage = {
     estimated_time_minutes: number,
 }
 
+export const CREATE_TASK_ENDPOINT = "/createtask"
+export const GET_TASK_ENDPOINT = "/tasks"
+export const TOGGLE_COMPLETE_TASK_ENDPOINT = "/togglecompletetask"
+export const REMOVE_TASK_ENDPOINT = "/removetask"
