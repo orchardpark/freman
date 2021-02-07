@@ -58,7 +58,7 @@ Arguments:
 
 ## Installation
 
-The backend requires a [Postgres](https://www.postgresql.org/) installation. A database and database user, with permission to read/write need to be created. The specifics of the database url, name, user and password are to be configured in the `config.yaml` file.
+The backend requires a [Postgres](https://www.postgresql.org/) installation. A database and database user, with permission to read/write need to be created. The specifics of the database url, name, user and password are to be configured in the `config.yaml` file. An example setup script for the database and user can be found in `setupd_db.sql`.
 
 A virtual environment is recommended for running the backend application. The required packages can then be installed via `pip install -r requirements.txt`.
 
