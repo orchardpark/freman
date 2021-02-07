@@ -1,4 +1,4 @@
-export type Task = {
+type Task = {
     title: string,
     description: string,
     estimated_time_minutes: number,
@@ -8,9 +8,5 @@ export type Task = {
     id: number
 }
 
-export type TaskMessage = {
-    title: string,
-    description: string,
-    estimated_time_minutes: number,
-}
 
+export default Task

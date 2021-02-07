@@ -3,14 +3,13 @@ import {Circle} from "react-circle";
 import "./taskcomponent.css"
 
 type Props = {
-    toggleCompleteTask: (id: number) => void,
-    removeTask: (id: number) => void
     is_finished: boolean,
+    toggleCompleteTask: (id: number) => void,
     title: string,
     id: number
 }
 
-function TaskComponent({toggleCompleteTask, removeTask, is_finished, title, id}: Props){
+function TaskComponent({is_finished, toggleCompleteTask, title, id}: Props){
 
     const isCompleted = is_finished
     const todoClass = (isCompleted) ? 'completed-task': 'task'
@@ -23,8 +22,7 @@ function TaskComponent({toggleCompleteTask, removeTask, is_finished, title, id}:
             <p className={'task-field-left-2'}>{title}</p>
             <button style={{ float: "right", color: "green" }} className={'fa  fa-check'}
                 onClick={e => toggleCompleteTask(id)} />
-            <button style={{ float: 'right', color: "red" }} className={'fa fa-times'} 
-                onClick={e => removeTask(id)}/>
+            <button style={{ float: 'right', color: "red" }} className={'fa fa-times'} />
         </div>
     )
 }

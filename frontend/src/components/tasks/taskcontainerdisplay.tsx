@@ -3,7 +3,7 @@ import NewTaskModal from "./newtaskmodal";
 import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
 import "../container.css"
-import {Task} from './task'
+import Task from './task'
 
 type Props = {
     tasks: Task[],
@@ -12,10 +12,9 @@ type Props = {
     isCompletedChecked: boolean,
     toggleCompletedFilter: () => void,
     addNewTask: (title: string, description: string, estimated_time_minutes: number) => void,
-    removeTask: (id: number) => void
 }
 
-function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask, removeTask}: Props){
+function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){
 
     const taskList = (filter_completed: boolean)=>{
         const result = []
@@ -35,7 +34,6 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
                     loading ? 'loading' :
                         <TaskComponent {...tasks[index]}
                                        toggleCompleteTask={toggleCompleteTask}
-                                       removeTask={removeTask}
                         />
                 }
             </div>
