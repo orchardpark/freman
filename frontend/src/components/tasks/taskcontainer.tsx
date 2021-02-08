@@ -9,6 +9,12 @@ function TaskContainer() {
     const [loading, setLoading] = useState(true)
     const [isCompletedChecked, setCompleteChecked] = useState(false)
 
+    /**
+     * Adds a new task and sends it to the backend
+     * @param title The title of the task
+     * @param description Description of the task
+     * @param estimatedTimeMinutes Number of minutes the task is expected to take to complete
+     */
     const addNewTask = (title: string, description: string, estimatedTimeMinutes: number) =>{
         const newTask = {
                 'title': title,
@@ -26,6 +32,10 @@ function TaskContainer() {
             .catch(console.log)
     }
 
+    /**
+     * Retrieves the task from the database
+     * sets the `task` variable.
+     */
     const getTasks = () => {
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/tasks'
         fetch(request)
@@ -37,8 +47,16 @@ function TaskContainer() {
             .catch(console.log)
     }
 
+    /**
+     * Call `getTasks` upon a change in the loading state
+     */
     useEffect(getTasks, [loading])
 
+    /**
+     * Toggles the selected task between completed and to-do status
+     * and sends this update back to the backend.
+     * @param id The id of the task
+     */
     const toggleCompleteTask = (id: number) =>{
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
         const id_object = {
