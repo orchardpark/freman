@@ -4,7 +4,7 @@ The logger runs in the background and observes which windows are active and peri
 
 ## Requirements
 
-Currently only Linux is supported. [Python3](https://www.python.org/) is needed to run the application.
+Currently only Linux is supported. [Python3](https://www.python.org/) is needed to run the application. Necessary packages can be installed by running `pip install -r requirements.txt`.
 
 ### Linux
 
