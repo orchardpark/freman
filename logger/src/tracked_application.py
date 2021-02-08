@@ -19,6 +19,7 @@ def combine_tracked(tracked: Dict[ApplicationKey, float]) -> List[TrackedApplica
     tracked_application_list: List[TrackedApplication] = []
         
     for key in tracked.keys():
-        tracked_application_list.append(TrackedApplication(key.application_name, round(tracked[key]), key.window_title))
+        if round(tracked[key]) > 0:
+            tracked_application_list.append(TrackedApplication(key.application_name, round(tracked[key]), key.window_title))
         
     return tracked_application_list
