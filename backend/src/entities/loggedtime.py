@@ -6,18 +6,18 @@ from marshmallow import Schema, fields
 class LoggedTime(Entity, Base):
     __tablename__ = 'loggedtime'
     application_name = Column(String)
-    logged_time_minutes = Column(Float)
+    logged_time_seconds = Column(Integer)
     window_title = Column(String)
 
     def __init__(self, **kwargs):
         super().__init__()
         self.application_name = kwargs['application_name']
-        self.logged_time_minutes = kwargs['logged_time_minutes']
+        self.logged_time_seconds = kwargs['logged_time_seconds']
         self.window_title = kwargs['window_title']
 
 
 class LoggedTimeSchema(Schema):
     id = fields.Integer()
     application_name = fields.String()
-    logged_time_minutes = fields.Float()
+    logged_time_seconds = fields.Integer()
     window_title = fields.String()

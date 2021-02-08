@@ -5,7 +5,10 @@ import yaml
 import logging
 import database
 import tracked_application
+from typing import Dict
+from logger import ApplicationKey
 log = logging.getLogger(__name__)
+
 
 
 # Active window functions
@@ -52,15 +55,14 @@ def log_linux():
         log.info('Loaded config')
 
     start_time = time.time()
-    tracked = {} # Dict: (application_name, window_title) -> seconds active
+    tracked: Dict[ApplicationKey, int] = {}
     while True:
-
         # only log time if user is active
         idle_time = get_idle_time_s()
         if idle_time <= config['max_idle_time']:
             application_name = get_active_application_name()
             window_title = get_active_window_title()
-            key = (application_name, window_title)
+            key = ApplicationKey(application_name, window_title)
             if key not in tracked:
                 tracked[key] = 0
             tracked[key] = tracked[key] + 1
