@@ -9,8 +9,6 @@ from typing import Dict
 from logger import ApplicationKey
 log = logging.getLogger(__name__)
 
-
-
 # Active window functions
 
 def get_pname(id) -> str:
@@ -56,8 +54,9 @@ def log_linux():
 
     start_time = time.time()
     tracked: Dict[ApplicationKey, int] = {}
+    time_of_last_measurement = time.time()
     while True:
-        # only log time if user is active
+        # Only log time if user is active
         idle_time = get_idle_time_s()
         if idle_time <= config['max_idle_time']:
             application_name = get_active_application_name()
@@ -65,12 +64,11 @@ def log_linux():
             key = ApplicationKey(application_name, window_title)
             if key not in tracked:
                 tracked[key] = 0
-            tracked[key] = tracked[key] + 1
-        
-        time.sleep(1)
-        elapsed_time = time.time() - start_time
+            tracked[key] = tracked[key] + time.time()-time_of_last_measurement
+            time_of_last_measurement = time.time()
 
         # Every sync interval write results to database and clear the current records
+        elapsed_time = time.time() - start_time
         if elapsed_time > 0 and round(elapsed_time) % config['sync_interval'] == 0:
             tracked_programs = tracked_application.combine_tracked(tracked)
             database_sync_success = database.send_to_database(
