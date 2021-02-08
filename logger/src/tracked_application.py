@@ -13,7 +13,7 @@ def combine_tracked(tracked: Dict[ApplicationKey, int]) -> List[TrackedApplicati
     '''
     Combines a dict [(application_name, window_title)-> seconds_active] to a list
     of TrackedApplication.
-    @param tracked: Dict of (application_name, window_title) -> seconds active
+    @param tracked: Dict of ApplicationKey -> seconds active
     @return list of TrackedApplication
     '''
     tracked_application_list: List[TrackedApplication] = []
@@ -21,5 +21,4 @@ def combine_tracked(tracked: Dict[ApplicationKey, int]) -> List[TrackedApplicati
     for key in tracked.keys():
         tracked_application_list.append(TrackedApplication(key.application_name, tracked[key], key.window_title))
         
-    
     return tracked_application_list
