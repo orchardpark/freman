@@ -1,9 +1,10 @@
 import requests
 import tracked_application
 import logging
+from typing import List
 log = logging.getLogger(__name__)
 
-def send_to_database(tracked_programs: list, server_url: str, server_port: str) -> bool:
+def send_to_database(tracked_programs: List[tracked_application.TrackedApplication], server_url: str, server_port: str) -> bool:
     headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
     data = list(map(lambda x: x.__dict__, tracked_programs))
     log.info('Sending tracked data to backend: {}'.format(str(data)))
