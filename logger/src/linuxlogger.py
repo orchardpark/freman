@@ -52,9 +52,9 @@ def log_linux():
         config = yaml.safe_load(f)
         log.info('Loaded config')
 
-    start_time = time.time()
-    tracked: Dict[ApplicationKey, int] = {}
+    tracked: Dict[ApplicationKey, float] = {}
     time_of_last_measurement = time.time()
+    time_of_last_update = time.time()
     while True:
         # Only log time if user is active
         idle_time = get_idle_time_s()
@@ -68,10 +68,10 @@ def log_linux():
             time_of_last_measurement = time.time()
 
         # Every sync interval write results to database and clear the current records
-        elapsed_time = time.time() - start_time
-        if elapsed_time > 0 and round(elapsed_time) % config['sync_interval'] == 0:
+        if time.time() - time_of_last_update >= config['sync_interval']:
             tracked_programs = tracked_application.combine_tracked(tracked)
             database_sync_success = database.send_to_database(
                 tracked_programs, config['server_url'], config['server_port'])
             if database_sync_success:
                 tracked = {}
+                time_of_last_update = time.time()

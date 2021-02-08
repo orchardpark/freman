@@ -9,7 +9,7 @@ class TrackedApplication:
     window_title: str
 
 
-def combine_tracked(tracked: Dict[ApplicationKey, int]) -> List[TrackedApplication]:
+def combine_tracked(tracked: Dict[ApplicationKey, float]) -> List[TrackedApplication]:
     '''
     Combines a dict [(application_name, window_title)-> seconds_active] to a list
     of TrackedApplication.
@@ -19,6 +19,6 @@ def combine_tracked(tracked: Dict[ApplicationKey, int]) -> List[TrackedApplicati
     tracked_application_list: List[TrackedApplication] = []
         
     for key in tracked.keys():
-        tracked_application_list.append(TrackedApplication(key.application_name, tracked[key], key.window_title))
+        tracked_application_list.append(TrackedApplication(key.application_name, round(tracked[key]), key.window_title))
         
     return tracked_application_list
