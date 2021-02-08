@@ -84,11 +84,16 @@ function TaskContainer() {
             .catch(console.log)
     }
     
+    /**
+     * Toggles the completed filter on or off
+     */
     const toggleCompletedFilter = () => {
         setCompleteChecked(isCompletedChecked => !isCompletedChecked)
     }
 
-    
+    /**
+     * Returns the JSX of this page
+     */
     return (
         <TaskContainerDisplay 
             addNewTask={addNewTask}
