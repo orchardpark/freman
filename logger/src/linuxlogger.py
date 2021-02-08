@@ -74,4 +74,4 @@ def log_linux():
                 tracked_programs, config['server_url'], config['server_port'])
             if database_sync_success:
                 tracked = {}
-                time_of_last_update = time.time()
+            time_of_last_update = time.time()
