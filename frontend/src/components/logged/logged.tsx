@@ -4,7 +4,7 @@ type Logged = {
     updated_at: Date,
     last_updated_by: string,
     application_name: string,
-    logged_time_seconds: number,
+    logged_time_minutes: number,
     window_title: string
 }
 
