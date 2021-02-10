@@ -5,10 +5,13 @@ import Task from "./task"
 
 function TaskContainer() {
 
+    /// STATE -------------------------
     const [tasks, setTasks] = useState<Task[]>([])
     const [loading, setLoading] = useState(true)
     const [isCompletedChecked, setCompleteChecked] = useState(false)
 
+    
+    /// FUNCTIONALITY -----------------
     /**
      * Adds a new task and sends it to the backend
      * @param title The title of the task
