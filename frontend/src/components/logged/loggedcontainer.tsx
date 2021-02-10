@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../container.css"
 import config from "../app/config"
 import Logged from './logged'
+import LoggedContainerDisplay from './loggedcontainerdisplay'
 
 function LoggedContainer() {
     /// STATE ---------------------------------
@@ -32,12 +33,9 @@ function LoggedContainer() {
      * Returns the JSX of this page
      */
     return(
-        <div className='container'>
-            <div>
-                <h1>Logged time</h1>
-            </div>
-            <br/>
-        </div>
+        <LoggedContainerDisplay
+            logged={logged}
+        />
     )
 }
 
