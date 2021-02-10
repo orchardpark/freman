@@ -36,7 +36,7 @@ function TaskContainer() {
     }
 
     /**
-     * Retrieves the task from the database
+     * Retrieves the tasks from the backend
      * sets the `task` variable.
      */
     const getTasks = () => {
