@@ -1,6 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import Modal from 'react-modal';
 import modalStyle from "./modalstyle"
+import DatePicker from "react-datepicker";
+import "./datepicker.css"
+import "react-datepicker/dist/react-datepicker.css";
 
 Modal.setAppElement(document?.getElementById('root') ?? "root")
 
@@ -14,6 +17,7 @@ function NewTaskModal({addNewTask}: Props){
     const [title, setTitle] = React.useState("")
     const [description, setDescription] = React.useState("")
     const [estimatedTimeMinutes, setEstimatedTimeMinutes] = React.useState(0)
+    const [deadline, setDeadline] = React.useState(new Date())
 
     function openModal() {
         setIsOpen(true);
@@ -76,6 +80,12 @@ function NewTaskModal({addNewTask}: Props){
                     <label>
                         Estimated time (minutes):
                         <input type="number" name="estimatedtimeminutes" value={estimatedTimeMinutes} onChange={changeHandler}/>
+                    </label>
+                    <br/>
+                    <br/>
+                    <label>
+                        Deadline
+                        <DatePicker selected={deadline} onSelect={date => setDeadline(date)} onChange={date => date} popperPlacement='top' />
                     </label>
                 </form>
                 <br/>

@@ -1,5 +1,5 @@
 import React from 'react'
-import NewTaskModal from "./newtaskmodal";
+import NewTaskModal from "./newtaskmodal"
 import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
 import "../container.css"

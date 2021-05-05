@@ -39,6 +39,7 @@ Arguments
 * `title`: Title of the task
 * `description`: Description of the task
 * `estimated_time_minutes`: Estimated number of minutes to complete the task
+* `deadline`: Date the task should be completed
 
 POST `/removetask`
 
