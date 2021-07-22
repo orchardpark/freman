@@ -4,7 +4,7 @@ The logger runs in the background and observes which windows are active and peri
 
 ## Requirements
 
-Currently only Linux is supported. [Python3](https://www.python.org/) is needed to run the application. Necessary packages can be installed by running `pip install -r requirements.txt`.
+[Python3](https://www.python.org/) is needed to run the application. Necessary packages can be installed by running `pip install -r requirements.txt`.
 
 ### Linux
 
@@ -13,6 +13,10 @@ On Linux you need the [xdotool](http://manpages.ubuntu.com/manpages/trusty/man1/
 On Ubuntu these can be installed by running
 * `apt install xdotool`
 * `apt install xprintidle`
+
+### Windows
+
+The Windows version should run with Python3 and requirements installed.
 
 ## How to use
 
