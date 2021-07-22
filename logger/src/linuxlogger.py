@@ -1,12 +1,12 @@
 import subprocess
 import time
 import psutil
-import yaml
 import logging
 import database
 import tracked_application
 from typing import Dict
 from logger import ApplicationKey
+from config import config
 log = logging.getLogger(__name__)
 
 # Active window functions
@@ -48,9 +48,6 @@ def get_idle_time_s() -> int:
 
 def log_linux():
     logging.info('Starting Linux logging')
-    with open('config.yaml') as f:
-        config = yaml.safe_load(f)
-        log.info('Loaded config')
 
     tracked: Dict[ApplicationKey, float] = {}
     time_of_last_measurement = time.time()

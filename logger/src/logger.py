@@ -18,5 +18,7 @@ if __name__ == '__main__':
         linuxlogger.log_linux()
 
     elif operating_system.startswith('Windows'):
-        #TODO
-        log.warn('Windows not supported yet')
+        import windowslogger
+        log.info('Detected OS: {}'.format(operating_system))
+        windowslogger.log_windows()
+
