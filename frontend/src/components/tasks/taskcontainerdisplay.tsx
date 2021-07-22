@@ -11,7 +11,7 @@ type Props = {
     toggleCompleteTask: (id: number) => void,
     isCompletedChecked: boolean,
     toggleCompletedFilter: () => void,
-    addNewTask: (title: string, description: string, estimated_time_minutes: number) => void,
+    addNewTask: (title: string, description: string, estimated_time_minutes: number, dealine: Date) => void,
 }
 
 function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){

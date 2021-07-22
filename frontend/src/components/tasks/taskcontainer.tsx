@@ -18,11 +18,12 @@ function TaskContainer() {
      * @param description Description of the task
      * @param estimatedTimeMinutes Number of minutes the task is expected to take to complete
      */
-    const addNewTask = (title: string, description: string, estimatedTimeMinutes: number) =>{
+    const addNewTask = (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) =>{
         const newTask = {
                 'title': title,
                 'description': description,
                 'estimated_time_minutes': estimatedTimeMinutes,
+                'deadline': deadline
             }
         const request = 'http://'+config.serverURL + ':' + config.serverPort + '/createtask'
         const requestOptions = {

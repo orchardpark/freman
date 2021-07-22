@@ -100,7 +100,7 @@ def toggle_complete_task():
 
 @app.route('/createtask', methods=['POST'])
 def create_task():
-    task = TaskSchema(only=('title', 'description', 'estimated_time_minutes')). \
+    task = TaskSchema(only=('title', 'description', 'estimated_time_minutes', 'deadline')). \
         load(request.get_json())
     task_objects = Task(**task)
 
