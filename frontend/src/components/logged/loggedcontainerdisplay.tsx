@@ -30,7 +30,7 @@ function LoggedContainerDisplay({logged}: Props){
     return (
         <div className='container'>
             <div>
-                <h1>Tasks</h1>
+                <h1>Logged Items</h1>
             </div>
             <br />
             <div style={{ overflow: 'auto', maxHeight: '80%' }}>
