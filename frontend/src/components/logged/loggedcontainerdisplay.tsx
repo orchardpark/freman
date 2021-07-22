@@ -37,7 +37,7 @@ function LoggedContainerDisplay({logged}: Props){
             <div>
                 <h2 className={'logged-field-left'}>Application</h2>
                 <h2 className={'logged-field-left-2'}>Window</h2>
-                <h2 className={'logged-field-right'}>Time</h2>
+                <h2 className={'logged-field-right'}>Time (minutes)</h2>
             </div>
             <span>&nbsp;&nbsp;</span>
 

@@ -22,8 +22,18 @@ Base.metadata.create_all(engine)
 def get_logged_time():
     # fetching from the database
     session = Session()
-    logged_time_objects = session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title).group_by(LoggedTime.application_name, LoggedTime.window_title).all()
-
+    logged_time_objects = \
+    session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title)\
+        .group_by(LoggedTime.application_name, LoggedTime.window_title)\
+        .having(func.div(func.sum(LoggedTime.logged_time_seconds), 60) > 0)\
+        .all()
+    
+    # Remove all entries that sum up to less than one minute
+    zero_objects = session.query(LoggedTime.application_name, LoggedTime.window_title).group_by(LoggedTime.application_name, LoggedTime.window_title).having(func.div(func.sum(LoggedTime.logged_time_seconds), 60) == 0)
+    for zero_object in zero_objects:
+        session.query(LoggedTime).filter(LoggedTime.application_name == zero_object.application_name, LoggedTime.window_title == zero_object.window_title).delete()
+    session.commit()
+    
     # transforming into JSON-serializable objects
     schema = LoggedTimeSchema(many=True)
     logged_time = schema.dump(logged_time_objects)

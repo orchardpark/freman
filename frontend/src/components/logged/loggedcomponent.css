@@ -6,6 +6,15 @@
     height: 60px;
 }
 
+.logged-selected{
+    border-style: solid;
+    border-width: 1px;
+    background-color: grey;
+    float: left;
+    width: 99%;
+    height: 60px;
+}
+
 .logged-field-left{
     float: left;
     width: 20%;
