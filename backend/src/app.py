@@ -17,7 +17,7 @@ Base.metadata.create_all(engine)
 
 # ------- LOGGED TIME
 
-@app.route('/loggedtime')
+@app.route('/logged')
 def get_logged_time():
     # fetching from the database
     session = Session()
