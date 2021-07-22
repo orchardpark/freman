@@ -17,7 +17,6 @@ class LoggedTime(Entity, Base):
 
 
 class LoggedTimeSchema(Schema):
-    id = fields.Integer()
     application_name = fields.String()
     logged_time_seconds = fields.Integer()
     window_title = fields.String()
