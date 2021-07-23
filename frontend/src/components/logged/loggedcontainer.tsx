@@ -18,10 +18,41 @@ function LoggedContainer() {
         fetch(request)
         .then(res => res.json())
         .then((logged)=>{
-            setLogged(logged)
+            setLogged(logged.map((loggedItem:Logged)=> {
+                return {
+                    ...loggedItem, 
+                    selected: false
+                }
+            }))
             setLoading(true)
         })
         .catch(console.log)
+    }
+
+    /*
+    * Sets the selected item
+    */
+    const setSelected = (application_name: string, window_title: string) => {
+        const newLoggedList = logged.map((loggedItem: Logged)=>{
+            return {
+                ...loggedItem,
+                selected: loggedItem.application_name === application_name && loggedItem.window_title === window_title
+            }
+        })
+        setLogged(newLoggedList)
+    }
+
+    const onKeyPressed = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Escape') {
+            const newLoggedList = logged.map((loggedItem: Logged) => {
+                return {
+                    ...loggedItem,
+                    selected: false
+                }
+            })
+            setLogged(newLoggedList)
+
+        }
     }
 
     /**
@@ -33,9 +64,12 @@ function LoggedContainer() {
      * Returns the JSX of this page
      */
     return(
+        <div onKeyDown={onKeyPressed} tabIndex={0}>
         <LoggedContainerDisplay
             logged={logged}
+            setSelected={setSelected}
         />
+        </div>
     )
 }
 

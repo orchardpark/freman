@@ -5,9 +5,10 @@ import "./loggedcomponent.css"
 
 type Props = {
     logged: Logged[],
+    setSelected: (application_name: string, window_title: string) => void
 }
 
-function LoggedContainerDisplay({logged}: Props){
+function LoggedContainerDisplay({logged, setSelected}: Props){
 
     const taskList = ()=>{
         const result = []
@@ -21,7 +22,9 @@ function LoggedContainerDisplay({logged}: Props){
         return(
             <div key={key}>
                 {
-                        <LoggedComponent {...logged[index]}
+                        <LoggedComponent 
+                            {...logged[index]}
+                            setSelected={setSelected}
                         />
                 }
             </div>
