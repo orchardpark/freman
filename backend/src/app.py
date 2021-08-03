@@ -5,7 +5,8 @@ from entities.bookedtime import BookedTime, BookedTimeSchema
 from entities.loggedtime import LoggedTime, LoggedTimeSchema
 from entities.task import Task, TaskSchema
 from sqlalchemy import func
-
+import logging
+logging.basicConfig(level=logging.INFO)
 # creating the Flask application
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ def get_logged_time():
     # fetching from the database
     session = Session()
     logged_time_objects = \
-    session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title)\
+    session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title, func.min(LoggedTime.created_at).label('created_at'))\
         .group_by(LoggedTime.application_name, LoggedTime.window_title)\
         .having(func.div(func.sum(LoggedTime.logged_time_seconds), 60) > 0)\
         .all()

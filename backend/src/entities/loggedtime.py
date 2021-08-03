@@ -20,3 +20,4 @@ class LoggedTimeSchema(Schema):
     application_name = fields.String()
     logged_time_seconds = fields.Integer()
     window_title = fields.String()
+    created_at = fields.DateTime()
