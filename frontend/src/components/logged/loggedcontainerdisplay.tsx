@@ -10,7 +10,7 @@ type Props = {
 
 function LoggedContainerDisplay({logged, setSelected}: Props){
 
-    const taskList = ()=>{
+    const loggedList = ()=>{
         const result = []
         for (const [index, value] of logged.entries()){
             result.push(renderItem(index, value['id']))
@@ -45,7 +45,7 @@ function LoggedContainerDisplay({logged, setSelected}: Props){
             <span>&nbsp;&nbsp;</span>
 
             <div style={{ overflow: 'auto', maxHeight: '80%' }}>
-                {taskList()}
+                {loggedList()}
             </div>
         </div>
     )
