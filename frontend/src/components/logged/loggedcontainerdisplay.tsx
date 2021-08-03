@@ -1,14 +1,18 @@
 import React from 'react'
 import Logged from './logged'
 import LoggedComponent from './loggedcomponent'
+import BookModal from './bookmodal'
 import "./loggedcomponent.css"
+import Task from '../tasks/task'
 
 type Props = {
     logged: Logged[],
+    tasks: Task[],
     setSelected: (application_name: string, window_title: string) => void
+    closeModal: () => void
 }
 
-function LoggedContainerDisplay({logged, setSelected}: Props){
+function LoggedContainerDisplay({logged, tasks, setSelected, closeModal}: Props){
 
     const loggedList = ()=>{
         const result = []
@@ -31,10 +35,29 @@ function LoggedContainerDisplay({logged, setSelected}: Props){
         )
     }
 
+    const getModal = () => {
+        const selected_element = logged.find(s => s.selected === true)
+        console.log(selected_element?.application_name)
+        if (selected_element === undefined) {
+            return (
+                <BookModal modalIsOpen={false} application_name={"none"} window_title={"none"} number_minutes={0} date_logged={new Date()} tasks={tasks} closeModal={()=>{} }/>
+            )
+        }
+        else {
+            return(
+                <BookModal modalIsOpen={true} application_name={selected_element.application_name}
+                    window_title={selected_element.window_title} number_minutes={selected_element.logged_time_seconds / 60}
+                    date_logged={selected_element.created_at} tasks={tasks} closeModal={ closeModal } />
+            )
+        }
+        
+        }
+
     return (
         <div className='container'>
             <div>
                 <h1>Logged Items</h1>
+                {getModal()}
             </div>
             <br />
             <div>
