@@ -23,6 +23,7 @@ Base.metadata.create_all(engine)
 def get_logged_time():
     # fetching from the database
     session = Session()
+    # group logged time by (application_name, window_title)
     logged_time_objects = \
     session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title, func.min(LoggedTime.created_at).label('created_at'))\
         .filter(LoggedTime.task_id==-1)\
