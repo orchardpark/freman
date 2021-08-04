@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, ForeignKey
 from .entity import Entity, Base
 from marshmallow import Schema, fields
 
@@ -8,7 +8,7 @@ class LoggedTime(Entity, Base):
     application_name = Column(String)
     logged_time_seconds = Column(Integer)
     window_title = Column(String)
-    task_id = Column(Integer) # @todo add foreign key constraint
+    task_id = Column(Integer)
 
     def __init__(self, **kwargs):
         super().__init__()
