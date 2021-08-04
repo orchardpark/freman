@@ -1,7 +1,7 @@
 const modalStyle = {
     content : {
         top                   : '25%',
-        left                  : '25%',
+        left                  : '50%',
         right                 : 'auto',
         bottom                : 'auto',
         marginRight           : '-50%',
