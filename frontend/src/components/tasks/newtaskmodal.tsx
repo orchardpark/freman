@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 Modal.setAppElement(document?.getElementById('root') ?? "root")
 
 type Props = {
-    addNewTask: (title: string, description: string, estimatedTimeMinutes: number, dealine: Date) => void
+    addNewTask: (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) => void
 }
 
 function NewTaskModal({addNewTask}: Props){

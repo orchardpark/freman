@@ -8,7 +8,7 @@ class LoggedTime(Entity, Base):
     application_name = Column(String)
     logged_time_seconds = Column(Integer)
     window_title = Column(String)
-    task_id = Column(Integer)
+    task_id = Column(Integer) # @todo add foreign key constraint
 
     def __init__(self, **kwargs):
         super().__init__()

@@ -14,6 +14,7 @@ type Props = {
     date_logged: Date,
     tasks: Task[]
     closeModal: () => void
+    bookTime: (application_name: string, window_title: string, task_id: number) => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -26,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function BookModal({ modalIsOpen, application_name, window_title, number_minutes, date_logged, tasks, closeModal }: Props) {
+function BookModal({ modalIsOpen, application_name, window_title, number_minutes, date_logged, tasks, closeModal, bookTime }: Props) {
     var subtitle: HTMLHeadingElement | null;
     const classes = useStyles();
-    const [task, setTask] = React.useState("")
+    const [task, setTask] = React.useState(-1)
 
     const handleChange = (event: any) => {
         setTask(event.target.value)
@@ -89,7 +90,7 @@ function BookModal({ modalIsOpen, application_name, window_title, number_minutes
                 <br/>
                 <div>
                     <button style={{ float: 'left' }} onClick={closeModal}>Cancel</button>
-                    <button style={{ float: 'right' }} onClick={closeModal}>Book Time</button>
+                    <button style={{ float: 'right' }} onClick={e => bookTime(application_name, window_title, task)}>Book Time</button>
                 </div>
                 
             </Modal>

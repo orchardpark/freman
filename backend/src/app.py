@@ -25,6 +25,7 @@ def get_logged_time():
     session = Session()
     logged_time_objects = \
     session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title, func.min(LoggedTime.created_at).label('created_at'))\
+        .filter(LoggedTime.task_id==-1)\
         .group_by(LoggedTime.application_name, LoggedTime.window_title)\
         .having(func.div(func.sum(LoggedTime.logged_time_seconds), 60) > 0)\
         .all()
@@ -75,13 +76,17 @@ def get_booked_time():
 
 @app.route('/booktime', methods=['POST'])
 def book_time():
-    data=request.form
+    data=request.get_json()
     application_name = data.get('application_name')
     window_title = data.get('window_title')
     task_id = data.get('task_id')
+    logging.info(f"application {application_name} window_title {window_title} task_id {task_id}")
 
     session = Session()
-    booked_time_objects: List[LoggedTime] = session.query(LoggedTime).filter(LoggedTime.application_name==application_name and LoggedTime.window_title==window_title and LoggedTime.task_id==-1)
+    booked_time_objects: List[LoggedTime] = session.query(LoggedTime).\
+        filter(LoggedTime.application_name==application_name).\
+            filter(LoggedTime.window_title==window_title).\
+                filter(LoggedTime.task_id==-1).all()
     for booked_time_object in booked_time_objects:
         booked_time_object.task_id = task_id
     session.commit()

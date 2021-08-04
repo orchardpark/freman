@@ -27,7 +27,7 @@ function LoggedContainer() {
      * Gets the logged items and tasks from the backend
      */
     const getLogged = () => {
-        const request = 'http://'+config.serverURL+":"+config.serverPort+"/logged"
+        const request = config.protocol+'://'+config.serverURL+":"+config.serverPort+"/logged"
         fetch(request)
         .then(res => res.json())
         .then((logged)=>{
@@ -47,13 +47,30 @@ function LoggedContainer() {
      * sets the `task` variable.
      */
     const getTasks = () => {
-        const request = 'http://'+config.serverURL + ':' + config.serverPort + '/tasks'
+        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/tasks'
         fetch(request)
             .then(res => res.json())
             .then((tasks) => {
                 setTasks(tasks)
             })
             .catch(console.log)
+    }
+
+    const bookTime = (application_name: string, window_title: string, task_id: number) => {
+        const request = config.protocol+"://"+config.serverURL+":"+config.serverPort+"/booktime"
+        const payload_object = {
+            application_name: application_name,
+            window_title: window_title,
+            task_id: task_id
+        }
+        const requestOptions = {
+            method: 'POST',
+            body: JSON.stringify(payload_object),
+            headers: {'Content-Type': 'application/json'}
+        }
+        fetch(request, requestOptions).catch(console.log)
+        deSelectAll()
+        setLoading(true)
     }
 
     /*
@@ -103,7 +120,8 @@ function LoggedContainer() {
                 logged={logged}
                 tasks={tasks}
                 setSelected={setSelected}
-                closeModal={ deSelectAll}
+                closeModal={deSelectAll}
+                bookTime={bookTime}
         />
         </div>
     )

@@ -10,9 +10,11 @@ type Props = {
     tasks: Task[],
     setSelected: (application_name: string, window_title: string) => void
     closeModal: () => void
+    bookTime: (application_name: string, window_title: string, task_id: number) => void
+
 }
 
-function LoggedContainerDisplay({logged, tasks, setSelected, closeModal}: Props){
+function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTime}: Props){
 
     const loggedList = ()=>{
         const result = []
@@ -40,14 +42,16 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal}: Props)
         console.log(selected_element?.application_name)
         if (selected_element === undefined) {
             return (
-                <BookModal modalIsOpen={false} application_name={"none"} window_title={"none"} number_minutes={0} date_logged={new Date()} tasks={tasks} closeModal={()=>{} }/>
+                <BookModal modalIsOpen={false} application_name={"none"} window_title={"none"} number_minutes={0} date_logged={new Date()} tasks={tasks} closeModal={() => { }} bookTime={ ()=>{}}/>
             )
         }
         else {
             return(
                 <BookModal modalIsOpen={true} application_name={selected_element.application_name}
                     window_title={selected_element.window_title} number_minutes={selected_element.logged_time_seconds / 60}
-                    date_logged={selected_element.created_at} tasks={tasks} closeModal={ closeModal } />
+                    date_logged={selected_element.created_at} tasks={tasks} closeModal={closeModal}
+                    bookTime={bookTime}
+                />
             )
         }
         

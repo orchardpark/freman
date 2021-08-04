@@ -25,7 +25,7 @@ function TaskContainer() {
                 'estimated_time_minutes': estimatedTimeMinutes,
                 'deadline': deadline
             }
-        const request = 'http://'+config.serverURL + ':' + config.serverPort + '/createtask'
+        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/createtask'
         const requestOptions = {
             method: 'POST',
             body: JSON.stringify(newTask),
@@ -41,7 +41,7 @@ function TaskContainer() {
      * sets the `task` variable.
      */
     const getTasks = () => {
-        const request = 'http://'+config.serverURL + ':' + config.serverPort + '/tasks'
+        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/tasks'
         fetch(request)
             .then(res => res.json())
             .then((tasks) => {
@@ -62,7 +62,7 @@ function TaskContainer() {
      * @param id The id of the task
      */
     const toggleCompleteTask = (id: number) =>{
-        const request = 'http://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
+        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
         const id_object = {
             id: id
         }
