@@ -17,6 +17,7 @@ type Props = {
 function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){
 
     const taskList = (filter_completed: boolean)=>{
+        tasks.sort((a,b)=>a.deadline.getUTCMilliseconds()-b.deadline.getUTCMilliseconds())
         const result = []
         for (const [index, value] of tasks.entries()){
             if(!filter_completed || !value['is_finished'])
