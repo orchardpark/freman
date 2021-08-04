@@ -1,12 +1,5 @@
-from logger import ApplicationKey
+from data import ApplicationKey, TrackedApplication
 from typing import Dict, List
-from dataclasses import dataclass
-
-@dataclass
-class TrackedApplication:
-    application_name: str
-    logged_time_seconds: int
-    window_title: str
 
 
 def combine_tracked(tracked: Dict[ApplicationKey, float]) -> List[TrackedApplication]:
