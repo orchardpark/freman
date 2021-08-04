@@ -1,10 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from entities.entity import Session, engine, Base
-from entities.bookedtime import BookedTime, BookedTimeSchema
 from entities.loggedtime import LoggedTime, LoggedTimeSchema
 from entities.task import Task, TaskSchema
 from sqlalchemy import func
+from typing import List
 import logging
 logging.basicConfig(level=logging.INFO)
 # creating the Flask application
@@ -62,10 +62,10 @@ def log_time():
 def get_booked_time():
     # fetching from the database
     session = Session()
-    booked_time_objects = session.query(BookedTime).all()
+    booked_time_objects = session.query(LoggedTime).filter(LoggedTime.task_id != -1).all()
 
     # transforming into JSON-serializable objects
-    schema = BookedTimeSchema(many=True)
+    schema = LoggedTimeSchema(many=True)
     booked_time = schema.dump(booked_time_objects)
 
     # serializing as JSON
@@ -75,12 +75,15 @@ def get_booked_time():
 
 @app.route('/booktime', methods=['POST'])
 def book_time():
-    booked_time = BookedTimeSchema(only=('task_id', 'booked_time_minutes')) \
-        .load(request.get_json())
+    data=request.form
+    application_name = data.get('application_name')
+    window_title = data.get('window_title')
+    task_id = data.get('task_id')
 
-    booked_time_objects = BookedTime(**booked_time.data)
     session = Session()
-    session.add(booked_time_objects)
+    booked_time_objects: List[LoggedTime] = session.query(LoggedTime).filter(LoggedTime.application_name==application_name and LoggedTime.window_title==window_title and LoggedTime.task_id==-1)
+    for booked_time_object in booked_time_objects:
+        booked_time_object.task_id = task_id
     session.commit()
     session.close()
     return 'OK'
