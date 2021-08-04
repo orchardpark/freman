@@ -18,6 +18,7 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
 
     const loggedList = ()=>{
         const result = []
+        logged.sort((a,b)=>b.logged_time_seconds-a.logged_time_seconds)
         for (const [index, value] of logged.entries()){
             result.push(renderItem(index, value['id']))
         }
