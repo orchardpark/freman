@@ -13,6 +13,12 @@ function SideNavContainer(props) {
         >
             <SideNav.Toggle />
             <SideNav.Nav defaultSelected="tasks">
+                <NavItem eventKey="login">
+                    <NavIcon>
+                        <i className="fa fa-fw fa-user-circle" style={{ fontSize: '1.75em' }} />
+                    </NavIcon>
+                    <NavText>Tasks</NavText>
+                </NavItem>
                 <NavItem eventKey="tasks">
                     <NavIcon>
                         <i className="fa fa-fw fa-tasks" style={{ fontSize: '1.75em' }} />
@@ -27,7 +33,13 @@ function SideNavContainer(props) {
                 </NavItem>
                 <NavItem eventKey="report">
                     <NavIcon>
-                        <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em'}} />
+                        <i className="fa fa-fw fa-bar-chart" style={{ fontSize: '1.75em'}} />
+                    </NavIcon>
+                    <NavText>Reports</NavText>
+                </NavItem>
+                <NavItem eventKey="tracker">
+                    <NavIcon>
+                        <i className="fa fa-fw fa-desktop" style={{ fontSize: '1.75em'}} />
                     </NavIcon>
                     <NavText>Reports</NavText>
                 </NavItem>
