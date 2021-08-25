@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from entities.entity import Session, engine, Base
-from entities.loggedtime import LoggedTime, LoggedTimeSchema
+from entities.loggedtime import NO_TASK, LoggedTime, LoggedTimeSchema
 from entities.task import Task, TaskSchema
 from sqlalchemy import func
 from typing import List
@@ -26,9 +26,8 @@ def get_logged_time():
     # group logged time by (application_name, window_title)
     logged_time_objects = \
     session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title, func.min(LoggedTime.created_at).label('created_at'))\
-        .filter(LoggedTime.task_id==-1)\
+        .filter(LoggedTime.task_id==NO_TASK)\
         .group_by(LoggedTime.application_name, LoggedTime.window_title)\
-        .having(func.div(func.sum(LoggedTime.logged_time_seconds), 60) > 0)\
         .all()
     
     # transforming into JSON-serializable objects
@@ -58,7 +57,7 @@ def log_time():
 def get_booked_time():
     # fetching from the database
     session = Session()
-    booked_time_objects = session.query(LoggedTime).filter(LoggedTime.task_id != -1).all()
+    booked_time_objects = session.query(LoggedTime).filter(LoggedTime.task_id != NO_TASK).all()
 
     # transforming into JSON-serializable objects
     schema = LoggedTimeSchema(many=True)

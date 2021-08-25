@@ -2,6 +2,9 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from .entity import Entity, Base
 from marshmallow import Schema, fields
 
+# constants
+NO_TASK = -1
+UNPRODUCTIVE = -2
 
 class LoggedTime(Entity, Base):
     __tablename__ = 'loggedtime'
@@ -15,7 +18,7 @@ class LoggedTime(Entity, Base):
         self.application_name = kwargs['application_name']
         self.logged_time_seconds = kwargs['logged_time_seconds']
         self.window_title = kwargs['window_title']
-        self.task_id = -1
+        self.task_id = NO_TASK
 
 
 class LoggedTimeSchema(Schema):

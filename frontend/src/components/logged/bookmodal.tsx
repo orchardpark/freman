@@ -42,10 +42,12 @@ function BookModal({ modalIsOpen, application_name, window_title, number_minutes
     }
 
     const getTaskMenuItems = () => {
-        return (
-            tasks.map(t => {
+        const menuItems = tasks.map(t => {
                 return(<MenuItem value={t.id}>{t.title}</MenuItem>)
-            })
+        })
+        const menuItemsWithNonProductive = menuItems.concat(<MenuItem value={-2}>{"Unproductive"}</MenuItem>)
+        return (
+            menuItemsWithNonProductive
         )
     }
 
