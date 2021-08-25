@@ -45,7 +45,12 @@ function TaskContainer() {
         fetch(request)
             .then(res => res.json())
             .then((tasks) => {
-                setTasks(tasks)
+                setTasks(tasks.map((task: Task) => {
+                    return {
+                        ...task,
+                        deadline: new Date(task.deadline)
+                    }
+                }))
                 setLoading(false)
             })
             .catch(console.log)
