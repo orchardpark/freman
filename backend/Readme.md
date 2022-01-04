@@ -7,7 +7,7 @@ The backend takes care of storing and retrieving the logged time and task data. 
 ### Logged items
 GET `/loggedtime`
 
-Returns a json object of the logged items.
+Returns a json object of the logged items. The items are organized by application.
 
 POST `/logtime`
 
@@ -22,6 +22,12 @@ Arguments:
 ### Bookings
 
 POST `/booktime`
+
+Book time logged for a particular application on specified task.
+
+Arguments:
+* `application_name`: Name of the logged application.
+* `task_id`: Task on which the time is booked.
 
 ### Tasks
 

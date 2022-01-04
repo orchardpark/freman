@@ -25,9 +25,9 @@ def get_logged_time():
     session = Session()
     # group logged time by (application_name, window_title)
     logged_time_objects = \
-    session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), LoggedTime.window_title, func.min(LoggedTime.created_at).label('created_at'))\
+    session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), func.min(LoggedTime.created_at).label('created_at'))\
         .filter(LoggedTime.task_id==NO_TASK)\
-        .group_by(LoggedTime.application_name, LoggedTime.window_title)\
+        .group_by(LoggedTime.application_name)\
         .all()
     
     # transforming into JSON-serializable objects
@@ -72,14 +72,12 @@ def get_booked_time():
 def book_time():
     data=request.get_json()
     application_name = data.get('application_name')
-    window_title = data.get('window_title')
     task_id = data.get('task_id')
-    logging.info(f"application {application_name} window_title {window_title} task_id {task_id}")
+    logging.info(f"Logging application {application_name} on task_id {task_id}")
 
     session = Session()
     booked_time_objects: List[LoggedTime] = session.query(LoggedTime).\
         filter(LoggedTime.application_name==application_name).\
-            filter(LoggedTime.window_title==window_title).\
                 filter(LoggedTime.task_id==-1).all()
     for booked_time_object in booked_time_objects:
         booked_time_object.task_id = task_id
