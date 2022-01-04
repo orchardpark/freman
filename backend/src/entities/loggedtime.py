@@ -21,7 +21,7 @@ class LoggedTime(Entity, Base):
         self.logged_time_seconds = kwargs['logged_time_seconds']
         self.window_title = kwargs['window_title']
         self.task_id = NO_TASK
-        self.category = Classes.UNKNOWN
+        self.category = Classes.UNKNOWN.value
 
 
 class LoggedTimeSchema(Schema):
