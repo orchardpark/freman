@@ -1,11 +1,12 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from .entity import Entity, Base
 from marshmallow import Schema, fields
-from ..classifier.classifier import Classes
+from classifier.classifier import Classes
 
 # constants
 NO_TASK = -1
 UNPRODUCTIVE = -2
+
 
 class LoggedTime(Entity, Base):
     __tablename__ = 'loggedtime'
