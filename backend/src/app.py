@@ -6,6 +6,7 @@ from entities.task import Task, TaskSchema
 from sqlalchemy import func
 from typing import List
 import logging
+
 logging.basicConfig(level=logging.INFO)
 # creating the Flask application
 app = Flask(__name__)
@@ -28,11 +29,13 @@ def get_logged_time():
     session = Session()
     # group logged time by (application_name, window_title)
     logged_time_objects = \
-    session.query(LoggedTime.application_name, func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'), func.min(LoggedTime.created_at).label('created_at'))\
-        .filter(LoggedTime.task_id==NO_TASK)\
-        .group_by(LoggedTime.application_name)\
+        session.query(LoggedTime.application_name,
+                      func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'),
+                      func.min(LoggedTime.created_at).label('created_at')) \
+        .filter(LoggedTime.task_id == NO_TASK) \
+        .group_by(LoggedTime.application_name) \
         .all()
-    
+
     # transforming into JSON-serializable objects
     schema = LoggedTimeSchema(many=True)
     logged_time = schema.dump(logged_time_objects)
@@ -54,6 +57,7 @@ def log_time():
     session.close()
     return 'OK'
 
+
 # ------- BOOKED TIME
 
 
@@ -74,15 +78,15 @@ def get_booked_time():
 
 @app.route('/booktime', methods=['POST'])
 def book_time():
-    data=request.get_json()
+    data = request.get_json()
     application_name = data.get('application_name')
     task_id = data.get('task_id')
     logging.info(f"Logging application {application_name} on task_id {task_id}")
 
     session = Session()
-    booked_time_objects: List[LoggedTime] = session.query(LoggedTime).\
-        filter(LoggedTime.application_name==application_name).\
-                filter(LoggedTime.task_id==-1).all()
+    booked_time_objects: List[LoggedTime] = session.query(LoggedTime). \
+        filter(LoggedTime.application_name == application_name). \
+        filter(LoggedTime.task_id == -1).all()
     for booked_time_object in booked_time_objects:
         booked_time_object.task_id = task_id
     session.commit()
