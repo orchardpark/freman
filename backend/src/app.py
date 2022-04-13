@@ -21,6 +21,9 @@ Base.metadata.create_all(engine)
 
 @app.route('/logged')
 def get_logged_time():
+    """
+    :return: The logged items that have not been assigned
+    """
     # fetching from the database
     session = Session()
     # group logged time by (application_name, window_title)
@@ -37,6 +40,7 @@ def get_logged_time():
     # serializing as JSON
     session.close()
     return jsonify(logged_time)
+
 
 @app.route('/logtime', methods=['POST'])
 def log_time():
