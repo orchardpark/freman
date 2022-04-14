@@ -1,11 +1,13 @@
 import Logged from "../logged/logged"
 import Task from "../tasks/task"
+import Booked from "./booked"
 
 type Props = {
 	logged: Logged[]
-	tasks: Task[]
+	tasks: Task[],
+	booked: Booked[]
 }
-function ReportContainerDisplay({ logged, tasks }: Props) {
+function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const totalLogged = logged.reduce((total, currentValue)=>total=total+currentValue.logged_time_seconds, 0);
 	return (
 		<div className="container">

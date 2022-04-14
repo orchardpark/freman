@@ -4,11 +4,13 @@ import "../container.css"
 import Logged from "../logged/logged"
 import Task from "../tasks/task"
 import ReportContainerDisplay from "./reportcontainerdisplay"
+import Booked from "./booked"
 
 
 function ReportContainer() {
     const [logged, setLogged] = useState<Logged[]>([])
     const [tasks, setTasks] = useState<Task[]>([])
+    const [booked, setBooked] = useState<Booked[]>([])
     const [loading, setLoading] = useState(true)
     /**
      * Gets the logged items & tasks from the backend
@@ -52,10 +54,18 @@ function ReportContainer() {
             .catch(console.log)
     }
 
+    const getBooked = () => {
+        const request = config.protocol+ '://'+config.serverURL + ':' + config.serverPort + '/bookedtime'
+        fetch(request)
+        .then(res=>res.json())
+        .then((booked)=>setBooked(booked))
+        .catch(console.log)
+    }
+
     useEffect(getData, [loading])
     
     return (
-        <ReportContainerDisplay logged={logged} tasks={tasks}/>
+        <ReportContainerDisplay logged={logged} tasks={tasks} booked={booked}/>
     )
 }
 
