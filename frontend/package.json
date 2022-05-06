@@ -17,12 +17,14 @@
     "@types/react-router-dom": "^5.1.5",
     "font-awesome": "^4.7.0",
     "material-ui": "^0.20.2",
+    "plotly.js": "^2.12.0",
     "react": "^16.13.1",
     "react-circle": "^1.1.1",
     "react-datepicker": "^3.8.0",
     "react-dom": "^16.13.1",
     "react-global-configuration": "^1.4.0",
     "react-modal": "^3.11.2",
+    "react-plotly.js": "^2.5.1",
     "react-router-dom": "5.2.0",
     "react-scripts": "^4.0.3",
     "react-vis": "^1.11.7",
@@ -50,6 +52,8 @@
     ]
   },
   "devDependencies": {
+    "@types/plotly.js": "^1.54.20",
+    "@types/react-plotly.js": "^2.5.0",
     "eslint-plugin-react-hooks": "^4.0.8"
   }
 }
