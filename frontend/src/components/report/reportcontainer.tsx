@@ -18,6 +18,7 @@ function ReportContainer() {
     const getData = () => {
         getLogged()
         getTasks()
+        getBooked()
         setLoading(false)
     }
 

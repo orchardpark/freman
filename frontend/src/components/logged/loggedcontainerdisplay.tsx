@@ -4,6 +4,7 @@ import LoggedComponent from './loggedcomponent'
 import BookModal from './bookmodal'
 import "./loggedcomponent.css"
 import Task from '../tasks/task'
+import "../container.css"
 
 type Props = {
     logged: Logged[],

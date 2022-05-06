@@ -3,6 +3,9 @@ import Task from "../tasks/task"
 import Booked from "./booked"
 import React from "react";
 import Plot from 'react-plotly.js'
+import { Container, Row, Col } from 'react-bootstrap'
+import "../container.css"
+
 
 type Props = {
 	logged: Logged[]
@@ -10,55 +13,85 @@ type Props = {
 	booked: Booked[]
 }
 function ReportContainerDisplay({ logged, tasks, booked }: Props) {
-	const totalLogged = logged.reduce((total, currentValue) => total = total + currentValue.logged_time_seconds, 0);
 	const openTasks = tasks.filter(task => !task.is_finished)
 	const numOnTimeTasks = tasks.filter(
-		task=>
-		(!task.is_finished && new Date(task.deadline)>=new Date()) ||
-		(task.is_finished && new Date(task.deadline) >= new Date(task.updated_at))
-		).length
-	
+		task =>
+			(!task.is_finished && new Date(task.deadline) >= new Date()) ||
+			(task.is_finished && new Date(task.deadline) >= new Date(task.updated_at))
+	).length
+
+	const getDateDayStr = (d: Date) => {
+		let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		return monthNames[d.getMonth() + 1] + " " + d.getDay()
+	}
+
+
 	return (
 		<div className="container">
 			<div>
 				<h1>Reports</h1>
 				<div>
-				</div>
-				<div>
-					<Plot 
-					data={[
-						{
-							domain: { x: [0, 1], y: [0, 1] },
-							value: openTasks.length ,
-							title: { text: "Open Tasks" },
-							type: "indicator",
-							mode: "number"
-						}
-					]} 
-					layout={
-						{
-							}
-						} />
+					<Container fluid>
+						<Row>
+							<Col>
+								<Plot
+									data={[
+										{
+											domain: { x: [0, 1], y: [0, 1] },
+											value: openTasks.length,
+											title: { text: "Open Tasks" },
+											type: "indicator",
+											mode: "number"
+										}
+									]}
+									layout={
+										{
+											width: 400,
+											height: 400
+										}
+									} />
+							</Col>
+							<Col>
+								<Plot
+									data={[
+										{
+											domain: { x: [0, 1], y: [0, 1] },
+											value: numOnTimeTasks * 100.0 / tasks.length,
+											title: { text: "Tasks on Time %" },
+											type: "indicator",
+											mode: "gauge+number",
+											gauge: {
+												axis: { range: [0, 100] },
+												bar: { color: "darkblue" },
+											},
 
-					<Plot
-						data={[
-							{
-								domain: { x: [0, 1], y: [0, 1] },
-								value: numOnTimeTasks * 100.0 / tasks.length,
-								title: { text: "Tasks on Time %" },
-								type: "indicator",
-								mode: "gauge+number",
-								gauge: { 
-									axis: { range: [0, 100] },
-									bar: { color: "darkblue" },
-								},
-								
-							}
-						]}
-						layout={
-							{
-							}
-						} />
+										}
+									]}
+									layout={
+										{
+											width: 400,
+											height: 400
+										}
+									} />
+							</Col>
+							<Col>
+								<Plot
+									data={[
+										{
+											type: 'bar',
+											x: logged.map(item => getDateDayStr(new Date(item.created_at))),
+											y: logged.map(item => item.logged_time_seconds / 60)
+										}
+									]}
+									layout={{
+										title: "Unbooked time by date",
+										width: 800,
+										height: 400
+									}}
+								/>
+							</Col>
+						</Row>
+					</Container>
 				</div>
 			</div>
 		</div>
