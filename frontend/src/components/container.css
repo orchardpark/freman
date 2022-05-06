@@ -3,17 +3,18 @@
     z-index: 3;
     top: 5%;
     left: 5%;
-    width: 95%;
+    width: 100%;
     height: 100%;
-    max-width: max-content;
+    min-width: 2000px;
 }
 .container-header{
     float: left;
 }
-
+/*
 @media all and (max-width: 980px) {
     .container{
         margin-left: 0;
         left: 64px;
     }
 }
+*/

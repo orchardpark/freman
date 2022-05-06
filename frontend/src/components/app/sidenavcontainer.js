@@ -41,7 +41,7 @@ function SideNavContainer(props) {
                     <NavIcon>
                         <i className="fa fa-fw fa-desktop" style={{ fontSize: '1.75em'}} />
                     </NavIcon>
-                    <NavText>Reports</NavText>
+                    <NavText>Logging Software</NavText>
                 </NavItem>
             </SideNav.Nav>
 

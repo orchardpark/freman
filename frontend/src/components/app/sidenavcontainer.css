@@ -1,7 +1,7 @@
 /*! react-sidenav v0.5.0 | (c) 2020 Trend Micro Inc. | MIT | https://github.com/trendmicro-frontend/react-sidenav */
 .sidenav---sidenav---_2tBP {
     position: absolute;
-    top: 5%;
+    top: 0%;
     bottom: 0;
     left: 0;
     z-index: 7;
@@ -12,6 +12,7 @@
     -o-transition: min-width 0.2s;
     -ms-transition: min-width 0.2s;
     transition: min-width 0.2s;
+    min-height: 2400px;
   }
   .sidenav---sidenav---_2tBP.sidenav---collapsed---LQDEv .sidenav---sidenav-nav---3tvij .sidenav---sidenav-navitem---uwIJ- .sidenav---sidenav-subnav---1EN61 {
     display: none;
