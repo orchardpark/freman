@@ -51,7 +51,6 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
      * @param e 
      */
     const onKeyPressed = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        console.log(e.key)
         if (e.key === '+') {
             setTaskModalOpen(true)
         }

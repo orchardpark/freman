@@ -1,5 +1,4 @@
 import React from "react"
-import {Circle} from "react-circle";
 import "./taskcomponent.css"
 
 type Props = {
@@ -17,7 +16,6 @@ function TaskComponent({is_finished, toggleCompleteTask, title, id}: Props){
     return (
         <div className={todoClass} >
             <div className={'task-field-left'}>
-                <Circle progress={100} size={"50"} progressColor={"blue"} />
             </div>
             <p className={'task-field-left-2'}>{title}</p>
             <button style={{ float: "right", color: "green" }} className={'fa  fa-check'}
