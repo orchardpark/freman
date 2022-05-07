@@ -22,7 +22,7 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
         tasks.sort((a,b)=>a.deadline.getUTCMilliseconds()-b.deadline.getUTCMilliseconds())
         const result = []
         for (const [index, value] of tasks.entries()){
-            if(!filter_completed || !value['is_finished'])
+            if(filter_completed || !value['is_finished'])
             {
                 result.push(renderItem(index, value['id']))
             }
