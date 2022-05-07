@@ -59,6 +59,9 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
         
         }
 
+    /**
+     * Render the logged items list.
+     */
     return (
         <div className='container'>
             <div>

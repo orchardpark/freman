@@ -9,12 +9,13 @@ import "react-datepicker/dist/react-datepicker.css";
 Modal.setAppElement(document?.getElementById('root') ?? "root")
 
 type Props = {
-    addNewTask: (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) => void
+    addNewTask: (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) => void,
+    taskModalOpen: boolean,
+    setTaskModalOpen: (isOpen: boolean) => void,
 }
 
-function NewTaskModal({addNewTask}: Props){
+function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
     var subtitle: HTMLHeadingElement | null;
-    const [modalIsOpen,setIsOpen] = React.useState(false)
     const [title, setTitle] = React.useState("")
     const [description, setDescription] = React.useState("")
     const [estimatedTimeMinutes, setEstimatedTimeMinutes] = React.useState(0)
@@ -23,7 +24,7 @@ function NewTaskModal({addNewTask}: Props){
     const target = useRef(null);
 
     function openModal() {
-        setIsOpen(true);
+        setTaskModalOpen(true)
     }
 
     function afterOpenModal() {
@@ -32,7 +33,7 @@ function NewTaskModal({addNewTask}: Props){
     }
 
     function closeModal(){
-        setIsOpen(false);
+        setTaskModalOpen(false);
     }
 
     function confirmNewTask() {
@@ -54,14 +55,12 @@ function NewTaskModal({addNewTask}: Props){
         }
     }
 
-
-
     return (
         <div>
             <Overlay target={target.current} show={showTooltip} placement='right'>
                 {(props) => (
                     <Tooltip id="overlay-tooltip" {...props}>
-                        (CTRL-T) Add a new task.
+                        (+) Add a new task.
                     </Tooltip>
                 )}
             </Overlay>
@@ -72,7 +71,7 @@ function NewTaskModal({addNewTask}: Props){
                 onMouseEnter={()=>{setShowTooltip(true)}} onMouseLeave={()=>{setShowTooltip(false)}}/></button>
             </div>
             <Modal
-                isOpen={modalIsOpen}
+                isOpen={taskModalOpen}
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 style={modalStyle}

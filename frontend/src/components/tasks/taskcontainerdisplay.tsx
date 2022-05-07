@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NewTaskModal from "./newtaskmodal"
 import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
@@ -17,6 +17,9 @@ type Props = {
 }
 
 function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){
+
+    const target = React.useRef<HTMLDivElement>(null)
+    const [taskModalOpen,setTaskModalOpen] = React.useState(false)
 
     const taskList = (filter_completed: boolean)=>{
         tasks.sort((a,b)=>a.deadline.getUTCMilliseconds()-b.deadline.getUTCMilliseconds())
@@ -43,8 +46,25 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
         )
     }
 
+    /**
+     * Handle keypresses on the screen
+     * @param e 
+     */
+    const onKeyPressed = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        console.log(e.key)
+        if (e.key === '+') {
+            setTaskModalOpen(true)
+        }
+    }
+
+    useEffect(()=>{
+        target.current?.focus()
+    })
+
+
     return (
-        <div className='container'>
+        <div onKeyDown={onKeyPressed} ref={target} tabIndex={0}>
+        <div className='container' >
             <div>
                 <h1>Tasks</h1>
                 <Container>
@@ -74,12 +94,13 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
                     <Row className='taskrow'>
                         <Col></Col>
                         <Col>
-                        <NewTaskModal addNewTask={addNewTask} />
+                        <NewTaskModal addNewTask={addNewTask} taskModalOpen={taskModalOpen} setTaskModalOpen={(isOpen: boolean)=>setTaskModalOpen(isOpen)}/>
                         </Col>
                         <Col></Col>
                     </Row>
                 </Container>
             </div>
+        </div>
         </div>
     )
 
