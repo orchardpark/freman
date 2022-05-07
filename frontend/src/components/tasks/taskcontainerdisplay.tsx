@@ -22,6 +22,11 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, i
     const target = React.useRef<HTMLDivElement>(null)
     const [taskModalOpen,setTaskModalOpen] = React.useState(false)
 
+    /**
+     * 
+     * @param filter_completed Filter completed tasks?
+     * @returns An array of TaskComponent
+     */
     const taskList = (filter_completed: boolean)=>{
         tasks.sort((a,b)=>a.deadline.getUTCMilliseconds()-b.deadline.getUTCMilliseconds())
         const result = []
@@ -34,6 +39,12 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, i
         return result
     }
 
+    /**
+     * 
+     * @param index Index of the task in the task array
+     * @param key Unique identifief for this component (the id of the task)
+     * @returns Render of an individual task component
+     */
     const renderItem = (index: number, key: number) =>{
         return(
             <div key={key}>
@@ -58,6 +69,10 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, i
         }
     }
 
+    /**
+     * Focus on the main div after loading the
+     * component.
+     */
     useEffect(()=>{
         target.current?.focus()
     })
