@@ -5,16 +5,8 @@
     left: 5%;
     width: 100%;
     height: 100%;
-    min-width: 2000px;
+    min-width: 1800px;
 }
 .container-header{
     float: left;
 }
-/*
-@media all and (max-width: 980px) {
-    .container{
-        margin-left: 0;
-        left: 64px;
-    }
-}
-*/

@@ -2,8 +2,10 @@ import React from 'react'
 import NewTaskModal from "./newtaskmodal"
 import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
-import "../container.css"
 import Task from './task'
+import { Container, Row, Col} from 'react-bootstrap'
+import "../container.css"
+import './taskrow.css'
 
 type Props = {
     tasks: Task[],
@@ -41,16 +43,42 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
         )
     }
 
-    return(
+    return (
         <div className='container'>
             <div>
                 <h1>Tasks</h1>
-                <NewTaskModal addNewTask={addNewTask} />
-                <CheckBox isChecked={isCompletedChecked} toggleChecked={toggleCompletedFilter} />
-            </div>
-            <br />
-            <div style={{ overflow: 'auto', maxHeight: '80%' }}>
-                {taskList(isCompletedChecked)}
+                <Container>
+                    <Row className="taskrow">
+                        <div>
+                            <Container>
+                                <Row>
+                                    <Col>
+                                        <h3>Filters:</h3>
+                                    </Col>
+                                    <Col>
+                                    <CheckBox isChecked={isCompletedChecked} toggleChecked={toggleCompletedFilter} text="Completed" />
+                                    </Col>
+                                    <Col></Col>
+                                    <Col></Col>
+                                    <Col></Col>
+                                    <Col></Col>
+                                </Row>
+                            </Container>
+                        </div>
+                    </Row>
+                    <Row className='taskrow'>
+                        <div style={{ overflow: 'auto', maxHeight: '80%', minWidth: '1200px'}}>
+                        {taskList(isCompletedChecked)}
+                        </div>
+                    </Row>
+                    <Row className='taskrow'>
+                        <Col></Col>
+                        <Col>
+                        <NewTaskModal addNewTask={addNewTask} />
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                </Container>
             </div>
         </div>
     )

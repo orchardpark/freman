@@ -2,14 +2,15 @@ import React from "react"
 
 type Props = {
     isChecked: boolean,
-    toggleChecked: () => void
+    toggleChecked: () => void,
+    text: string
 }
 
-function CheckBox({isChecked, toggleChecked}: Props){
+function CheckBox({isChecked, toggleChecked, text}: Props){
     return (
         <div>
-            <input style={{float: "left"}} type={"checkbox"} checked={isChecked} onChange={toggleChecked}/>
-            <p>Filter Completed</p>
+            <p>{text}</p>
+            <input type={"checkbox"} checked={isChecked} onChange={toggleChecked}/>
         </div>
     )
 }

@@ -1,7 +1,8 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useRef, useState} from 'react';
 import Modal from 'react-modal';
 import modalStyle from "./modalstyle"
 import DatePicker from "react-datepicker";
+import {Overlay, Tooltip} from 'react-bootstrap'
 import "./datepicker.css"
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -18,6 +19,8 @@ function NewTaskModal({addNewTask}: Props){
     const [description, setDescription] = React.useState("")
     const [estimatedTimeMinutes, setEstimatedTimeMinutes] = React.useState(0)
     const [deadline, setDeadline] = React.useState(new Date())
+    const [showTooltip, setShowTooltip] = useState(false)
+    const target = useRef(null);
 
     function openModal() {
         setIsOpen(true);
@@ -51,10 +54,22 @@ function NewTaskModal({addNewTask}: Props){
         }
     }
 
+
+
     return (
         <div>
+            <Overlay target={target.current} show={showTooltip} placement='right'>
+                {(props) => (
+                    <Tooltip id="overlay-tooltip" {...props}>
+                        (CTRL-T) Add a new task.
+                    </Tooltip>
+                )}
+            </Overlay>
             <div>
-                <button onClick={openModal} style={{fontSize: '20px'}}><i className={'fa fa-fw fa-plus'}/></button>
+                <button ref={target} 
+                onClick={openModal} style={{fontSize: '20px'}}><i 
+                className={'fa fa-fw fa-plus'} 
+                onMouseEnter={()=>{setShowTooltip(true)}} onMouseLeave={()=>{setShowTooltip(false)}}/></button>
             </div>
             <Modal
                 isOpen={modalIsOpen}
