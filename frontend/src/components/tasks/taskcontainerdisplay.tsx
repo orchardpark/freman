@@ -11,12 +11,13 @@ type Props = {
     tasks: Task[],
     loading: boolean,
     toggleCompleteTask: (id: number) => void,
+    deleteTask: (id: number) => void,
     isCompletedChecked: boolean,
     toggleCompletedFilter: () => void,
     addNewTask: (title: string, description: string, estimated_time_minutes: number, dealine: Date) => void,
 }
 
-function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){
+function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){
 
     const target = React.useRef<HTMLDivElement>(null)
     const [taskModalOpen,setTaskModalOpen] = React.useState(false)
@@ -40,6 +41,7 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, isCompletedCh
                     loading ? 'loading' :
                         <TaskComponent {...tasks[index]}
                                        toggleCompleteTask={toggleCompleteTask}
+                                       deleteTask={deleteTask}
                         />
                 }
             </div>

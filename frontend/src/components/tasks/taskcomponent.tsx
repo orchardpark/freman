@@ -5,11 +5,12 @@ import {Overlay, Tooltip} from 'react-bootstrap'
 type Props = {
     is_finished: boolean,
     toggleCompleteTask: (id: number) => void,
+    deleteTask: (id: number) => void,
     title: string,
     id: number
 }
 
-function TaskComponent({is_finished, toggleCompleteTask, title, id}: Props){
+function TaskComponent({is_finished, toggleCompleteTask, deleteTask, title, id}: Props){
 
     const [showTooltip, setShowTooltip] = React.useState(false)
     const [toolTipText, setToolTipText] = React.useState("")
@@ -35,6 +36,7 @@ function TaskComponent({is_finished, toggleCompleteTask, title, id}: Props){
                 onMouseLeave={() => { setShowTooltip(false) }}
             />
             <button style={{ float: 'right', color: "red" }} className={'fa fa-times'}
+                onClick={e => deleteTask(id)}
                 onMouseEnter={() => { setToolTipText("Delete task"); setShowTooltip(true) }}
                 onMouseLeave={() => { setShowTooltip(false) }}
             />

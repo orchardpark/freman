@@ -99,8 +99,14 @@ def book_time():
 @app.route('/removetask', methods=['POST'])
 def remove_task():
     id_object = request.get_json()
+    logging.info(f"Removing task {id_object['id']}")
 
     session = Session()
+    # mark booked time on this task as unbooked
+    booked_entries_on_this_task = session.query(LoggedTime).filter(LoggedTime.task_id == id_object['id']).all()
+    for entry in booked_entries_on_this_task:
+        entry.task_id = NO_TASK
+    # delete task
     session.query(Task).filter(Task.id == id_object['id']).delete()
     session.commit()
     session.close()

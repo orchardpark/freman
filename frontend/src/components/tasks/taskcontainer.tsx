@@ -56,6 +56,24 @@ function TaskContainer() {
             .catch(console.log)
     }
 
+    const deleteTask = (id: number) => {
+        const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/removetask'
+        const id_object = {
+            id: id
+        }
+        const requestOptions = {
+            method: 'POST',
+            body: JSON.stringify(id_object),
+            headers: { 'Content-Type': 'application/json' }
+        }
+        fetch(request, requestOptions)
+            .then((data) => {
+                const newTasks = tasks.filter(task => task.id !== id)
+                setTasks(newTasks)
+            })
+            .catch(console.log)
+    }
+
     /**
      * Call `getTasks` upon a change in the loading state
      */
@@ -109,6 +127,7 @@ function TaskContainer() {
             tasks={tasks}
             loading={loading}
             toggleCompleteTask={toggleCompleteTask}
+            deleteTask={deleteTask}
             isCompletedChecked={isCompletedChecked}
             toggleCompletedFilter={toggleCompletedFilter}
         />
