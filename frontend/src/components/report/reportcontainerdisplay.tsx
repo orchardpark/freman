@@ -12,6 +12,7 @@ type Props = {
 	tasks: Task[],
 	booked: Booked[]
 }
+
 function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const openTasks = tasks.filter(task => !task.is_finished)
 	const numOnTimeTasks = tasks.filter(
@@ -25,6 +26,16 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 		return monthNames[d.getMonth() + 1] + " " + d.getDay()
 	}
 
+	const loggedByDate = () => {
+		var startMap: { [dayString: string]: number } = {}
+		const loggedByDateSeconds = logged.reduce((loggedSoFar, { created_at, logged_time_seconds }) => {
+			const dayString = getDateDayStr(created_at)
+			if (!loggedSoFar[dayString]) loggedSoFar[dayString] = 0;
+			loggedSoFar[dayString] += logged_time_seconds / 60;
+			return loggedSoFar;
+		}, startMap)
+		return loggedByDateSeconds
+	}
 
 	return (
 		<div className="container">
@@ -79,12 +90,12 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 									data={[
 										{
 											type: 'bar',
-											x: logged.map(item => getDateDayStr(new Date(item.created_at))),
-											y: logged.map(item => item.logged_time_seconds / 60)
+											x: Object.keys(loggedByDate()),
+											y: Object.values(loggedByDate()).map((item: number)=>Math.round(item))
 										}
 									]}
 									layout={{
-										title: "Unbooked time by date",
+										title: "Unbooked time (minutes) by date",
 										width: 800,
 										height: 400
 									}}
