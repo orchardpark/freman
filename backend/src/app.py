@@ -31,7 +31,10 @@ def get_logged_time():
     logged_time_objects = \
         session.query(LoggedTime.application_name,
                       func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'),
-                      func.min(LoggedTime.created_at).label('created_at')) \
+                      func.min(LoggedTime.created_at).label('created_at'),
+                      func.max(LoggedTime.updated_at).label('updated_at'),
+                      func.min(LoggedTime.id).label('id')
+                      ) \
         .filter(LoggedTime.task_id == NO_TASK) \
         .group_by(LoggedTime.application_name) \
         .all()

@@ -3,6 +3,7 @@ import modalStyle from "./modalstyle"
 import Modal from 'react-modal';
 import { Box, FormControl, Grid, InputLabel, makeStyles, MenuItem, Select} from '@material-ui/core';
 import Task from '../tasks/task';
+import UNPRODUCTIVE from '../app/constants';
 
 Modal.setAppElement(document?.getElementById('root') ?? "root")
 
@@ -43,9 +44,9 @@ function BookModal({ modalIsOpen, application_name, window_title, number_minutes
 
     const getTaskMenuItems = () => {
         const menuItems = tasks.map(t => {
-                return(<MenuItem value={t.id}>{t.title}</MenuItem>)
+                return(<MenuItem key={t.id} value={t.id}>{t.title}</MenuItem>)
         })
-        const menuItemsWithNonProductive = menuItems.concat(<MenuItem value={-2}>{"Unproductive"}</MenuItem>)
+        const menuItemsWithNonProductive = menuItems.concat(<MenuItem key={UNPRODUCTIVE} value={UNPRODUCTIVE}>{"Unproductive"}</MenuItem>)
         return (
             menuItemsWithNonProductive
         )

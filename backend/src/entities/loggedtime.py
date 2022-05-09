@@ -30,4 +30,6 @@ class LoggedTimeSchema(Schema):
     logged_time_seconds = fields.Integer()
     window_title = fields.String()
     created_at = fields.DateTime()
+    updated_at = fields.DateTime()
+    id = fields.Integer()
     task_id = fields.Integer()
