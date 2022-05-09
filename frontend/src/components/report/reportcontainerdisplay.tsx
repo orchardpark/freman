@@ -21,11 +21,21 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 			(task.is_finished && new Date(task.deadline) >= new Date(task.updated_at))
 	).length
 
+	/**
+	 * 
+	 * @param d Date to be converted
+	 * @returns String of the date
+	 */
 	const getDateDayStr = (d: Date) => {
-		let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		let monthNames = ["January", "February", "March", "April", "May",
+			"June", "July", "August", "September", "October", "November", "December"];
 		return monthNames[d.getMonth() + 1] + " " + d.getDay()
 	}
 
+	/**
+	 * 
+	 * @returns Logged time by date
+	 */
 	const loggedByDate = () => {
 		var startMap: { [dayString: string]: number } = {}
 		const loggedByDateSeconds = logged.reduce((loggedSoFar, { created_at, logged_time_seconds }) => {
@@ -35,6 +45,26 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 			return loggedSoFar;
 		}, startMap)
 		return loggedByDateSeconds
+	}
+
+	/**
+	 * 
+	 * @returns Total time by application (booked + logged)
+	 */
+	const timeByApplication = () => {
+		var startMap: { [application_name: string]: number } = {}
+		var timeByApplication = logged.reduce((timeSoFar, { application_name, logged_time_seconds }) => {
+			if (!timeSoFar[application_name]) timeSoFar[application_name] = 0
+			timeSoFar[application_name] += logged_time_seconds / 60;
+			return timeSoFar;
+		}, startMap)
+		timeByApplication = booked.reduce((timeSoFar, { application_name, logged_time_seconds }) => {
+			if (!timeSoFar[application_name]) timeSoFar[application_name] = 0
+			timeSoFar[application_name] += logged_time_seconds / 60;
+			return timeSoFar;
+		}, timeByApplication)
+
+		return timeByApplication;
 	}
 
 	return (
@@ -91,7 +121,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 										{
 											type: 'bar',
 											x: Object.keys(loggedByDate()),
-											y: Object.values(loggedByDate()).map((item: number)=>Math.round(item))
+											y: Object.values(loggedByDate()).map((item: number) => Math.round(item))
 										}
 									]}
 									layout={{
@@ -100,6 +130,29 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 										height: 400
 									}}
 								/>
+							</Col>
+
+						</Row>
+						<Row>
+							<Col>
+								<Plot
+									data={[
+										{
+											type: 'pie',
+											labels: Object.keys(timeByApplication()),
+											values: Object.values(timeByApplication()).map((item: number) => Math.round(item))
+										}
+									]}
+									layout={{
+										title: "Time by application",
+										width: 400,
+										height: 400
+									}}
+								/>
+							</Col>
+							<Col>
+							</Col>
+							<Col>
 							</Col>
 						</Row>
 					</Container>
