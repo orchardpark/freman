@@ -13,11 +13,11 @@ function SideNavContainer(props) {
         >
             <SideNav.Toggle />
             <SideNav.Nav>
-                <NavItem eventKey="login">
+                <NavItem eventKey="account">
                     <NavIcon>
                         <i className="fa fa-fw fa-user-circle" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
-                    <NavText>Tasks</NavText>
+                    <NavText>Account</NavText>
                 </NavItem>
                 <NavItem eventKey="tasks">
                     <NavIcon>

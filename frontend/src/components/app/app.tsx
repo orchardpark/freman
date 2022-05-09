@@ -6,6 +6,7 @@ import LoggedContainer from "../logged/loggedcontainer"
 import ReportContainer from "../report/reportcontainer";
 import DownloadContainer from '../download/downloadcontainer';
 import {Route, Switch, Redirect, useHistory} from "react-router-dom"
+import AccountContainer from '../account/account';
 
 function App(){
     const history = useHistory()
@@ -15,6 +16,9 @@ function App(){
             <TopBar/>
             <SideNavContainer history={history}/>
             <Switch>
+                <Route path="/account">
+                    <AccountContainer/>
+                </Route>
                 <Route path="/tasks">
                     <TaskContainer/>
                 </Route>
@@ -29,7 +33,7 @@ function App(){
                 </Route>
                 <Route path="/">
                     <Redirect to={{
-                        pathname: "/tasks",
+                        pathname: "/account",
                         state: { referrer: "/" }
                     }} />
                 </Route>
