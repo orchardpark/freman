@@ -96,6 +96,18 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 		return bookedTimeByMonth
 	}
 
+	const productiveTime = booked
+	.filter(item=>item.task_id!==UNPRODUCTIVE)
+	.reduce((bookedTime, {logged_time_seconds})=>{
+		return bookedTime + logged_time_seconds;
+	},0)
+
+	const unProductiveTime = booked
+	.filter(item=>item.task_id===UNPRODUCTIVE)
+	.reduce((bookedTime, {logged_time_seconds})=>{
+		return bookedTime + logged_time_seconds;
+	},0)
+
 	return (
 		<div className="container">
 			<div>
@@ -203,8 +215,27 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 								}}
 							/>
 							<Col>
-							</Col>
-							<Col>
+							<Plot
+							data={[
+										{
+											domain: { x: [0, 1], y: [0, 1] },
+											value: productiveTime * 100.0 / (productiveTime + unProductiveTime),
+											title: { text: "Productive time %" },
+											type: "indicator",
+											mode: "gauge+number",
+											gauge: {
+												axis: { range: [0, 100] },
+												bar: { color: "darkblue" },
+											},
+										}
+									]}
+									layout={
+										{
+											width: 400,
+											height: 400
+										}
+									}
+							/>
 							</Col>
 						</Row>
 					</Container>
