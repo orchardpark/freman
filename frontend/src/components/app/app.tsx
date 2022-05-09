@@ -4,6 +4,7 @@ import SideNavContainer from "./sidenavcontainer"
 import TaskContainer from '../tasks/taskcontainer'
 import LoggedContainer from "../logged/loggedcontainer"
 import ReportContainer from "../report/reportcontainer";
+import DownloadContainer from '../download/downloadcontainer';
 import {Route, Switch, Redirect, useHistory} from "react-router-dom"
 
 function App(){
@@ -22,6 +23,9 @@ function App(){
                 </Route>
                 <Route path="/report">
                     <ReportContainer/>
+                </Route>
+                <Route path="/download">
+                    <DownloadContainer/>
                 </Route>
                 <Route path="/">
                     <Redirect to={{

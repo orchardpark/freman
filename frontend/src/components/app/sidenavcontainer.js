@@ -37,7 +37,7 @@ function SideNavContainer(props) {
                     </NavIcon>
                     <NavText>Reports</NavText>
                 </NavItem>
-                <NavItem eventKey="tracker">
+                <NavItem eventKey="download">
                     <NavIcon>
                         <i className="fa fa-fw fa-desktop" style={{ fontSize: '1.75em'}} />
                     </NavIcon>
