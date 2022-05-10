@@ -10,7 +10,6 @@ class Task(Entity, Base):
     estimated_time_minutes = Column(Integer)
     deadline = Column(DateTime)
     is_finished = Column(Boolean)
-    priority = Column(Integer)
 
     def __init__(self, title, description, estimated_time_minutes, deadline, is_finished=False):
         super().__init__()
