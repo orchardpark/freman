@@ -88,7 +88,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 		const bookedTimeByMonth = booked
 		.filter(item=>item.task_id !== UNPRODUCTIVE)
 		.reduce((loggedSoFar, {created_at, logged_time_seconds}) => {
-			const monthStr = getDateMonthStr(created_at)
+			const monthStr = getDateMonthStr(new Date(created_at))
 			if(!loggedSoFar[monthStr]) loggedSoFar[monthStr] = 0
 			loggedSoFar[monthStr] += logged_time_seconds/60
 			return loggedSoFar;
