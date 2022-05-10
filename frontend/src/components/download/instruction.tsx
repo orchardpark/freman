@@ -11,6 +11,7 @@ const linuxInstruction =
             <h2>Installation instructions. </h2>
             <ol>
                 <li>Download and unzip the archive.</li>
+                <li>Move the key.txt (obtain in the account page) and move it to the folder.</li>
                 <li>Open a terminal and navigate to the extracted folder.</li>
                 <li>Run: <code>chmod +x distro_installer.sh</code>, replace distro by your linux distribution (e.g. ubuntu).</li>
                 <li>Run: <code>sudo ./distro_installer.sh</code></li>
