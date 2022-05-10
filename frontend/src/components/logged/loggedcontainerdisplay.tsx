@@ -44,7 +44,9 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
         console.log(selected_element?.application_name)
         if (selected_element === undefined) {
             return (
-                <BookModal modalIsOpen={false} application_name={"none"} window_title={"none"} number_minutes={0} date_logged={new Date()} tasks={tasks} closeModal={() => { }} bookTime={ ()=>{}}/>
+                <BookModal modalIsOpen={false} application_name={"none"} 
+                window_title={"none"} number_minutes={0} date_logged={new Date()} 
+                tasks={tasks} closeModal={() => { }} bookTime={ ()=>{}}/>
             )
         }
         else {
