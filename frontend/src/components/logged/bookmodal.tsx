@@ -68,7 +68,7 @@ function BookModal({ modalIsOpen, application_name, number_minutes, date_logged,
                             <Grid item xs={8}>Application:</Grid>
                             <Grid item xs={4}>{application_name}</Grid>
                             <Grid item xs={8}>Number of minutes logged</Grid>
-                            <Grid item xs={4}>{number_minutes}</Grid>
+                            <Grid item xs={4}>{Math.round(number_minutes)}</Grid>
                             <Grid item xs={8}>Date logged</Grid>
                             <Grid item xs={4}>{date_logged.toUTCString()}</Grid>
                         </Grid>
