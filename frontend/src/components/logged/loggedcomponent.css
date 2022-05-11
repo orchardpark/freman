@@ -1,8 +1,6 @@
 .logged{
     border-style: solid;
     border-width: 1px;
-    float: left;
-    width: 99%;
     height: 60px;
 }
 
@@ -10,25 +8,5 @@
     border-style: solid;
     border-width: 1px;
     background-color: grey;
-    float: left;
-    width: 99%;
     height: 60px;
-}
-
-.logged-field-left{
-    float: left;
-    width: 20%;
-    height: 50px;
-}
-
-.logged-field-left-2{
-    float: left;
-    width: 70%;
-    height: 50px;
-}
-
-.logged-field-right{
-    float: right;
-    width: 10%;
-    height: 50px;
 }

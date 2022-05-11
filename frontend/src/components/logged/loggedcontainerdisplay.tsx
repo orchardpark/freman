@@ -4,7 +4,7 @@ import LoggedComponent from './loggedcomponent'
 import BookModal from './bookmodal'
 import "./loggedcomponent.css"
 import Task from '../tasks/task'
-import "../container.css"
+import {Container, Row, Col} from 'react-bootstrap'
 
 type Props = {
     logged: Logged[],
@@ -65,22 +65,20 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
      * Render the logged items list.
      */
     return (
-        <div className='container'>
-            <div>
-                <h1>Logged Items</h1>
-                {getModal()}
-            </div>
+        <Container>
+            <Row>
+                <Col>
+                    <h1>Logged Items</h1>
+                    {getModal()}
+                </Col>
+            </Row>
             <br />
-            <div>
-                <h2 className={'logged-field-left'}>Application</h2>
-                <h2 className={'logged-field-right'}>Time (minutes)</h2>
-            </div>
-            <span>&nbsp;&nbsp;</span>
-
-            <div style={{ overflow: 'auto', maxHeight: '80%' }}>
-                {loggedList()}
-            </div>
-        </div>
+            <Row>
+                <Col><h3>Application</h3></Col>
+                <Col><h3>Time (minutes)</h3></Col>
+            </Row>
+            {loggedList()}
+        </Container>
     )
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import "./loggedcomponent.css"
+import {Row, Col} from 'react-bootstrap'
 
 type Props = {
     application_name: string,
@@ -12,14 +13,14 @@ type Props = {
 function LoggedComponent({application_name, logged_time_seconds, selected, setSelected}: Props){
 
     return (
-        <div className={selected ? 'logged-selected' : 'logged'} onClick={(event: React.MouseEvent<HTMLElement>) => {
+        <Row className={selected ? 'logged-selected' : 'logged'} onClick={(event: React.MouseEvent<HTMLElement>) => {
             if (selected === false) {
                 setSelected(application_name)
             }
         }}>
-            <p className={'logged-field-left'}>{application_name}</p>
-            <p className={'logged-field-right'}>{Math.round(logged_time_seconds/60)}</p>
-        </div>
+            <Col >{application_name}</Col>
+            <Col >{Math.round(logged_time_seconds/60)}</Col>
+        </Row>
     )
 }
 
