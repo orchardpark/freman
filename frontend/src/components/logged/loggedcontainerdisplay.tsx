@@ -9,9 +9,9 @@ import "../container.css"
 type Props = {
     logged: Logged[],
     tasks: Task[],
-    setSelected: (application_name: string, window_title: string) => void
+    setSelected: (application_name: string) => void
     closeModal: () => void
-    bookTime: (application_name: string, window_title: string, task_id: number) => void
+    bookTime: (application_name: string, task_id: number) => void
 
 }
 
@@ -30,10 +30,10 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
         return(
             <div key={key}>
                 {
-                        <LoggedComponent 
-                            {...logged[index]}
-                            setSelected={setSelected}
-                        />
+                    <LoggedComponent
+                        {...logged[index]}
+                        setSelected={setSelected}
+                    />
                 }
             </div>
         )
@@ -45,14 +45,14 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
         if (selected_element === undefined) {
             return (
                 <BookModal modalIsOpen={false} application_name={"none"} 
-                window_title={"none"} number_minutes={0} date_logged={new Date()} 
+                number_minutes={0} date_logged={new Date()} 
                 tasks={tasks} closeModal={() => { }} bookTime={ ()=>{}}/>
             )
         }
         else {
             return(
                 <BookModal modalIsOpen={true} application_name={selected_element.application_name}
-                    window_title={selected_element.window_title} number_minutes={selected_element.logged_time_seconds / 60}
+                    number_minutes={selected_element.logged_time_seconds / 60}
                     date_logged={selected_element.created_at} tasks={tasks} closeModal={closeModal}
                     bookTime={bookTime}
                 />
@@ -73,7 +73,6 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
             <br />
             <div>
                 <h2 className={'logged-field-left'}>Application</h2>
-                <h2 className={'logged-field-left-2'}>Window</h2>
                 <h2 className={'logged-field-right'}>Time (minutes)</h2>
             </div>
             <span>&nbsp;&nbsp;</span>

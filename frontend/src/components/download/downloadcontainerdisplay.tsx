@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
 import "../container.css"
-import linuxInstruction from './instruction'
+import {linuxInstruction, windowsInstruction} from './instruction'
 
 type Props = {
     platform: string,
@@ -13,6 +13,9 @@ function DownloadContainerDisplay({ platform}: Props) {
     const instructionText = (platform: string) => {
         if(platform === "Linux"){
             return linuxInstruction
+        }
+        else if(platform=== "Windows"){
+            return windowsInstruction
         }
         else{
             return ""

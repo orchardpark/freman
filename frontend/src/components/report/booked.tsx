@@ -5,7 +5,6 @@ type Booked = {
     last_updated_by: string,
     application_name: string,
     logged_time_seconds: number,
-    window_title: string,
     task_id: number
 }
 

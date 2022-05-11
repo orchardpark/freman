@@ -10,12 +10,11 @@ Modal.setAppElement(document?.getElementById('root') ?? "root")
 type Props = {
     modalIsOpen: boolean
     application_name: string,
-    window_title: string,
     number_minutes: number,
     date_logged: Date,
     tasks: Task[]
     closeModal: () => void
-    bookTime: (application_name: string, window_title: string, task_id: number) => void
+    bookTime: (application_name: string, task_id: number) => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function BookModal({ modalIsOpen, application_name, window_title, number_minutes, date_logged, tasks, closeModal, bookTime }: Props) {
+function BookModal({ modalIsOpen, application_name, number_minutes, date_logged, tasks, closeModal, bookTime }: Props) {
     var subtitle: HTMLHeadingElement | null;
     const classes = useStyles();
     const [task, setTask] = React.useState(-1)
@@ -68,8 +67,6 @@ function BookModal({ modalIsOpen, application_name, window_title, number_minutes
                         <Grid container>
                             <Grid item xs={8}>Application:</Grid>
                             <Grid item xs={4}>{application_name}</Grid>
-                            <Grid item xs={8}>Window Title:</Grid>
-                            <Grid item xs={4}>{window_title}</Grid>
                             <Grid item xs={8}>Number of minutes logged</Grid>
                             <Grid item xs={4}>{number_minutes}</Grid>
                             <Grid item xs={8}>Date logged</Grid>
@@ -93,7 +90,7 @@ function BookModal({ modalIsOpen, application_name, window_title, number_minutes
                 <br/>
                 <div>
                     <button style={{ float: 'left' }} onClick={closeModal}>Cancel</button>
-                    <button style={{ float: 'right' }} onClick={e => bookTime(application_name, window_title, task)}>Book Time</button>
+                    <button style={{ float: 'right' }} onClick={e => bookTime(application_name, task)}>Book Time</button>
                 </div>
                 
             </Modal>

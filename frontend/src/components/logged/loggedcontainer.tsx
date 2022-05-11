@@ -56,12 +56,11 @@ function LoggedContainer() {
             .catch(console.log)
     }
 
-    const bookTime = (application_name: string, window_title: string, task_id: number) => {
+    const bookTime = (application_name: string, task_id: number) => {
         setLoading(true)
         const request = config.protocol+"://"+config.serverURL+":"+config.serverPort+"/booktime"
         const payload_object = {
             application_name: application_name,
-            window_title: window_title,
             task_id: task_id
         }
         const requestOptions = {
@@ -77,11 +76,11 @@ function LoggedContainer() {
     /*
     * Sets the selected item
     */
-    const setSelected = (application_name: string, window_title: string) => {
+    const setSelected = (application_name: string ) => {
         const newLoggedList = logged.map((loggedItem: Logged)=>{
             return {
                 ...loggedItem,
-                selected: loggedItem.application_name === application_name && loggedItem.window_title === window_title
+                selected: loggedItem.application_name === application_name 
             }
         })
         setLogged(newLoggedList)

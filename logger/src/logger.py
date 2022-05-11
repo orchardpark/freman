@@ -23,6 +23,7 @@ if __name__ == '__main__':
     tracked: Dict[ApplicationKey, float] = {}
     time_of_last_measurement = time.time()
     time_of_last_update = time.time()
+    logging.info(f'Config: sync time {config["sync_interval"]}')
     while True:
         application_name = oslogger.get_active_application_name()
         window_title = oslogger.get_active_window_title()

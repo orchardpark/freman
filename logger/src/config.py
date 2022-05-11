@@ -2,5 +2,5 @@ config = {
     "server_url": "127.0.0.1",
     "server_port": 5000,
     "max_idle_time": 300,
-    "sync_interval": 600
+    "sync_interval": 60
 }
