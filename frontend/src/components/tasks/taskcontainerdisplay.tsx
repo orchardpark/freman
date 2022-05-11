@@ -80,43 +80,41 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, i
 
     return (
         <div onKeyDown={onKeyPressed} ref={target} tabIndex={0}>
-        <div className='container' >
-            <div>
-                <h1>Tasks</h1>
-                <Container>
-                    <Row className="taskrow">
-                        <div>
-                            <Container>
-                                <Row>
-                                    <Col>
-                                        <h3>Filters:</h3>
-                                    </Col>
-                                    <Col>
+            <Container>
+                <Row>
+                    <h1>Tasks</h1>
+                </Row>
+                <Row className="taskrow">
+                    <div>
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <h3>Filters:</h3>
+                                </Col>
+                                <Col>
                                     <CheckBox isChecked={isCompletedChecked} toggleChecked={toggleCompletedFilter} text="Completed" />
-                                    </Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                </Row>
-                            </Container>
-                        </div>
-                    </Row>
-                    <Row className='taskrow'>
-                        <div style={{ overflow: 'auto', maxHeight: '80%', minWidth: '1200px'}}>
+                                </Col>
+                                <Col></Col>
+                                <Col></Col>
+                                <Col></Col>
+                                <Col></Col>
+                            </Row>
+                        </Container>
+                    </div>
+                </Row>
+                <Row className='taskrow'>
+                    <div style={{ overflow: 'auto', maxHeight: '80%', minWidth: '1200px' }}>
                         {taskList(isCompletedChecked)}
-                        </div>
-                    </Row>
-                    <Row className='taskrow'>
-                        <Col></Col>
-                        <Col>
-                        <NewTaskModal addNewTask={addNewTask} taskModalOpen={taskModalOpen} setTaskModalOpen={(isOpen: boolean)=>setTaskModalOpen(isOpen)}/>
-                        </Col>
-                        <Col></Col>
-                    </Row>
-                </Container>
-            </div>
-        </div>
+                    </div>
+                </Row>
+                <Row className='taskrow'>
+                    <Col></Col>
+                    <Col>
+                        <NewTaskModal addNewTask={addNewTask} taskModalOpen={taskModalOpen} setTaskModalOpen={(isOpen: boolean) => setTaskModalOpen(isOpen)} />
+                    </Col>
+                    <Col></Col>
+                </Row>
+            </Container>
         </div>
     )
 
