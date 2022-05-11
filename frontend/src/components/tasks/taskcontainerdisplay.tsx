@@ -4,7 +4,6 @@ import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
 import Task from './task'
 import { Container, Row, Col} from 'react-bootstrap'
-import "../container.css"
 import './taskrow.css'
 
 type Props = {

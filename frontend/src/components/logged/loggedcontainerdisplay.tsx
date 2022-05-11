@@ -2,7 +2,6 @@ import React from 'react'
 import Logged from './logged'
 import LoggedComponent from './loggedcomponent'
 import BookModal from './bookmodal'
-import "./loggedcomponent.css"
 import Task from '../tasks/task'
 import {Container, Row, Col} from 'react-bootstrap'
 

@@ -1,11 +1,11 @@
 import React from "react"
-import "../container.css"
+import {Container} from 'react-bootstrap'
 function AccountContainer() {
 
     return (
-        <div className="container">
+        <Container>
             Account
-        </div>
+        </Container>
     )
 }
 

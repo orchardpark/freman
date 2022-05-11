@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import config from "../app/config"
-import "../container.css"
 import Logged from "../logged/logged"
 import Task from "../tasks/task"
 import ReportContainerDisplay from "./reportcontainerdisplay"
