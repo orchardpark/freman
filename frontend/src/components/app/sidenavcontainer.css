@@ -262,7 +262,7 @@
     width: 64px;
     height: 50px;
     margin-right: -6px;
-    vertical-align: top;
+    /*vertical-align: top;*/
     background-repeat: no-repeat;
     background-position: center center;
     background-color: transparent;
