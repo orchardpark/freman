@@ -1,7 +1,7 @@
 import React from 'react';
 import Task from '../tasks/task';
 import {UNPRODUCTIVE} from '../app/constants';
-import {Modal, Container, Row, Form} from 'react-bootstrap'
+import {Modal, Container, Row, Form, Col} from 'react-bootstrap'
 
 type Props = {
     modalIsOpen: boolean
@@ -32,36 +32,46 @@ function BookModal({ modalIsOpen, application_name, number_minutes, date_logged,
     }
 
     return (
-        <div>
-            <Modal
-                show={modalIsOpen}
-                onHide={closeModal}
-                >
+        <Modal
+            show={modalIsOpen}
+            onHide={closeModal}
+            size="lg"
+        >
+            <Modal.Header>
+
                 <Modal.Title>Book Time</Modal.Title>
-                <form>
-                    <label>Logged Detail</label>
-                        <Container>
-                            <Row item xs={8}>Application:</Row>
-                            <Row item xs={4}>{application_name}</Row>
-                            <Row item xs={8}>Number of minutes logged</Row>
-                            <Row item xs={4}>{Math.round(number_minutes)}</Row>
-                            <Row item xs={8}>Date logged</Row>
-                            <Row item xs={4}>{date_logged.toUTCString()}</Row>
-                        </Container>
-                    <br/>
-                </form>
-                <Form.Select aria-label='Task' onChange={handleChange} value={task}>
-                    {getTaskMenuItems()}
-                </Form.Select>
-                <br/>
-                <br/>
-                <div>
-                    <button style={{ float: 'left' }} onClick={closeModal}>Cancel</button>
-                    <button style={{ float: 'right' }} onClick={e => bookTime(application_name, task)}>Book Time</button>
-                </div>
-                
-            </Modal>
-        </div>
+            </Modal.Header>
+            <Modal.Body className='show-grid'>
+                <Container fluid>
+                    <Row>
+                        <label>Logged Detail</label>
+                    </Row>
+                    <Row>
+                        <Col xs={8}>Application:</Col>
+                        <Col xs={4}>{application_name}</Col>
+                    </Row>
+                    <Row>
+                        <Col xs={8}>Number of minutes logged</Col>
+                        <Col xs={4}>{Math.round(number_minutes)}</Col>
+                    </Row>
+                    <Row>
+                        <Col xs={8}>Date logged</Col>
+                        <Col xs={4}>{date_logged.toUTCString()}</Col>
+                    </Row>
+                    <Row>
+                        <Form.Select aria-label='Task' onChange={handleChange} value={task}>
+                            {getTaskMenuItems()}
+                        </Form.Select>
+
+                    </Row>
+                </Container>
+            </Modal.Body>
+            <Modal.Footer>
+                <button style={{ float: 'left' }} onClick={closeModal}>Cancel</button>
+                <button style={{ float: 'right' }} onClick={e => bookTime(application_name, task)}>Book Time</button>
+            </Modal.Footer>
+
+        </Modal>
     )
 }
 

@@ -23,7 +23,7 @@ function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
         setTaskModalOpen(true)
     }
 
-    function closeModal(){
+    function closeModal() {
         setTaskModalOpen(false);
     }
 
@@ -32,17 +32,17 @@ function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
         closeModal()
     }
 
-    function changeHandler(event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>){
+    function changeHandler(event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) {
         const name = event.target.name
         const value = event.target.value
-        if(name === "title"){
+        if (name === "title") {
             setTitle(value)
         }
-        
-        if(name === "description"){
+
+        if (name === "description") {
             setDescription(value)
         }
-        if(name === "estimatedtimeminutes"){
+        if (name === "estimatedtimeminutes") {
             setEstimatedTimeMinutes(Number.parseInt(value))
         }
     }
@@ -57,44 +57,47 @@ function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
                 )}
             </Overlay>
             <div>
-                <button ref={target} 
-                onClick={openModal} style={{fontSize: '20px'}}><i 
-                className={'fa fa-fw fa-plus'} 
-                onMouseEnter={()=>{setShowTooltip(true)}} onMouseLeave={()=>{setShowTooltip(false)}}/></button>
+                <button ref={target}
+                    onClick={openModal} style={{ fontSize: '20px' }}><i
+                        className={'fa fa-fw fa-plus'}
+                        onMouseEnter={() => { setShowTooltip(true) }} onMouseLeave={() => { setShowTooltip(false) }} /></button>
             </div>
             <Modal
                 show={taskModalOpen}
                 onHide={closeModal}>
-                <Modal.Title>New Task Modal</Modal.Title>
-                <form>
-                    <label>
-                        Task Name:
-                        <input type="text" name="title" value={title} onChange={changeHandler}/>
-                    </label>
-                    <br/>
-                    <br/>
-                    <label >
-                        Description:
-                        <textarea name="description" rows={5} value={description} onChange={changeHandler}/>
-                    </label>
-                    <br/>
-                    <br/>
-                    <label>
-                        Estimated time (minutes):
-                        <input type="number" name="estimatedtimeminutes" value={estimatedTimeMinutes} onChange={changeHandler}/>
-                    </label>
-                    <br/>
-                    <br/>
-                    <label>
-                        Deadline
-                        <DatePicker selected={deadline} onSelect={date => setDeadline(date)} onChange={date => date} popperPlacement='top' />
-                    </label>
-                </form>
-                <br/>
-                <div>
-                    <button style={{float: 'left'}}  onClick={closeModal}>Cancel</button>
-                    <button style={{float: 'right'}} onClick={confirmNewTask}>Confirm</button>
-                </div>
+                <Modal.Header>
+                    <Modal.Title>Add new task</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <label>
+                            Task Name:
+                            <input type="text" name="title" value={title} onChange={changeHandler} />
+                        </label>
+                        <br />
+                        <br />
+                        <label >
+                            Description:
+                            <textarea name="description" rows={5} value={description} onChange={changeHandler} />
+                        </label>
+                        <br />
+                        <br />
+                        <label>
+                            Estimated time (minutes):
+                            <input type="number" name="estimatedtimeminutes" value={estimatedTimeMinutes} onChange={changeHandler} />
+                        </label>
+                        <br />
+                        <br />
+                        <label>
+                            Deadline
+                            <DatePicker selected={deadline} onSelect={date => setDeadline(date)} onChange={date => date} popperPlacement='top' />
+                        </label>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button style={{ float: 'left' }} onClick={closeModal}>Cancel</button>
+                    <button style={{ float: 'right' }} onClick={confirmNewTask}>Confirm</button>
+                </Modal.Footer>
             </Modal>
         </div>
     );

@@ -40,7 +40,6 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
 
     const getModal = () => {
         const selected_element = logged.find(s => s.selected === true)
-        console.log(selected_element?.application_name)
         if (selected_element === undefined) {
             return (
                 <BookModal modalIsOpen={false} application_name={"none"} 
