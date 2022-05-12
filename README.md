@@ -1,5 +1,5 @@
 # freman
-Task Manager & Analytics for Freelancers / Solo Entrepreneurs / Independent Researchers
+Track & improve your productivity
 
 Features
 * Create tasks with description, estimated duration and deadline
