@@ -38,7 +38,6 @@ function BookModal({ modalIsOpen, application_name, number_minutes, date_logged,
             size="lg"
         >
             <Modal.Header>
-
                 <Modal.Title>Book Time</Modal.Title>
             </Modal.Header>
             <Modal.Body className='show-grid'>
