@@ -1,3 +1,4 @@
 const UNPRODUCTIVE = -2;
+const UNKNOWN = -1;
 
-export default UNPRODUCTIVE;
+export {UNPRODUCTIVE, UNKNOWN}

@@ -3,8 +3,7 @@ import Task from "../tasks/task"
 import Booked from "./booked"
 import Plot from 'react-plotly.js'
 import { Container, Row, Col } from 'react-bootstrap'
-import UNPRODUCTIVE from '../app/constants'
-
+import {UNPRODUCTIVE} from '../app/constants'
 
 type Props = {
 	logged: Logged[]

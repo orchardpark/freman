@@ -1,12 +1,9 @@
 import React, {ChangeEvent, useRef, useState} from 'react';
-import Modal from 'react-modal';
-import modalStyle from "./modalstyle"
 import DatePicker from "react-datepicker";
-import {Overlay, Tooltip} from 'react-bootstrap'
+import {Overlay, Tooltip, Modal} from 'react-bootstrap'
 import "./datepicker.css"
 import "react-datepicker/dist/react-datepicker.css";
 
-Modal.setAppElement(document?.getElementById('root') ?? "root")
 
 type Props = {
     addNewTask: (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) => void,
@@ -15,7 +12,6 @@ type Props = {
 }
 
 function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
-    var subtitle: HTMLHeadingElement | null;
     const [title, setTitle] = React.useState("")
     const [description, setDescription] = React.useState("")
     const [estimatedTimeMinutes, setEstimatedTimeMinutes] = React.useState(0)
@@ -25,11 +21,6 @@ function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
 
     function openModal() {
         setTaskModalOpen(true)
-    }
-
-    function afterOpenModal() {
-        if(subtitle != null)
-            subtitle.style.color = '#f00';
     }
 
     function closeModal(){
@@ -47,6 +38,7 @@ function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
         if(name === "title"){
             setTitle(value)
         }
+        
         if(name === "description"){
             setDescription(value)
         }
@@ -71,13 +63,9 @@ function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
                 onMouseEnter={()=>{setShowTooltip(true)}} onMouseLeave={()=>{setShowTooltip(false)}}/></button>
             </div>
             <Modal
-                isOpen={taskModalOpen}
-                onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
-                style={modalStyle}
-                contentLabel="New Task Modal">
-
-                <h2 ref={_subtitle => (subtitle = _subtitle)}>Add new Task</h2>
+                show={taskModalOpen}
+                onHide={closeModal}>
+                <Modal.Title>New Task Modal</Modal.Title>
                 <form>
                     <label>
                         Task Name:

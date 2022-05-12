@@ -3,6 +3,7 @@ import config from "../app/config"
 import Logged from './logged'
 import LoggedContainerDisplay from './loggedcontainerdisplay'
 import Task from '../tasks/task';
+import { UNKNOWN } from '../app/constants';
 
 function LoggedContainer() {
     /// STATE ---------------------------------
@@ -56,20 +57,22 @@ function LoggedContainer() {
     }
 
     const bookTime = (application_name: string, task_id: number) => {
-        setLoading(true)
-        const request = config.protocol+"://"+config.serverURL+":"+config.serverPort+"/booktime"
-        const payload_object = {
-            application_name: application_name,
-            task_id: task_id
+        if (task_id !== UNKNOWN) {
+            setLoading(true)
+            const request = config.protocol + "://" + config.serverURL + ":" + config.serverPort + "/booktime"
+            const payload_object = {
+                application_name: application_name,
+                task_id: task_id
+            }
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify(payload_object),
+                headers: { 'Content-Type': 'application/json' }
+            }
+            fetch(request, requestOptions).catch(console.log)
+            deSelectAll()
+            setLoading(false)
         }
-        const requestOptions = {
-            method: 'POST',
-            body: JSON.stringify(payload_object),
-            headers: {'Content-Type': 'application/json'}
-        }
-        fetch(request, requestOptions).catch(console.log)
-        deSelectAll()
-        setLoading(false)
     }
 
     /*
