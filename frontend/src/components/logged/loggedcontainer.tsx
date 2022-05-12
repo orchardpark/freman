@@ -68,9 +68,8 @@ function LoggedContainer() {
                 body: JSON.stringify(payload_object),
                 headers: { 'Content-Type': 'application/json' }
             }
-            fetch(request, requestOptions).catch(console.log)
+            fetch(request, requestOptions).catch(console.log).then(()=>getLogged())
             deSelectAll()
-            getLogged()
         }
     }
 
