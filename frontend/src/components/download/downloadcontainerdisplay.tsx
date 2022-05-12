@@ -1,4 +1,3 @@
-import React from 'react'
 import {Button} from 'react-bootstrap'
 import {linuxInstruction, windowsInstruction} from './instruction'
 import {Container, Row} from 'react-bootstrap'
