@@ -69,4 +69,9 @@ The backend requires a [Postgres](https://www.postgresql.org/) installation. A d
 
 A virtual environment is recommended for running the backend application. The required packages can then be installed via `pip install -r requirements.txt`.
 
-Next the program can be started by running `./bootstrap.sh`
+## Development
+The development server can be started by running `./run_dev.sh`
+
+## Production
+To run a production server, install [Gunicorn](https://gunicorn.org/).
+Next run the server `gunicorn -w 4 -b 0.0.0.0:5000 app:app`
