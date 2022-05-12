@@ -1,6 +1,6 @@
 import React from 'react';
 import Task from '../tasks/task';
-import {UNPRODUCTIVE} from '../app/constants';
+import {UNKNOWN, UNPRODUCTIVE} from '../app/constants';
 import {Modal, Container, Row, Form, Col} from 'react-bootstrap'
 
 type Props = {
@@ -59,6 +59,7 @@ function BookModal({ modalIsOpen, application_name, number_minutes, date_logged,
                     </Row>
                     <Row>
                         <Form.Select aria-label='Task' onChange={handleChange} value={task}>
+                            <option key={UNKNOWN} value={UNKNOWN}>Select task</option>
                             {getTaskMenuItems()}
                         </Form.Select>
 

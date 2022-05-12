@@ -58,7 +58,6 @@ function LoggedContainer() {
 
     const bookTime = (application_name: string, task_id: number) => {
         if (task_id !== UNKNOWN) {
-            setLoading(true)
             const request = config.protocol + "://" + config.serverURL + ":" + config.serverPort + "/booktime"
             const payload_object = {
                 application_name: application_name,
@@ -71,7 +70,7 @@ function LoggedContainer() {
             }
             fetch(request, requestOptions).catch(console.log)
             deSelectAll()
-            setLoading(false)
+            getLogged()
         }
     }
 
