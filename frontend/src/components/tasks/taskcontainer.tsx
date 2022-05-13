@@ -19,7 +19,7 @@ function TaskContainer() {
      * @param estimatedTimeMinutes Number of minutes the task is expected to take to complete
      */
     const addNewTask = (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) => {
-        if (title.length >= 1 && title.at(0)?.toLowerCase() === title.at(0)?.toUpperCase) {
+        if (title.length >= 1 && estimatedTimeMinutes > 0) {
             const newTask = {
                 'title': title,
                 'description': description,
