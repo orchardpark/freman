@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import config from "../app/config"
 import TaskContainerDisplay from './taskcontainerdisplay'
 import Task from "./task"
@@ -10,7 +10,7 @@ function TaskContainer() {
     const [loading, setLoading] = useState(true)
     const [isCompletedChecked, setCompleteChecked] = useState(false)
 
-    
+
     /// FUNCTIONALITY -----------------
     /**
      * Adds a new task and sends it to the backend
@@ -18,22 +18,25 @@ function TaskContainer() {
      * @param description Description of the task
      * @param estimatedTimeMinutes Number of minutes the task is expected to take to complete
      */
-    const addNewTask = (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) =>{
-        const newTask = {
+    const addNewTask = (title: string, description: string, estimatedTimeMinutes: number, deadline: Date) => {
+        if (title.length >= 1 && title.at(0)?.toLowerCase() === title.at(0)?.toUpperCase) {
+            const newTask = {
                 'title': title,
                 'description': description,
                 'estimated_time_minutes': estimatedTimeMinutes,
                 'deadline': deadline
             }
-        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/createtask'
-        const requestOptions = {
-            method: 'POST',
-            body: JSON.stringify(newTask),
-            headers: {'Content-Type': 'application/json'}
+
+            const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/createtask'
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify(newTask),
+                headers: { 'Content-Type': 'application/json' }
+            }
+            fetch(request, requestOptions)
+                .then(() => setLoading(true))
+                .catch(console.log)
         }
-        fetch(request, requestOptions)
-            .then(()=>setLoading(true))
-            .catch(console.log)
     }
 
     /**
@@ -41,7 +44,7 @@ function TaskContainer() {
      * sets the `task` variable.
      */
     const getTasks = () => {
-        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/tasks'
+        const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/tasks'
         fetch(request)
             .then(res => res.json())
             .then((tasks) => {
@@ -84,25 +87,25 @@ function TaskContainer() {
      * and sends this update back to the backend.
      * @param id The id of the task
      */
-    const toggleCompleteTask = (id: number) =>{
-        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/togglecompletetask'
+    const toggleCompleteTask = (id: number) => {
+        const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/togglecompletetask'
         const id_object = {
             id: id
         }
         const requestOptions = {
             method: 'POST',
             body: JSON.stringify(id_object),
-            headers: {'Content-Type': 'application/json'}
+            headers: { 'Content-Type': 'application/json' }
         }
         fetch(request, requestOptions)
-            .then((data)=>{
-                const newTasks = tasks.map((task)=> {
-                    if(task.id === id){
+            .then((data) => {
+                const newTasks = tasks.map((task) => {
+                    if (task.id === id) {
                         return {
                             ...task,
                             is_finished: !task.is_finished
                         }
-                    } else{
+                    } else {
                         return task
                     }
                 })
@@ -110,7 +113,7 @@ function TaskContainer() {
             })
             .catch(console.log)
     }
-    
+
     /**
      * Toggles the completed filter on or off
      */
@@ -122,7 +125,7 @@ function TaskContainer() {
      * Returns the JSX of this page
      */
     return (
-        <TaskContainerDisplay 
+        <TaskContainerDisplay
             addNewTask={addNewTask}
             tasks={tasks}
             loading={loading}
