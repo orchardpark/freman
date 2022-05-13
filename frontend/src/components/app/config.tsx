@@ -9,7 +9,7 @@ const dev= {
 const prd = {
     serverURL: 'freman.pro',
     serverPort: 5000,
-    protocol: 'http'
+    protocol: 'https'
 }
 
 const isDev = () => {
