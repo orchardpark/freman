@@ -7,7 +7,7 @@ const dev= {
 }
 
 const prd = {
-    serverURL: '127.0.0.1',
+    serverURL: 'freman.pro',
     serverPort: 5000,
     protocol: 'http'
 }
