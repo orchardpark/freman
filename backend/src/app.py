@@ -27,7 +27,7 @@ def get_logged_time():
     """
     # fetching from the database
     session = Session()
-    # group logged time by (application_name, window_title)
+    # group logged time by (application_name)
     logged_time_objects = \
         session.query(LoggedTime.application_name,
                       func.sum(LoggedTime.logged_time_seconds).label('logged_time_seconds'),
@@ -50,7 +50,7 @@ def get_logged_time():
 
 @app.route('/logtime', methods=['POST'])
 def log_time():
-    logged_time = LoggedTimeSchema(only=('application_name', 'logged_time_seconds', 'window_title'), many=True) \
+    logged_time = LoggedTimeSchema(only=('application_name', 'logged_time_seconds'), many=True) \
         .load(request.get_json())
     logged_time_objects = list(map(lambda x: LoggedTime(**x), logged_time))
 
