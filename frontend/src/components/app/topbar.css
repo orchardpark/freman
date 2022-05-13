@@ -1,4 +1,4 @@
-.topbar{
+.topbar {
     background-color: rgb(62, 62, 252);
     position: absolute;
     height: 5%;
@@ -7,6 +7,7 @@
     border-bottom: 1px solid;
     z-index: 2;
 }
+
 .topbar-header-text {
     color: white;
     text-align: left;
