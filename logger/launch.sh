@@ -1,1 +1,1 @@
-python src/logger.py
+python src/logger.py --development
