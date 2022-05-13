@@ -5,3 +5,4 @@ marshmallow
 flask-cors
 psycopg2-binary
 mypy
+gunicorn
