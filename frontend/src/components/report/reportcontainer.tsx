@@ -4,6 +4,7 @@ import Logged from "../logged/logged"
 import Task from "../tasks/task"
 import ReportContainerDisplay from "./reportcontainerdisplay"
 import Booked from "./booked"
+import { getEndPoint } from "../app/util"
 
 
 function ReportContainer() {
@@ -25,7 +26,7 @@ function ReportContainer() {
      * Gets the logged items and tasks from the backend
      */
     const getLogged = () => {
-        const request = config.protocol+'://'+config.serverURL+":"+config.serverPort+"/logged"
+        const request = getEndPoint('logged')
         fetch(request)
         .then(res => res.json())
         .then((logged)=>{
@@ -45,7 +46,7 @@ function ReportContainer() {
      * sets the `task` variable.
      */
     const getTasks = () => {
-        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/tasks'
+        const request = getEndPoint('tasks')
         fetch(request)
             .then(res => res.json())
             .then((tasks) => {
@@ -55,7 +56,7 @@ function ReportContainer() {
     }
 
     const getBooked = () => {
-        const request = config.protocol+ '://'+config.serverURL + ':' + config.serverPort + '/bookedtime'
+        const request = getEndPoint('bookedtime')
         fetch(request)
         .then(res=>res.json())
         .then((booked)=>setBooked(booked))

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import config from "../app/config"
 import TaskContainerDisplay from './taskcontainerdisplay'
 import Task from "./task"
+import { getEndPoint } from "../app/util"
 
 function TaskContainer() {
 
@@ -44,7 +45,7 @@ function TaskContainer() {
      * sets the `task` variable.
      */
     const getTasks = () => {
-        const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/tasks'
+        const request = getEndPoint('tasks')
         fetch(request)
             .then(res => res.json())
             .then((tasks) => {
@@ -60,7 +61,7 @@ function TaskContainer() {
     }
 
     const deleteTask = (id: number) => {
-        const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/removetask'
+        const request = getEndPoint('removetask')
         const id_object = {
             id: id
         }
@@ -88,7 +89,7 @@ function TaskContainer() {
      * @param id The id of the task
      */
     const toggleCompleteTask = (id: number) => {
-        const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/togglecompletetask'
+        const request = getEndPoint('togglecompletetask')
         const id_object = {
             id: id
         }

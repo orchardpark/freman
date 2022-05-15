@@ -4,6 +4,7 @@ import Logged from './logged'
 import LoggedContainerDisplay from './loggedcontainerdisplay'
 import Task from '../tasks/task';
 import { UNKNOWN } from '../app/constants';
+import { getEndPoint } from '../app/util'
 
 function LoggedContainer() {
     /// STATE ---------------------------------
@@ -27,7 +28,7 @@ function LoggedContainer() {
      * Gets the logged items and tasks from the backend
      */
     const getLogged = () => {
-        const request = config.protocol+'://'+config.serverURL+":"+config.serverPort+"/logged"
+        const request = getEndPoint('logged')
         fetch(request)
         .then(res => res.json())
         .then((logged)=>{
@@ -47,7 +48,7 @@ function LoggedContainer() {
      * sets the `task` variable.
      */
     const getTasks = () => {
-        const request = config.protocol+'://'+config.serverURL + ':' + config.serverPort + '/tasks'
+        const request = getEndPoint('tasks')
         fetch(request)
             .then(res => res.json())
             .then((tasks) => {
@@ -58,7 +59,7 @@ function LoggedContainer() {
 
     const bookTime = (application_name: string, task_id: number) => {
         if (task_id !== UNKNOWN) {
-            const request = config.protocol + "://" + config.serverURL + ":" + config.serverPort + "/booktime"
+            const request = getEndPoint('booktime')
             const payload_object = {
                 application_name: application_name,
                 task_id: task_id
