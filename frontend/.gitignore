@@ -25,4 +25,5 @@ yarn-error.log*
 # visual studio
 .vs/
 obj/
+bin/
 *njsproj
