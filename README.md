@@ -1,5 +1,5 @@
 # freman
-(Live application)[https://freman.pro]
+(https://freman.pro)[Live application]
 
 Track & improve your productivity
 
