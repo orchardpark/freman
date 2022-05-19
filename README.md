@@ -1,4 +1,6 @@
 # freman
+(Live application)[freman.pro]
+
 Track & improve your productivity
 
 Features
