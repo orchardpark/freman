@@ -8,7 +8,7 @@ function SideNavContainer(props) {
     return (
         <SideNav
             onSelect={(selected) => {
-                props.history.push("/"+selected)
+                props.history("/" + selected)
             }}
         >
             <SideNav.Toggle />
@@ -27,19 +27,19 @@ function SideNavContainer(props) {
                 </NavItem>
                 <NavItem eventKey="logged">
                     <NavIcon>
-                        <i className="fa fa-fw fa-clock-o" style={{ fontSize: '1.75em'}} />
+                        <i className="fa fa-fw fa-clock-o" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText>Logged Time</NavText>
                 </NavItem>
                 <NavItem eventKey="report">
                     <NavIcon>
-                        <i className="fa fa-fw fa-bar-chart" style={{ fontSize: '1.75em'}} />
+                        <i className="fa fa-fw fa-bar-chart" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText>Reports</NavText>
                 </NavItem>
                 <NavItem eventKey="download">
                     <NavIcon>
-                        <i className="fa fa-fw fa-desktop" style={{ fontSize: '1.75em'}} />
+                        <i className="fa fa-fw fa-desktop" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText>Logging Software</NavText>
                 </NavItem>

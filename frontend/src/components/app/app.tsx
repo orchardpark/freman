@@ -1,43 +1,43 @@
-import React  from 'react';
+import React from 'react';
 import TopBar from "./topbar"
 import SideNavContainer from "./sidenavcontainer"
 import TaskContainer from '../tasks/taskcontainer'
 import LoggedContainer from "../logged/loggedcontainer"
 import ReportContainer from "../report/reportcontainer";
 import DownloadContainer from '../download/downloadcontainer';
-import {Route, Switch, Redirect, useHistory} from "react-router-dom"
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom"
 import AccountContainer from '../account/account';
+import Login from '../login/login';
+import { GithubRedirect } from '../login/github';
 
-function App(){
-    const history = useHistory()
+function App() {
+    const history = useNavigate()
+    const [token, setToken] = React.useState<String>("")
 
-    return( 
+    if (!token) {
+        return (
+            <>
+                <Login />
+                <Routes>
+                    <Route path='/login/github' element={<GithubRedirect />} />
+                </Routes>
+            </>
+        )
+    }
+
+    return (
         <div>
-            <TopBar/>
-            <SideNavContainer history={history}/>
-            <Switch>
-                <Route path="/account">
-                    <AccountContainer/>
-                </Route>
-                <Route path="/tasks">
-                    <TaskContainer/>
-                </Route>
-                <Route path="/logged">
-                    <LoggedContainer/>
-                </Route>
-                <Route path="/report">
-                    <ReportContainer/>
-                </Route>
-                <Route path="/download">
-                    <DownloadContainer/>
-                </Route>
-                <Route path="/">
-                    <Redirect to={{
-                        pathname: "/account",
-                        state: { referrer: "/" }
-                    }} />
-                </Route>
-            </Switch>
+            <TopBar />
+            <SideNavContainer history={history} />
+            <Routes>
+                <Route path="/account" element={<AccountContainer />} />
+                <Route path="/tasks" element={<TaskContainer />} />
+                <Route path="/logged" element={<LoggedContainer />} />
+                <Route path="/report" element={<ReportContainer />} />
+                <Route path="/download" element={<DownloadContainer />} />
+                <Route path="*" element={<Navigate to='/account' replace />}
+                />
+            </Routes>
         </div>
     )
 }

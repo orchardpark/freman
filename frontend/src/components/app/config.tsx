@@ -1,15 +1,17 @@
 const development: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
-const dev= {
+const dev = {
     serverURL: '127.0.0.1',
     serverPort: 5000,
-    protocol: 'http'
+    protocol: 'http',
+    githubClientId: 'ca7ea27558eb29688ed9'
 }
 
 const prd = {
     serverURL: 'freman.pro',
     serverPort: 5000,
-    protocol: 'https'
+    protocol: 'https',
+    githubClientId: ''
 }
 
 const isDev = () => {

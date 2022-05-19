@@ -11,7 +11,6 @@ logging.basicConfig(level=logging.INFO)
 # creating the Flask application
 app = Flask(__name__)
 
-# TODO configure CORS
 CORS(app)
 
 # if needed, generate database schema

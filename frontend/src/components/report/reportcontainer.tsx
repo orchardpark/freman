@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import config from "../app/config"
+import React from "react"
 import Logged from "../logged/logged"
 import Task from "../tasks/task"
 import ReportContainerDisplay from "./reportcontainerdisplay"
@@ -8,10 +7,10 @@ import { getEndPoint } from "../app/util"
 
 
 function ReportContainer() {
-    const [logged, setLogged] = useState<Logged[]>([])
-    const [tasks, setTasks] = useState<Task[]>([])
-    const [booked, setBooked] = useState<Booked[]>([])
-    const [loading, setLoading] = useState(true)
+    const [logged, setLogged] = React.useState<Logged[]>([])
+    const [tasks, setTasks] = React.useState<Task[]>([])
+    const [booked, setBooked] = React.useState<Booked[]>([])
+    const [loading, setLoading] = React.useState(true)
     /**
      * Gets the logged items & tasks from the backend
      */
@@ -28,17 +27,17 @@ function ReportContainer() {
     const getLogged = () => {
         const request = getEndPoint('logged')
         fetch(request)
-        .then(res => res.json())
-        .then((logged)=>{
-            setLogged(logged.map((loggedItem:Logged)=> {
-                return {
-                    ...loggedItem,
-                    selected: false,
-                    created_at: new Date(loggedItem.created_at)
-                }
-            }))
-        })
-        .catch(console.log)
+            .then(res => res.json())
+            .then((logged) => {
+                setLogged(logged.map((loggedItem: Logged) => {
+                    return {
+                        ...loggedItem,
+                        selected: false,
+                        created_at: new Date(loggedItem.created_at)
+                    }
+                }))
+            })
+            .catch(console.log)
     }
 
     /**
@@ -58,15 +57,15 @@ function ReportContainer() {
     const getBooked = () => {
         const request = getEndPoint('bookedtime')
         fetch(request)
-        .then(res=>res.json())
-        .then((booked)=>setBooked(booked))
-        .catch(console.log)
+            .then(res => res.json())
+            .then((booked) => setBooked(booked))
+            .catch(console.log)
     }
 
-    useEffect(getData, [loading])
-    
+    React.useEffect(getData, [loading])
+
     return (
-        <ReportContainerDisplay logged={logged} tasks={tasks} booked={booked}/>
+        <ReportContainerDisplay logged={logged} tasks={tasks} booked={booked} />
     )
 }
 
