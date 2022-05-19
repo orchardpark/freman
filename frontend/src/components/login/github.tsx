@@ -2,6 +2,7 @@ import React from 'react'
 import { useSearchParams } from 'react-router-dom';
 import config from '../app/config'
 import { format } from 'react-string-format';
+import { getEndPoint } from '../app/util';
 
 function GithubLogin() {
     const githubClientId = config.githubClientId
@@ -14,6 +15,8 @@ function GithubLogin() {
 
 function GithubRedirect() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const request = getEndPoint('access_token')
+
     return (
         <div>
             {searchParams.get('code')}

@@ -56,6 +56,12 @@ function LoggedContainer() {
             .catch(console.log)
     }
 
+    /**
+     * 
+     * Books all time logged on application on specified task
+     * @param application_name 
+     * @param task_id 
+     */
     const bookTime = (application_name: string, task_id: number) => {
         if (task_id !== UNKNOWN) {
             const request = getEndPoint('booktime')

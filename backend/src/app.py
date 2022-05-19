@@ -16,6 +16,14 @@ CORS(app)
 # if needed, generate database schema
 Base.metadata.create_all(engine)
 
+# ------- LOGIN
+
+
+@app.route('/access_token')
+def get_access_token():
+    logging.info(request.args.get('code'))
+    return
+
 
 # ------- LOGGED TIME
 
