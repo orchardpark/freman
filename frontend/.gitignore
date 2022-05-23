@@ -27,3 +27,6 @@ yarn-error.log*
 obj/
 bin/
 *njsproj
+
+# config
+src/components/app/config.tsx
