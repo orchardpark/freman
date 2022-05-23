@@ -103,21 +103,6 @@ def get_account():
     schema = UserSchema()
     return jsonify(schema.dump(user))
 
-
-@app.route('/validate_token')
-def validate_token():
-    try:
-        user_id = get_user_id_from_header()
-    except BlackListError:
-        logging.info('Token blacklisted {}'.format(request.headers.get('Authorization')))
-        return 'Invalid, blacklisted', 401
-    except jwt.ExpiredSignatureError:
-        logging.info('Token expired {}'.format(request.headers.get('Authorization')))
-        return 'Invalid, expired', 401
-    except jwt.InvalidTokenError:
-        logging.info('Token invalid {}'.format(request.headers.get('Authorization')))
-        return 'Invalid token', 401
-    return 'OK'
 # endregion
 
 # region LOGGED TIME
