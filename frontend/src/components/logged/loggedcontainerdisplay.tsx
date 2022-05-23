@@ -3,30 +3,30 @@ import Logged from './logged'
 import LoggedComponent from './loggedcomponent'
 import BookModal from './bookmodal'
 import Task from '../tasks/task'
-import {Container, Row, Col} from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 
 type Props = {
-    logged: Logged[],
-    tasks: Task[],
+    logged: Logged[]
+    tasks: Task[]
     setSelected: (application_name: string) => void
     closeModal: () => void
     bookTime: (application_name: string, task_id: number) => void
 
 }
 
-function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTime}: Props){
+function LoggedContainerDisplay({ logged, tasks, setSelected, closeModal, bookTime }: Props) {
 
-    const loggedList = ()=>{
+    const loggedList = () => {
         const result = []
-        logged.sort((a,b)=>b.logged_time_seconds-a.logged_time_seconds)
-        for (const [index, value] of logged.entries()){
+        logged.sort((a, b) => b.logged_time_seconds - a.logged_time_seconds)
+        for (const [index, value] of logged.entries()) {
             result.push(renderItem(index, value['id']))
         }
         return result
     }
 
-    const renderItem = (index: number, key: number) =>{
-        return(
+    const renderItem = (index: number, key: number) => {
+        return (
             <div key={key}>
                 {
                     <LoggedComponent
@@ -42,13 +42,13 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
         const selected_element = logged.find(s => s.selected === true)
         if (selected_element === undefined) {
             return (
-                <BookModal modalIsOpen={false} application_name={"none"} 
-                number_minutes={0} date_logged={new Date()} 
-                tasks={tasks} closeModal={() => { }} bookTime={ ()=>{}}/>
+                <BookModal modalIsOpen={false} application_name={"none"}
+                    number_minutes={0} date_logged={new Date()}
+                    tasks={tasks} closeModal={() => { }} bookTime={() => { }} />
             )
         }
         else {
-            return(
+            return (
                 <BookModal modalIsOpen={true} application_name={selected_element.application_name}
                     number_minutes={selected_element.logged_time_seconds / 60}
                     date_logged={selected_element.created_at} tasks={tasks} closeModal={closeModal}
@@ -56,8 +56,8 @@ function LoggedContainerDisplay({logged, tasks, setSelected, closeModal, bookTim
                 />
             )
         }
-        
-        }
+
+    }
 
     /**
      * Render the logged items list.

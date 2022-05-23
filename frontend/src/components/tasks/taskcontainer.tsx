@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react"
-import config from "../app/config"
+import React from "react"
 import TaskContainerDisplay from './taskcontainerdisplay'
 import Task from "./task"
-import { getEndPoint } from "../app/util"
+import { getEndPoint, getGetRequestOptions, getPostRequestOptions } from "../app/util"
 
-function TaskContainer() {
+type Props = {
+    token: string
+}
+
+function TaskContainer({ token }: Props) {
 
     /// STATE -------------------------
-    const [tasks, setTasks] = useState<Task[]>([])
-    const [loading, setLoading] = useState(true)
-    const [isCompletedChecked, setCompleteChecked] = useState(false)
+    const [tasks, setTasks] = React.useState<Task[]>([])
+    const [loading, setLoading] = React.useState(true)
+    const [isCompletedChecked, setCompleteChecked] = React.useState(false)
 
 
     /// FUNCTIONALITY -----------------
@@ -28,12 +31,8 @@ function TaskContainer() {
                 'deadline': deadline
             }
 
-            const request = config.protocol + '://' + config.serverURL + ':' + config.serverPort + '/createtask'
-            const requestOptions = {
-                method: 'POST',
-                body: JSON.stringify(newTask),
-                headers: { 'Content-Type': 'application/json' }
-            }
+            const request = getEndPoint('createtask')
+            const requestOptions = getPostRequestOptions(token, JSON.stringify(newTask))
             fetch(request, requestOptions)
                 .then(() => setLoading(true))
                 .catch(console.log)
@@ -46,7 +45,8 @@ function TaskContainer() {
      */
     const getTasks = () => {
         const request = getEndPoint('tasks')
-        fetch(request)
+        const requestOptions = getGetRequestOptions(token)
+        fetch(request, requestOptions)
             .then(res => res.json())
             .then((tasks) => {
                 setTasks(tasks.map((task: Task) => {
@@ -65,13 +65,9 @@ function TaskContainer() {
         const id_object = {
             id: id
         }
-        const requestOptions = {
-            method: 'POST',
-            body: JSON.stringify(id_object),
-            headers: { 'Content-Type': 'application/json' }
-        }
+        const requestOptions = getPostRequestOptions(token, JSON.stringify(id_object))
         fetch(request, requestOptions)
-            .then((data) => {
+            .then(() => {
                 const newTasks = tasks.filter(task => task.id !== id)
                 setTasks(newTasks)
             })
@@ -81,7 +77,7 @@ function TaskContainer() {
     /**
      * Call `getTasks` upon a change in the loading state
      */
-    useEffect(getTasks, [loading])
+    React.useEffect(getTasks, [token, loading])
 
     /**
      * Toggles the selected task between completed and to-do status
@@ -93,11 +89,7 @@ function TaskContainer() {
         const id_object = {
             id: id
         }
-        const requestOptions = {
-            method: 'POST',
-            body: JSON.stringify(id_object),
-            headers: { 'Content-Type': 'application/json' }
-        }
+        const requestOptions = getPostRequestOptions(token, JSON.stringify(id_object))
         fetch(request, requestOptions)
             .then((data) => {
                 const newTasks = tasks.map((task) => {

@@ -3,7 +3,7 @@ import NewTaskModal from "./newtaskmodal"
 import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
 import Task from './task'
-import { Container, Row, Col} from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import './taskrow.css'
 
 type Props = {
@@ -16,22 +16,21 @@ type Props = {
     addNewTask: (title: string, description: string, estimated_time_minutes: number, dealine: Date) => void,
 }
 
-function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask}: Props){
+function TaskContainerDisplay({ tasks, loading, toggleCompleteTask, deleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask }: Props) {
 
     const target = React.useRef<HTMLDivElement>(null)
-    const [taskModalOpen,setTaskModalOpen] = React.useState(false)
+    const [taskModalOpen, setTaskModalOpen] = React.useState(false)
 
     /**
      * 
      * @param filter_completed Filter completed tasks?
      * @returns An array of TaskComponent
      */
-    const taskList = (filter_completed: boolean)=>{
-        tasks.sort((a,b)=>a.deadline.getUTCMilliseconds()-b.deadline.getUTCMilliseconds())
+    const taskList = (filter_completed: boolean) => {
+        tasks.sort((a, b) => a.deadline.getUTCMilliseconds() - b.deadline.getUTCMilliseconds())
         const result = []
-        for (const [index, value] of tasks.entries()){
-            if(filter_completed || !value['is_finished'])
-            {
+        for (const [index, value] of tasks.entries()) {
+            if (filter_completed || !value['is_finished']) {
                 result.push(renderItem(index, value['id']))
             }
         }
@@ -44,14 +43,14 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, i
      * @param key Unique identifief for this component (the id of the task)
      * @returns Render of an individual task component
      */
-    const renderItem = (index: number, key: number) =>{
-        return(
+    const renderItem = (index: number, key: number) => {
+        return (
             <div key={key}>
                 {
                     loading ? 'loading' :
                         <TaskComponent {...tasks[index]}
-                                       toggleCompleteTask={toggleCompleteTask}
-                                       deleteTask={deleteTask}
+                            toggleCompleteTask={toggleCompleteTask}
+                            deleteTask={deleteTask}
                         />
                 }
             </div>
@@ -72,9 +71,9 @@ function TaskContainerDisplay({tasks, loading, toggleCompleteTask, deleteTask, i
      * Focus on the main div after loading the
      * component.
      */
-    useEffect(()=>{
+    useEffect(() => {
         target.current?.focus()
-    })
+    }, [loading])
 
 
     return (

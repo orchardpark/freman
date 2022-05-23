@@ -1,60 +1,64 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Logged from './logged'
 import LoggedContainerDisplay from './loggedcontainerdisplay'
 import Task from '../tasks/task';
 import { UNKNOWN } from '../app/constants';
-import { getEndPoint } from '../app/util'
+import { getEndPoint, getGetRequestOptions, getPostRequestOptions } from '../app/util'
 
-function LoggedContainer() {
+type Props = {
+    token: string
+}
+
+function LoggedContainer({ token }: Props) {
     /// STATE ---------------------------------
     const [logged, setLogged] = React.useState<Logged[]>([])
     const [tasks, setTasks] = React.useState<Task[]>([])
-    const [loading, setLoading] = React.useState(true)
-
 
     /// FUNCTIONALITY -------------------------
 
-    /**
-     * Gets the logged items & tasks from the backend
-     */
     const getData = () => {
         getLogged()
         getTasks()
-        setLoading(false)
     }
 
     /**
      * Gets the logged items and tasks from the backend
      */
-    const getLogged = () => {
+    const getLogged = useCallback(() => {
         const request = getEndPoint('logged')
-        fetch(request)
+        const requestOptions = getGetRequestOptions(token)
+        fetch(request, requestOptions)
             .then(res => res.json())
-            .then((logged) => {
-                setLogged(logged.map((loggedItem: Logged) => {
+            .then((loggedItems) => {
+                setLogged(loggedItems.map((loggedItem: Logged) => {
                     return {
                         ...loggedItem,
                         selected: false,
                         created_at: new Date(loggedItem.created_at)
                     }
-                }))
+                }
+                ))
             })
             .catch(console.log)
-    }
+    }, [token]
+    )
+
 
     /**
      * Retrieves the tasks from the backend
      * sets the `task` variable.
      */
-    const getTasks = () => {
+    const getTasks = useCallback(() => {
         const request = getEndPoint('tasks')
-        fetch(request)
+        const requestOptions = getGetRequestOptions(token)
+        fetch(request, requestOptions)
             .then(res => res.json())
             .then((tasks) => {
                 setTasks(tasks)
             })
             .catch(console.log)
-    }
+    }, [token]
+    )
 
     /**
      * 
@@ -69,12 +73,13 @@ function LoggedContainer() {
                 application_name: application_name,
                 task_id: task_id
             }
-            const requestOptions = {
-                method: 'POST',
-                body: JSON.stringify(payload_object),
-                headers: { 'Content-Type': 'application/json' }
-            }
-            fetch(request, requestOptions).catch(console.log).then(() => getLogged())
+            const requestOptions = getPostRequestOptions(token, JSON.stringify(payload_object))
+            fetch(request, requestOptions).catch(console.log).then(
+                () => {
+                    const newLogged = logged.filter(x => x.application_name !== application_name)
+                    setLogged(newLogged)
+                }
+            )
             deSelectAll()
         }
     }
@@ -115,10 +120,11 @@ function LoggedContainer() {
     /**
      * Call `getData` upon a change in the loading state
      */
-    React.useEffect(getData, [loading])
+    React.useEffect(getData, [getLogged, getTasks])
 
     /**
-     * Returns the JSX of this page
+     * Returns the JSX of this paNL
+ge
      */
     return (
         <div onKeyDown={onKeyPressed} tabIndex={0}>

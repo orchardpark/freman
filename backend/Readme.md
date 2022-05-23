@@ -75,3 +75,5 @@ The development server can be started by running `./run_dev.sh`
 ## Production
 To run a production server, install [Gunicorn](https://gunicorn.org/).
 Next run the server `gunicorn --certfile=server.crt --keyfile=server.key -w 4 -b 0.0.0.0:5000 app:app`
+
+Also change the configuration in `example_config.py` to your configuration and rename the file to `config.py`

@@ -4,14 +4,14 @@ const dev = {
     serverURL: '127.0.0.1',
     serverPort: 5000,
     protocol: 'http',
-    githubClientId: 'ca7ea27558eb29688ed9'
+    githubClientId: '',
 }
 
 const prd = {
-    serverURL: 'freman.pro',
+    serverURL: '',
     serverPort: 5000,
     protocol: 'https',
-    githubClientId: ''
+    githubClientId: '',
 }
 
 const isDev = () => {

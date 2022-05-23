@@ -1,32 +1,26 @@
-import React from "react"
+import React, { useCallback } from "react"
 import Logged from "../logged/logged"
 import Task from "../tasks/task"
 import ReportContainerDisplay from "./reportcontainerdisplay"
 import Booked from "./booked"
-import { getEndPoint } from "../app/util"
+import { getEndPoint, getGetRequestOptions } from "../app/util"
 
+type Props = {
+    token: string
+}
 
-function ReportContainer() {
+function ReportContainer({ token }: Props) {
     const [logged, setLogged] = React.useState<Logged[]>([])
     const [tasks, setTasks] = React.useState<Task[]>([])
     const [booked, setBooked] = React.useState<Booked[]>([])
-    const [loading, setLoading] = React.useState(true)
-    /**
-     * Gets the logged items & tasks from the backend
-     */
-    const getData = () => {
-        getLogged()
-        getTasks()
-        getBooked()
-        setLoading(false)
-    }
 
     /**
      * Gets the logged items and tasks from the backend
      */
-    const getLogged = () => {
+    const getLogged = useCallback(() => {
         const request = getEndPoint('logged')
-        fetch(request)
+        const requestOptions = getGetRequestOptions(token)
+        fetch(request, requestOptions)
             .then(res => res.json())
             .then((logged) => {
                 setLogged(logged.map((loggedItem: Logged) => {
@@ -38,31 +32,37 @@ function ReportContainer() {
                 }))
             })
             .catch(console.log)
-    }
+    }, [token])
 
     /**
      * Retrieves the tasks from the backend
      * sets the `task` variable.
      */
-    const getTasks = () => {
+    const getTasks = useCallback(() => {
         const request = getEndPoint('tasks')
-        fetch(request)
+        const requestOptions = getGetRequestOptions(token)
+        fetch(request, requestOptions)
             .then(res => res.json())
             .then((tasks) => {
                 setTasks(tasks)
             })
             .catch(console.log)
-    }
+    }, [token])
 
-    const getBooked = () => {
+    const getBooked = useCallback(() => {
         const request = getEndPoint('bookedtime')
-        fetch(request)
+        const requestOptions = getGetRequestOptions(token)
+        fetch(request, requestOptions)
             .then(res => res.json())
             .then((booked) => setBooked(booked))
             .catch(console.log)
-    }
+    }, [token])
 
-    React.useEffect(getData, [loading])
+    React.useEffect(() => {
+        getLogged()
+        getTasks()
+        getBooked()
+    }, [getLogged, getTasks, getBooked])
 
     return (
         <ReportContainerDisplay logged={logged} tasks={tasks} booked={booked} />

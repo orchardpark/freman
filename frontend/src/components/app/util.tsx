@@ -21,4 +21,18 @@ const getEndPoint = (func: string, queryParams: { [param: string]: string } = {}
     }
 }
 
-export { getEndPoint }
+const getPostRequestOptions = (token: string, body: string) => {
+    return {
+        body: body,
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        method: 'POST'
+    }
+}
+
+const getGetRequestOptions = (token: string) => {
+    return {
+        headers: { 'Authorization': 'Bearer ' + token }
+    }
+}
+
+export { getEndPoint, getPostRequestOptions, getGetRequestOptions }
