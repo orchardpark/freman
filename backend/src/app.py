@@ -5,7 +5,7 @@ from flask_cors import CORS
 from entities.entity import Session, engine, Base
 from entities.loggedtime import NO_TASK, LoggedTime, LoggedTimeSchema
 from entities.task import Task, TaskSchema
-from entities.user import User, GithubUser, BlackListError, UserSchema
+from entities.user import User, GithubUser, BlackListError, UserSchema, AuthTokenType
 from sqlalchemy import func
 from typing import List
 import logging
@@ -24,17 +24,16 @@ CORS(app, origins=['http://localhost:3000', 'https://freman.pro:3000', 'https://
 Base.metadata.create_all(engine)
 
 
-def get_user_id_from_header():
+def get_token_data_from_header():
     # fetch user token
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(' ')[1]
     else:
         auth_token = ''
-    decoded_token = User.decode_auth_token(Session, auth_token)
+    user_id, user_type = User.decode_auth_token(Session, auth_token)
 
-    user_id = int(decoded_token)
-    return user_id
+    return int(user_id), user_type
 
 
 # region LOGIN
@@ -90,18 +89,37 @@ def github_login():
 @app.route('/account')
 def get_account():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
     session = Session()
     user = session.query(User).filter(User.id == user_id).first()
     session.close()
     schema = UserSchema()
     return jsonify(schema.dump(user))
+
+
+@app.route('/request_api_token')
+def request_api_token():
+    try:
+        user_id, user_type = get_token_data_from_header()
+    except BlackListError:
+        return 'Authentication token blacklisted', 401
+    except jwt.ExpiredSignatureError:
+        return 'Expired Signature', 401
+    except jwt.InvalidTokenError:
+        return 'Invalid token', 401
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
+    token = User.encode_api_token(user_id)
+    return jsonify(token)
+
 
 # endregion
 
@@ -114,13 +132,15 @@ def get_logged_time():
     :return: The logged items that have not been assigned
     """
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
 
     # fetching from the database
     session = Session()
@@ -148,13 +168,17 @@ def get_logged_time():
 @app.route('/logtime', methods=['POST'])
 def log_time():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+
+    if user_type != AuthTokenType.LOGGER:
+        return 'Wrong token type', 401
+
     logged_time = LoggedTimeSchema(only=('application_name', 'logged_time_seconds'), many=True) \
         .load(request.get_json())
     logged_time_objects = list(map(lambda x: LoggedTime(**x, user_id=user_id), logged_time))
@@ -172,13 +196,17 @@ def log_time():
 @app.route('/bookedtime')
 def get_booked_time():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
+
     # fetching from the database
     session = Session()
     booked_time_objects = session.query(LoggedTime).filter(LoggedTime.task_id != NO_TASK, LoggedTime.user_id == user_id).all()
@@ -195,13 +223,17 @@ def get_booked_time():
 @app.route('/booktime', methods=['POST'])
 def book_time():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
+
     data = request.get_json()
     application_name = data.get('application_name')
     task_id = data.get('task_id')
@@ -226,13 +258,16 @@ def book_time():
 @app.route('/removetask', methods=['POST'])
 def remove_task():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
 
     id_object = request.get_json()
     logging.info(f"Removing task {id_object['id']}, for user {user_id}")
@@ -255,13 +290,17 @@ def remove_task():
 @app.route('/togglecompletetask', methods=['POST'])
 def toggle_complete_task():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
+
     id_object = request.get_json()
     session = Session()
     task = session.query(Task).filter(Task.id == id_object['id'], Task.user_id == user_id).first()
@@ -274,7 +313,7 @@ def toggle_complete_task():
 @app.route('/createtask', methods=['POST'])
 def create_task():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
@@ -283,6 +322,10 @@ def create_task():
         return 'Invalid token', 401
     except TypeError:
         return 'Failed to decode', 401
+
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
+
     task = TaskSchema(only=('title', 'description', 'estimated_time_minutes', 'deadline')). \
         load(request.get_json())
     logging.info('Creating task {} for user {}'.format(task.get('title'), user_id))
@@ -298,13 +341,17 @@ def create_task():
 @app.route('/tasks')
 def get_tasks():
     try:
-        user_id = get_user_id_from_header()
+        user_id, user_type = get_token_data_from_header()
     except BlackListError:
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
         return 'Invalid token', 401
+
+    if user_type != AuthTokenType.USER:
+        return 'Wrong token type', 401
+
     # fetching from the database
     session = Session()
     task_objects = session.query(Task).filter(Task.user_id == user_id).all()

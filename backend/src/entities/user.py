@@ -4,6 +4,12 @@ from marshmallow import Schema, fields
 import jwt
 import config
 import datetime
+from enum import Enum
+
+
+class AuthTokenType(Enum):
+    USER = 1
+    LOGGER = 2
 
 
 class BlackListError(Exception):
@@ -39,7 +45,22 @@ class User(Entity, Base):
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=3600),
             'iat': datetime.datetime.utcnow(),
-            'sub': user_id
+            'sub': user_id,
+            'type': AuthTokenType.USER.name
+        }
+        return jwt.encode(
+            payload,
+            config.token.get('secret'),
+            algorithm='HS256'
+        )
+
+    @staticmethod
+    def encode_api_token(user_id):
+        payload = {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=3600),
+            'iat': datetime.datetime.utcnow(),
+            'sub': user_id,
+            'type': AuthTokenType.LOGGER.name
         }
         return jwt.encode(
             payload,
@@ -54,7 +75,7 @@ class User(Entity, Base):
         if is_blacklisted_token:
             raise BlackListError
         else:
-            return payload['sub']
+            return payload['sub'], payload['type']
 
 
 class GithubUser(Entity, Base):
