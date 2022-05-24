@@ -3,7 +3,8 @@ dev = {
     "server_port": 5000,
     "max_idle_time": 300,
     "sync_interval": 60,
-    "protocol": "http"
+    "protocol": "http",
+    "api_key": ""
 }
 
 prd = {
@@ -11,7 +12,8 @@ prd = {
     "server_port": 5000,
     "max_idle_time": 300,
     "sync_interval": 60,
-    "protocol": "https"
+    "protocol": "https",
+    "api_key": ""
 }
 
 

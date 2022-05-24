@@ -1,4 +1,3 @@
-import React from 'react'
 import Logged from './logged'
 import LoggedComponent from './loggedcomponent'
 import BookModal from './bookmodal'
