@@ -20,4 +20,6 @@ The Windows version should run with Python3 and requirements installed.
 
 ## How to use
 
+Rename the `config-example.py` file to `config.py` and fill in the configuration details.
+
 On Linux run the `launch.sh` script to start the logger.
