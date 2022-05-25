@@ -23,12 +23,12 @@ function AccountContainerDisplay({ name, createdDate, token, getAPIToken }: Prop
             <Row>Account {name}</Row>
             <Row>Created {createdDate}</Row>
             <Row>
-                <Col>
+                <Col xs={1}>
                     <Button onClick={getAPIToken}>
                         Generate
                     </Button>
                 </Col>
-                <Col>
+                <Col xs={3}>
                     {tokenDisplay}
                 </Col>
             </Row>
