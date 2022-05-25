@@ -4,23 +4,37 @@ import AccountData from './accountdata'
 import AccountContainerDisplay from './accountcontainerdisplay'
 type Props = {
     token: string
-    setToken: (token: string) => void
+    handleFetchError: (error: Error) => void
 }
-function AccountContainer({ token, setToken }: Props) {
+
+function AccountContainer({ token, handleFetchError }: Props) {
     const [accountData, setAccountData] = React.useState<AccountData>()
+    const [APIToken, setAPIToken] = React.useState<string>("")
     const getAccountData = () => {
         const request = getEndPoint('account')
         const requestOptions = getGetRequestOptions(token)
         fetch(request, requestOptions)
             .then(data => data.json())
             .then(data => setAccountData(data))
-            .catch(console.log)
+    }
+    const getAPIToken = () => {
+        const request = getEndPoint('request_api_token')
+        const requestOptions = getGetRequestOptions(token)
+        fetch(request, requestOptions)
+            .then(data => data.json())
+            .then(data => setAPIToken(data))
+            .catch(handleFetchError)
     }
 
-    useEffect(getAccountData, [token, setToken])
+    useEffect(getAccountData, [token])
 
     return (
-        <AccountContainerDisplay name={accountData?.name} createdDate={accountData?.created_at} />
+        <AccountContainerDisplay
+            name={accountData?.name}
+            createdDate={accountData?.created_at}
+            token={APIToken}
+            getAPIToken={getAPIToken}
+        />
     )
 }
 

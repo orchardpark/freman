@@ -6,10 +6,11 @@ import Booked from "./booked"
 import { getEndPoint, getGetRequestOptions } from "../app/util"
 
 type Props = {
-    token: string
+    token: string,
+    handleFetchError: (error: Error) => void
 }
 
-function ReportContainer({ token }: Props) {
+function ReportContainer({ token, handleFetchError }: Props) {
     const [logged, setLogged] = React.useState<Logged[]>([])
     const [tasks, setTasks] = React.useState<Task[]>([])
     const [booked, setBooked] = React.useState<Booked[]>([])
@@ -31,8 +32,8 @@ function ReportContainer({ token }: Props) {
                     }
                 }))
             })
-            .catch(console.log)
-    }, [token])
+            .catch(handleFetchError)
+    }, [token, handleFetchError])
 
     /**
      * Retrieves the tasks from the backend
@@ -46,8 +47,8 @@ function ReportContainer({ token }: Props) {
             .then((tasks) => {
                 setTasks(tasks)
             })
-            .catch(console.log)
-    }, [token])
+            .catch(handleFetchError)
+    }, [token, handleFetchError])
 
     const getBooked = useCallback(() => {
         const request = getEndPoint('bookedtime')
@@ -55,8 +56,8 @@ function ReportContainer({ token }: Props) {
         fetch(request, requestOptions)
             .then(res => res.json())
             .then((booked) => setBooked(booked))
-            .catch(console.log)
-    }, [token])
+            .catch(handleFetchError)
+    }, [token, handleFetchError])
 
     React.useEffect(() => {
         getLogged()

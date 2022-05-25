@@ -33,7 +33,7 @@ def get_token_data_from_header():
         auth_token = ''
     user_id, user_type = User.decode_auth_token(Session, auth_token)
 
-    return int(user_id), user_type
+    return int(user_id), AuthTokenType[user_type]
 
 
 # region LOGIN
@@ -91,12 +91,16 @@ def get_account():
     try:
         user_id, user_type = get_token_data_from_header()
     except BlackListError:
+        logging.error('token blacklisted')
         return 'Authentication token blacklisted', 401
     except jwt.ExpiredSignatureError:
+        logging.error('token expired')
         return 'Expired Signature', 401
     except jwt.InvalidTokenError:
+        logging.error('token invalid')
         return 'Invalid token', 401
     if user_type != AuthTokenType.USER:
+        logging.error('token type wrong', user_id, user_type)
         return 'Wrong token type', 401
     session = Session()
     user = session.query(User).filter(User.id == user_id).first()

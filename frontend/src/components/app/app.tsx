@@ -21,9 +21,19 @@ function App() {
             return ""
     })
 
+    // Lifecycle methods
+
     React.useEffect(() => {
         localStorage.setItem("_tkn", JSON.stringify(token))
     }, [token])
+
+    // Error handling
+    const handleFetchError = (error: Error) => {
+        console.log(error)
+        setToken("")
+    }
+
+    // Render
 
     if (!token) {
         return (
@@ -37,19 +47,19 @@ function App() {
     }
 
     return (
-        <div>
+        <>
             <TopBar />
             <SideNavContainer history={history} />
             <Routes>
-                <Route path="/account" element={<AccountContainer token={token} setToken={setToken} />} />
-                <Route path="/tasks" element={<TaskContainer token={token} />} />
-                <Route path="/logged" element={<LoggedContainer token={token} />} />
-                <Route path="/report" element={<ReportContainer token={token} />} />
+                <Route path="/account" element={<AccountContainer token={token} handleFetchError={handleFetchError} />} />
+                <Route path="/tasks" element={<TaskContainer token={token} handleFetchError={handleFetchError} />} />
+                <Route path="/logged" element={<LoggedContainer token={token} handleFetchError={handleFetchError} />} />
+                <Route path="/report" element={<ReportContainer token={token} handleFetchError={handleFetchError} />} />
                 <Route path="/download" element={<DownloadContainer />} />
                 <Route path="*" element={<Navigate to="/account" replace />}
                 />
             </Routes>
-        </div>
+        </>
     )
 }
 

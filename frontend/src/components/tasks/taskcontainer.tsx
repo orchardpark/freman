@@ -4,10 +4,11 @@ import Task from "./task"
 import { getEndPoint, getGetRequestOptions, getPostRequestOptions } from "../app/util"
 
 type Props = {
-    token: string
+    token: string,
+    handleFetchError: (error: Error) => void
 }
 
-function TaskContainer({ token }: Props) {
+function TaskContainer({ token, handleFetchError }: Props) {
 
     /// STATE -------------------------
     const [tasks, setTasks] = React.useState<Task[]>([])
@@ -35,7 +36,7 @@ function TaskContainer({ token }: Props) {
             const requestOptions = getPostRequestOptions(token, JSON.stringify(newTask))
             fetch(request, requestOptions)
                 .then(() => setLoading(true))
-                .catch(console.log)
+                .catch(handleFetchError)
         }
     }
 
@@ -57,7 +58,7 @@ function TaskContainer({ token }: Props) {
                 }))
                 setLoading(false)
             })
-            .catch(console.log)
+            .catch(handleFetchError)
     }
 
     const deleteTask = (id: number) => {
@@ -71,13 +72,9 @@ function TaskContainer({ token }: Props) {
                 const newTasks = tasks.filter(task => task.id !== id)
                 setTasks(newTasks)
             })
-            .catch(console.log)
+            .catch(handleFetchError)
     }
 
-    /**
-     * Call `getTasks` upon a change in the loading state
-     */
-    React.useEffect(getTasks, [token, loading])
 
     /**
      * Toggles the selected task between completed and to-do status
@@ -104,7 +101,7 @@ function TaskContainer({ token }: Props) {
                 })
                 setTasks(newTasks)
             })
-            .catch(console.log)
+            .catch(handleFetchError)
     }
 
     /**
@@ -113,6 +110,15 @@ function TaskContainer({ token }: Props) {
     const toggleCompletedFilter = () => {
         setCompleteChecked(isCompletedChecked => !isCompletedChecked)
     }
+
+    /// LIFECYCLE
+    /**
+     * Call `getTasks` upon a change in the loading state
+     */
+    React.useEffect(getTasks, [token, loading, handleFetchError])
+
+    /// RENDER
+
 
     /**
      * Returns the JSX of this page

@@ -6,10 +6,11 @@ import { UNKNOWN } from '../app/constants';
 import { getEndPoint, getGetRequestOptions, getPostRequestOptions } from '../app/util'
 
 type Props = {
-    token: string
+    token: string,
+    handleFetchError: (error: Error) => void
 }
 
-function LoggedContainer({ token }: Props) {
+function LoggedContainer({ token, handleFetchError }: Props) {
     /// STATE ---------------------------------
     const [logged, setLogged] = React.useState<Logged[]>([])
     const [tasks, setTasks] = React.useState<Task[]>([])
@@ -39,8 +40,8 @@ function LoggedContainer({ token }: Props) {
                 }
                 ))
             })
-            .catch(console.log)
-    }, [token]
+            .catch(handleFetchError)
+    }, [token, handleFetchError]
     )
 
 
@@ -56,8 +57,8 @@ function LoggedContainer({ token }: Props) {
             .then((tasks) => {
                 setTasks(tasks)
             })
-            .catch(console.log)
-    }, [token]
+            .catch(handleFetchError)
+    }, [token, handleFetchError]
     )
 
     /**
@@ -74,12 +75,14 @@ function LoggedContainer({ token }: Props) {
                 task_id: task_id
             }
             const requestOptions = getPostRequestOptions(token, JSON.stringify(payload_object))
-            fetch(request, requestOptions).catch(console.log).then(
-                () => {
-                    const newLogged = logged.filter(x => x.application_name !== application_name)
-                    setLogged(newLogged)
-                }
-            )
+            fetch(request, requestOptions)
+                .then(
+                    () => {
+                        const newLogged = logged.filter(x => x.application_name !== application_name)
+                        setLogged(newLogged)
+                    }
+                )
+                .catch(handleFetchError)
             deSelectAll()
         }
     }
