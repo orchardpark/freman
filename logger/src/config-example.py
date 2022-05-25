@@ -2,18 +2,16 @@ dev = {
     "server_url": "127.0.0.1",
     "server_port": 5000,
     "max_idle_time": 300,
-    "sync_interval": 60,
+    "sync_interval": 600,
     "protocol": "http",
-    "api_key": ""
 }
 
 prd = {
-    "server_url": "freman.pro",
+    "server_url": "",
     "server_port": 5000,
     "max_idle_time": 300,
-    "sync_interval": 60,
+    "sync_interval": 600,
     "protocol": "https",
-    "api_key": ""
 }
 
 
