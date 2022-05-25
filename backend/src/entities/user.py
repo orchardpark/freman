@@ -57,7 +57,7 @@ class User(Entity, Base):
     @staticmethod
     def encode_api_token(user_id):
         payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=3600),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=365),
             'iat': datetime.datetime.utcnow(),
             'sub': user_id,
             'type': AuthTokenType.LOGGER.name

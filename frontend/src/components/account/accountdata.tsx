@@ -1,5 +1,5 @@
 type AccountData = {
-    created_at: Date,
+    created_at: string,
     name: string
 }
 
