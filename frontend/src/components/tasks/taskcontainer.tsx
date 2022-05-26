@@ -32,7 +32,7 @@ function TaskContainer({ token, handleFetchError }: Props) {
                 'deadline': deadline
             }
 
-            const request = getEndPoint('createtask')
+            const request = getEndPoint('create_task')
             const requestOptions = getPostRequestOptions(token, JSON.stringify(newTask))
             fetch(request, requestOptions)
                 .then(() => setLoading(true))
@@ -62,7 +62,7 @@ function TaskContainer({ token, handleFetchError }: Props) {
     }
 
     const deleteTask = (id: number) => {
-        const request = getEndPoint('removetask')
+        const request = getEndPoint('remove_task')
         const id_object = {
             id: id
         }
@@ -82,7 +82,7 @@ function TaskContainer({ token, handleFetchError }: Props) {
      * @param id The id of the task
      */
     const toggleCompleteTask = (id: number) => {
-        const request = getEndPoint('togglecompletetask')
+        const request = getEndPoint('toggle_complete_task')
         const id_object = {
             id: id
         }

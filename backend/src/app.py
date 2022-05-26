@@ -40,7 +40,7 @@ def get_token_data_from_header():
 # region LOGIN
 
 
-@app.route('/github_login')
+@app.route('/v1/github_login')
 def github_login():
     """
     :return: JWT authentication token
@@ -87,7 +87,7 @@ def github_login():
         return 'Failed to obtain token', 400
 
 
-@app.route('/account')
+@app.route('/v1/account')
 def get_account():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -110,7 +110,7 @@ def get_account():
     return jsonify(schema.dump(user))
 
 
-@app.route('/request_api_token')
+@app.route('/v1/request_api_token')
 def request_api_token():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -126,7 +126,7 @@ def request_api_token():
     return jsonify(token)
 
 
-@app.route('/validate_token')
+@app.route('/v1/validate_token')
 def validate_token():
     try:
         logging.info(request.headers)
@@ -147,7 +147,7 @@ def validate_token():
 # region LOGGED TIME
 
 
-@app.route('/logged')
+@app.route('/v1/logged')
 def get_logged_time():
     """
     :return: The logged items that have not been assigned
@@ -186,7 +186,7 @@ def get_logged_time():
     return jsonify(logged_time)
 
 
-@app.route('/logtime', methods=['POST'])
+@app.route('/v1/log_time', methods=['POST'])
 def log_time():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -214,7 +214,7 @@ def log_time():
 # region BOOKED TIME
 
 
-@app.route('/bookedtime')
+@app.route('/v1/booked_time')
 def get_booked_time():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -241,7 +241,7 @@ def get_booked_time():
     return jsonify(booked_time)
 
 
-@app.route('/booktime', methods=['POST'])
+@app.route('/v1/book_time', methods=['POST'])
 def book_time():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -276,7 +276,7 @@ def book_time():
 # region TASKS
 
 
-@app.route('/removetask', methods=['POST'])
+@app.route('/v1/remove_task', methods=['POST'])
 def remove_task():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -308,7 +308,7 @@ def remove_task():
     return 'OK'
 
 
-@app.route('/togglecompletetask', methods=['POST'])
+@app.route('/v1/toggle_complete_task', methods=['POST'])
 def toggle_complete_task():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -331,7 +331,7 @@ def toggle_complete_task():
     return 'OK'
 
 
-@app.route('/createtask', methods=['POST'])
+@app.route('/v1/create_task', methods=['POST'])
 def create_task():
     try:
         user_id, user_type = get_token_data_from_header()
@@ -359,7 +359,7 @@ def create_task():
     return 'OK'
 
 
-@app.route('/tasks')
+@app.route('/v1/tasks')
 def get_tasks():
     try:
         user_id, user_type = get_token_data_from_header()

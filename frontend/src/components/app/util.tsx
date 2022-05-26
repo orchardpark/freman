@@ -5,18 +5,20 @@ import config from "../app/config"
  * @param queryParams A map of the parameters and corresponding values.
  * @returns The endpoint corresponding to given function (e.g. logged) 
  */
-const getEndPoint = (func: string, queryParams: { [param: string]: string } = {}) => {
+const getEndPoint = (func: string, queryParams: { [param: string]: string } = {}, version = "/v1") => {
     var paramArray = new Array<String>()
     for (const key in queryParams) {
         paramArray.push(key + '=' + queryParams[key])
     }
     if (paramArray.length === 0) {
-        const request = config.protocol + '://' + config.serverURL + ":" + config.serverPort + "/" + func
+        const request =
+            config.protocol + '://' + config.serverURL + ":" + config.serverPort + version + "/" + func
         return request
     }
     else {
         const paramString = '?' + paramArray.join('&')
-        const request = config.protocol + '://' + config.serverURL + ":" + config.serverPort + "/" + func + paramString
+        const request =
+            config.protocol + '://' + config.serverURL + ":" + config.serverPort + version + "/" + func + paramString
         return request
     }
 }

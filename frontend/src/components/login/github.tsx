@@ -43,7 +43,7 @@ function GithubRedirect({ setToken }: Props) {
         }
         else {
             setToken('')
-            return 'Login failed'
+            return 'Login...'
         }
     }
 

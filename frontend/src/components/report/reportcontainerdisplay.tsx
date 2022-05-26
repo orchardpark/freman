@@ -3,7 +3,7 @@ import Task from "../tasks/task"
 import Booked from "./booked"
 import Plot from 'react-plotly.js'
 import { Container, Row, Col } from 'react-bootstrap'
-import {UNPRODUCTIVE} from '../app/constants'
+import { UNPRODUCTIVE } from '../app/constants'
 
 type Props = {
 	logged: Logged[]
@@ -13,9 +13,11 @@ type Props = {
 
 function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const openTasks = tasks.filter(task => !task.is_finished)
+	const yesterday = new Date()
+	yesterday.setDate(yesterday.getDate() - 1)
 	const numOnTimeTasks = tasks.filter(
 		task =>
-			(!task.is_finished && new Date(task.deadline) >= new Date()) ||
+			(!task.is_finished && new Date(task.deadline) >= yesterday) ||
 			(task.is_finished && new Date(task.deadline) >= new Date(task.updated_at))
 	).length
 
@@ -58,17 +60,17 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const timeByApplication = () => {
 		var startMap: { [application_name: string]: number } = {}
 		const timeByApplication = [...logged, ...booked]
-		.reduce((timeSoFar, { application_name, logged_time_seconds }) => {
-			if (!timeSoFar[application_name]) timeSoFar[application_name] = 0
-			timeSoFar[application_name] += logged_time_seconds / 60
-			return timeSoFar;
-		}, startMap)
+			.reduce((timeSoFar, { application_name, logged_time_seconds }) => {
+				if (!timeSoFar[application_name]) timeSoFar[application_name] = 0
+				timeSoFar[application_name] += logged_time_seconds / 60
+				return timeSoFar;
+			}, startMap)
 		return timeByApplication;
 	}
 
 	const expectedTimeByMonth = () => {
-		var startMap: {[monthString: string]: number} = {}
-		const expectedTimeByMonth = tasks.reduce((timeSoFar, {deadline, estimated_time_minutes})=>{
+		var startMap: { [monthString: string]: number } = {}
+		const expectedTimeByMonth = tasks.reduce((timeSoFar, { deadline, estimated_time_minutes }) => {
 			const monthString = getDateMonthStr(new Date(deadline))
 			if (!timeSoFar[monthString]) timeSoFar[monthString] = 0
 			timeSoFar[monthString] += estimated_time_minutes
@@ -81,15 +83,15 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	}
 
 	const actualTimeByMonth = () => {
-		var startMap: {[monthString: string]: number} = {}
+		var startMap: { [monthString: string]: number } = {}
 		const bookedTimeByMonth = booked
-		.filter(item=>item.task_id !== UNPRODUCTIVE)
-		.reduce((loggedSoFar, {created_at, logged_time_seconds}) => {
-			const monthStr = getDateMonthStr(new Date(created_at))
-			if(!loggedSoFar[monthStr]) loggedSoFar[monthStr] = 0
-			loggedSoFar[monthStr] += logged_time_seconds/60
-			return loggedSoFar;
-		}, startMap)
+			.filter(item => item.task_id !== UNPRODUCTIVE)
+			.reduce((loggedSoFar, { created_at, logged_time_seconds }) => {
+				const monthStr = getDateMonthStr(new Date(created_at))
+				if (!loggedSoFar[monthStr]) loggedSoFar[monthStr] = 0
+				loggedSoFar[monthStr] += logged_time_seconds / 60
+				return loggedSoFar;
+			}, startMap)
 		return bookedTimeByMonth
 	}
 

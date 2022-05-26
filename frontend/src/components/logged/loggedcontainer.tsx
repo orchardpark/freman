@@ -69,7 +69,7 @@ function LoggedContainer({ token, handleFetchError }: Props) {
      */
     const bookTime = (application_name: string, task_id: number) => {
         if (task_id !== UNKNOWN) {
-            const request = getEndPoint('booktime')
+            const request = getEndPoint('book_time')
             const payload_object = {
                 application_name: application_name,
                 task_id: task_id

@@ -1,8 +1,8 @@
 #!/bin/sh
 echo Please enter tye API key obtained from the 'Accounts' page.
 read api_token
-echo Checking api toke $api_token
-URL="http://localhost:5000/validate_token"
+echo Checking api token $api_token
+URL="http://freman.pro:5000/validate_token"
 header="Authorization: Bearer "$api_token
 response=$(curl -s -w "%{http_code}" -H "$header" $URL)
 http_code=$(tail -n1 <<< "$response")
@@ -18,4 +18,6 @@ echo Installing dependencies
 pacman -S xdotool --noconfirm
 echo Getting files
 echo Create API key file
-echo Installation complete
+touch logger/api_key.txt
+cat $api_token > logger/api_key.txt
+echo Installation complete!

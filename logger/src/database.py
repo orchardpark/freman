@@ -21,6 +21,6 @@ def send_to_database(
     }
     data = list(map(lambda x: x.__dict__, tracked_programs))
     log.info('Sending tracked data to backend: {}'.format(str(data)))
-    res = requests.post("{}://{}:{}/logtime".format(protocol, server_url, server_port), json=data, headers=headers)
+    res = requests.post("{}://{}:{}/v1/log_time".format(protocol, server_url, server_port), json=data, headers=headers)
     log.debug(res)
     return res.status_code == 200

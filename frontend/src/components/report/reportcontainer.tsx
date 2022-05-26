@@ -51,7 +51,7 @@ function ReportContainer({ token, handleFetchError }: Props) {
     }, [token, handleFetchError])
 
     const getBooked = useCallback(() => {
-        const request = getEndPoint('bookedtime')
+        const request = getEndPoint('booked_time')
         const requestOptions = getGetRequestOptions(token)
         fetch(request, requestOptions)
             .then(res => res.json())
