@@ -29,6 +29,7 @@ def get_token_data_from_header():
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(' ')[1]
+        logging.info('Getting token {}'.format(auth_token))
     else:
         auth_token = ''
     user_id, user_type = User.decode_auth_token(Session, auth_token)
@@ -124,6 +125,22 @@ def request_api_token():
     token = User.encode_api_token(user_id)
     return jsonify(token)
 
+
+@app.route('/validate_token')
+def validate_token():
+    try:
+        logging.info(request.headers)
+        user_id, user_type = get_token_data_from_header()
+    except BlackListError:
+        logging.info("Blacklisted token")
+        return 'Authentication token blacklisted', 401
+    except jwt.ExpiredSignatureError:
+        logging.info("Expired token")
+        return 'Expired Signature', 401
+    except jwt.InvalidTokenError:
+        logging.info("Invalid token")
+        return 'Invalid token', 401
+    return 'OK: {} token'.format(user_type.name), 200
 
 # endregion
 

@@ -1,6 +1,6 @@
 import requests
 import logging
-import os
+import api_reader
 from typing import List
 from data import TrackedApplication
 log = logging.getLogger(__name__)
@@ -11,7 +11,7 @@ def send_to_database(
         server_url: str,
         server_port: str,
         protocol: str) -> bool:
-    api_key = os.getenv('FREMAN_API_KEY')
+    api_key = api_reader.get_key()
     if not api_key:
         log.error('API key not set in Environment variables!')
     headers = {

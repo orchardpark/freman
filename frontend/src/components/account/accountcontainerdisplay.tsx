@@ -37,6 +37,10 @@ function AccountContainerDisplay({ name, createdDate, token, getAPIToken }: Prop
                     {tokenDisplay}
                 </Col>
             </Row>
+            <Row>
+                Problems or suggestions? Post them on
+                <a href='https://github.com/orchardpark/freman/issues'>&nbsp;Github</a>
+            </Row>
         </Container>
     )
 }

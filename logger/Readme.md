@@ -8,11 +8,10 @@ The logger runs in the background and observes which windows are active and peri
 
 ### Linux
 
-On Linux you need the [xdotool](http://manpages.ubuntu.com/manpages/trusty/man1/xdotool.1.html), which allows for obtaining the active window. Furthermore [xprintidle](https://github.com/g0hl1n/xprintidle) is needed to get the system idle time.
+On Linux you need the [xdotool](http://manpages.ubuntu.com/manpages/trusty/man1/xdotool.1.html), which allows for obtaining the active window. 
 
 On Ubuntu these can be installed by running
 * `apt install xdotool`
-* `apt install xprintidle`
 
 ### Windows
 

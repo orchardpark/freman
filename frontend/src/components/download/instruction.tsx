@@ -6,15 +6,19 @@ const linuxInstruction =
             The software needs to be running in order to log time spend on applications.
             If you want to automatically run the program, you can use your OS's built-in task scheduler.
         </div>
-        <br/>
+        <br />
         <div>
             <h2>Installation instructions. </h2>
+            <h5>Detected Operating System: Linux</h5>
             <ol>
                 <li>Download and unzip the archive.</li>
-                <li>Move the key.txt (obtain in the account page) and move it to the folder.</li>
+                <li>Obtain an API key in the `Account` tab</li>
                 <li>Open a terminal and navigate to the extracted folder.</li>
                 <li>Run: <code>chmod +x distro_installer.sh</code>, replace distro by your linux distribution (e.g. ubuntu).</li>
-                <li>Run: <code>sudo ./distro_installer.sh</code></li>
+                <li>Run: <code>sudo ./distro_installer.sh</code> and follow the instructions.</li>
+                <li>Move into the logger directory <code>cd logger</code></li>
+                <li>Run the program by running: <code>./logger</code></li>
+                <li>Optional: use a tool like <code>cron</code> to schedule fremanlogger to run on startup.</li>
             </ol>
         </div>
     </div>
@@ -28,6 +32,14 @@ const windowsInstruction =
             If you want to automatically run the program, you can use your OS's built-in task scheduler.
         </div>
         <br />
+        <div>
+            <h2>Installation instructions. </h2>
+            <h5>Detected Operating System: Windows</h5>
+            <ol>
+                <li>Download the installer.</li>
+                <li>Obtain an API key in the `Account` tab</li>
+            </ol>
+        </div>
     </div>
 
 export {

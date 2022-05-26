@@ -8,7 +8,7 @@ type Props = {
 }
 
 function AccountContainer({ token, handleFetchError }: Props) {
-    const [accountData, setAccountData] = React.useState<AccountData>({ name: "sdd", created_at: "fuck" })
+    const [accountData, setAccountData] = React.useState<AccountData>({ name: "", created_at: "" })
     const [APIToken, setAPIToken] = React.useState<string>("")
     const getAccountData = () => {
         const request = getEndPoint('account')

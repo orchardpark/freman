@@ -4,9 +4,11 @@ log = logging.getLogger(__name__)
 
 # Active window functions
 
+
 def get_pname(id) -> str:
     p = subprocess.Popen(["ps -o cmd= {}".format(id)], stdout=subprocess.PIPE, shell=True)
     return p.communicate()[0].decode('utf-8').strip()
+
 
 def get_active_application_name() -> str:
     p = subprocess.Popen(['xdotool', 'getwindowfocus'], stdout=subprocess.PIPE)
@@ -24,14 +26,16 @@ def get_active_window_pid() -> int:
     pid = int(output)
     return pid
 
+
 def get_active_window_title() -> str:
     p = subprocess.Popen(['xdotool', 'getwindowfocus', 'getwindowname'], stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output, _ = p.communicate()
     wname = output.decode('utf-8').strip()
     return wname
 
+
 def get_idle_time_s() -> int:
     p = subprocess.Popen(['xprintidle'], stdout=subprocess.PIPE)
     output, _ = p.communicate()
-    return int(output)/1000
+    return int(int(output)/1000)

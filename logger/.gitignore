@@ -2,3 +2,4 @@ build/
 dist/
 logger.spec
 src/config.py
+api_key.txt
