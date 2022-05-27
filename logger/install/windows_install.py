@@ -1,5 +1,6 @@
 import requests
 import wget
+import zipfile
 
 api_key = input("Please enter the API key obtained from the Accounts page")
 print("Checking API token", api_key)
@@ -15,6 +16,9 @@ else:
     quit(1)
 
 print("Getting files")
+wget.download('https://github.com/orchardpark/freman/releases/download/v1/logger_windows_v1.zip')
+with zipfile.ZipFile('logger_windows_v1.zip') as zip_ref:
+    zip_ref.extractall('.')
 print("Creating API key file")
 with open('logger/api_key.txt', 'w') as fout:
     print(api_key, file=fout)

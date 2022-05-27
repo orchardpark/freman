@@ -4,7 +4,10 @@ import { GithubLogin } from './github'
 function Login() {
 
     return (
-        <GithubLogin />
+        <>
+            <h1>Please login using one of the following methods</h1>
+            <GithubLogin />
+        </>
     )
 }
 
