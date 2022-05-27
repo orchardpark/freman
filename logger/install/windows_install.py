@@ -1,4 +1,5 @@
 import requests
+import wget
 
 api_key = input("Please enter the API key obtained from the Accounts page")
 print("Checking API token", api_key)
