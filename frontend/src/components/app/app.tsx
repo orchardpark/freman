@@ -33,6 +33,10 @@ function App() {
         setToken("")
     }
 
+    const logOut = () => {
+        setToken("")
+    }
+
     // Render
 
     if (!token) {
@@ -51,7 +55,7 @@ function App() {
             <TopBar />
             <SideNavContainer history={history} />
             <Routes>
-                <Route path="/account" element={<AccountContainer token={token} handleFetchError={handleFetchError} />} />
+                <Route path="/account" element={<AccountContainer token={token} handleFetchError={handleFetchError} logOut={logOut} />} />
                 <Route path="/tasks" element={<TaskContainer token={token} handleFetchError={handleFetchError} />} />
                 <Route path="/logged" element={<LoggedContainer token={token} handleFetchError={handleFetchError} />} />
                 <Route path="/report" element={<ReportContainer token={token} handleFetchError={handleFetchError} />} />

@@ -5,10 +5,11 @@ type Props = {
     name: string,
     createdDate: string,
     token: string,
-    getAPIToken: () => void
+    getAPIToken: () => void,
+    logOut: () => void
 }
 
-function AccountContainerDisplay({ name, createdDate, token, getAPIToken }: Props) {
+function AccountContainerDisplay({ name, createdDate, token, getAPIToken, logOut }: Props) {
     let tokenDisplay;
     if (token === '') {
         tokenDisplay = <p>Click button to generate new API token for the logger application</p>
@@ -36,6 +37,9 @@ function AccountContainerDisplay({ name, createdDate, token, getAPIToken }: Prop
                 <Col xs={3}>
                     {tokenDisplay}
                 </Col>
+            </Row>
+            <Row>
+                <Button onClick={logOut}> Log out</Button>
             </Row>
             <Row>
                 Problems or suggestions? Post them on

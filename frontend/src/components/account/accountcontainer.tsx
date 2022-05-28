@@ -4,10 +4,11 @@ import AccountData from './accountdata'
 import AccountContainerDisplay from './accountcontainerdisplay'
 type Props = {
     token: string
-    handleFetchError: (error: Error) => void
+    handleFetchError: (error: Error) => void,
+    logOut: () => void
 }
 
-function AccountContainer({ token, handleFetchError }: Props) {
+function AccountContainer({ token, handleFetchError, logOut }: Props) {
     const [accountData, setAccountData] = React.useState<AccountData>({ name: "", created_at: "" })
     const [APIToken, setAPIToken] = React.useState<string>("")
     const getAccountData = () => {
@@ -34,6 +35,7 @@ function AccountContainer({ token, handleFetchError }: Props) {
             createdDate={accountData.created_at.split('T')[0]}
             token={APIToken}
             getAPIToken={getAPIToken}
+            logOut={logOut}
         />
     )
 }
