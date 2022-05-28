@@ -10,10 +10,10 @@ type Props = {
 function DownloadContainerDisplay({ platform }: Props) {
     const downloadLink = () => {
         if (platform === "Linux") {
-            return "linux_installer.zip"
+            return "linux_install.zip"
         }
         else if (platform === "Windows") {
-            return "logger_installer.exe"
+            return "windows_install.zip"
         }
         else {
             return ""

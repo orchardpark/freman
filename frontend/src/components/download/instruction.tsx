@@ -38,11 +38,10 @@ const windowsInstruction =
             <ol>
                 <li>Download the archive and unzip it.</li>
                 <li>Obtain an API key in the `Account` tab</li>
-                <li>Open the unzipped folder and run the windows_installer.exe</li>
+                <li>Open the unzipped folder and run the windows_install.exe</li>
                 <li>Wait for the installer to finish and open the logger folder.</li>
                 <li>Run the logger.exe program.</li>
                 <li>Optional: schedule the logger.exe to run with Windows Task Scheduler.</li>
-
             </ol>
         </div>
     </div>
