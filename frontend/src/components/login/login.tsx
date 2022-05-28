@@ -1,4 +1,3 @@
-import React from 'react'
 import { GithubLogin } from './github'
 
 function Login() {
