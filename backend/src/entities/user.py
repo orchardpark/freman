@@ -33,7 +33,7 @@ class BlackListToken(Entity, Base):
 
 
 class User(Entity, Base):
-    __tablename__ = 'user'
+    __tablename__ = 'fremanuser'
     name = Column(String)
 
     def __init__(self, name):
@@ -81,7 +81,7 @@ class User(Entity, Base):
 class GithubUser(Entity, Base):
     __tablename__ = 'githubuser'
     login = Column(String, nullable=False)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('fremanuser.id'))
     name = Column(String)
     company = Column(String)
     twitter_username = Column(String)

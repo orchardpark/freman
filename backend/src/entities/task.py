@@ -11,7 +11,7 @@ class Task(Entity, Base):
     estimated_time_minutes = Column(Integer)
     deadline = Column(DateTime)
     is_finished = Column(Boolean)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('fremanuser.id'))
 
     def __init__(self, title, description, estimated_time_minutes, deadline, user_id, is_finished=False):
         super().__init__()

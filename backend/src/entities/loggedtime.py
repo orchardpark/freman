@@ -14,7 +14,7 @@ class LoggedTime(Entity, Base):
     logged_time_seconds = Column(Integer)
     task_id = Column(Integer)
     category = Column(Integer)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('fremanuser.id'))
 
     def __init__(self, **kwargs):
         super().__init__()
