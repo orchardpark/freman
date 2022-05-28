@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 # creating the Flask application
 app = Flask(__name__)
 
-CORS(app, origins=['http://localhost:3000', 'https://freman.pro:443', 'https://localhost:443'])
+CORS(app, origins=config.token['cors'])
 
 # if needed, generate database schema
 Base.metadata.create_all(engine)

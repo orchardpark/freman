@@ -10,5 +10,6 @@ github = {
 }
 
 token = {
-  'secret': 'tokensecret'
+  'secret': 'tokensecret',
+  'cors': ['http://localhost:3000']
 }
