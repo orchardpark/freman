@@ -22,5 +22,7 @@ wget https://github.com/orchardpark/freman/releases/download/v1/logger_linux_v1.
 unzip logger_linux_v1
 echo Create API key file
 touch logger/api_key.txt
-cat $api_token > logger/api_key.txt
+echo "$api_token" > logger/api_key.txt
+echo Cleaning up
+rm logger_linux_v1.zip
 echo Installation complete!
