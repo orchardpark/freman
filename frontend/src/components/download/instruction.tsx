@@ -8,8 +8,8 @@ const linuxInstruction =
         </div>
         <br />
         <div>
-            <h2>Installation instructions. </h2>
             <h5>Detected Operating System: Linux</h5>
+            <h2>Installation instructions. </h2>
             <ol>
                 <li>Download and unzip the archive.</li>
                 <li>Obtain an API key in the `Account` tab</li>
@@ -19,6 +19,10 @@ const linuxInstruction =
                 <li>Move into the logger directory <code>cd logger</code></li>
                 <li>Run the program by running: <code>./logger</code></li>
                 <li>Optional: use a tool like <code>cron</code> to schedule fremanlogger to run on startup.</li>
+            </ol>
+            <h2>Alternative instructions. </h2>
+            <ol>
+                <li>Download the logger from github and configure it to run with https://freman.pro</li>
             </ol>
         </div>
     </div>
@@ -33,15 +37,19 @@ const windowsInstruction =
         </div>
         <br />
         <div>
-            <h2>Installation instructions. </h2>
             <h5>Detected Operating System: Windows</h5>
+            <h2>Installation instructions. </h2>
             <ol>
                 <li>Download the archive and unzip it.</li>
                 <li>Obtain an API key in the `Account` tab</li>
-                <li>Open the unzipped folder and run the windows_install.exe</li>
+                <li>Open the unzipped folder and run the windows_install.exe. The code is unsigned, so you will need to accept.</li>
                 <li>Wait for the installer to finish and open the logger folder.</li>
-                <li>Run the logger.exe program.</li>
+                <li>Run the logger.exe program. Again, accept running the unsigend executable.</li>
                 <li>Optional: schedule the logger.exe to run with Windows Task Scheduler.</li>
+            </ol>
+            <h2>Alternative instructions. </h2>
+            <ol>
+                <li>Download the logger from github and configure it to run with https://freman.pro</li>
             </ol>
         </div>
     </div>
