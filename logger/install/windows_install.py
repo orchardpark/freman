@@ -1,8 +1,9 @@
 import requests
 import wget
 import zipfile
+import os
 
-api_key = input("Please enter the API key obtained from the Accounts page")
+api_key = input("Please enter the API key obtained from the Accounts page: ")
 print("Checking API token", api_key)
 headers = {
         'Authorization': 'Bearer {}'.format(api_key)
@@ -22,7 +23,6 @@ with zipfile.ZipFile('logger_windows_v1.zip') as zip_ref:
 print("Creating API key file")
 with open('logger/api_key.txt', 'w') as fout:
     print(api_key, file=fout)
+os.remove('logger_windows_v1.zip')
+
 print("Installation complete")
-
-
-
