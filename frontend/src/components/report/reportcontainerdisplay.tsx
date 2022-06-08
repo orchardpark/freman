@@ -55,7 +55,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 
 	/**
 	 * 
-	 * @returns Total time by application (booked + logged)
+	 * @returns Total time by application (booked + logged), for the top 7 apps
 	 */
 	const timeByApplication = () => {
 		var startMap: { [application_name: string]: number } = {}
@@ -65,6 +65,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 				timeSoFar[application_name] += logged_time_seconds / 60
 				return timeSoFar;
 			}, startMap)
+		Object.values(timeByApplication).sort((a, b) => b - a).slice(0, 7).at(-1)
 		return timeByApplication;
 	}
 
