@@ -35,7 +35,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const getDateMonthStr = (d: Date) => {
 		let monthNames = ["January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November", "December"];
-		return monthNames[d.getMonth()]
+		return d.getFullYear() + "--" + d.getMonth()
 	}
 
 	/**
@@ -65,8 +65,15 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 				timeSoFar[application_name] += logged_time_seconds / 60
 				return timeSoFar;
 			}, startMap)
-		Object.values(timeByApplication).sort((a, b) => b - a).slice(0, 7).at(-1)
-		return timeByApplication;
+		const filterVal = Object.values(timeByApplication).sort((a, b) => b - a).slice(0, 7).at(-1)
+		if (filterVal !== undefined) {
+			const filteredTimeByApplication = Object.entries(timeByApplication)
+				.filter(([k, v]) => v >= filterVal).map(([k, v]) => ({ [k]: v }))
+			return filteredTimeByApplication
+		}
+		else {
+			return timeByApplication;
+		}
 	}
 
 	const expectedTimeByMonth = () => {
@@ -76,8 +83,6 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 			if (!timeSoFar[monthString]) timeSoFar[monthString] = 0
 			timeSoFar[monthString] += estimated_time_minutes
 			return timeSoFar;
-
-
 		}, startMap)
 		return expectedTimeByMonth;
 
@@ -201,8 +206,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 								mode: 'lines+markers',
 								name: 'actual',
 								x: Object.keys(actualTimeByMonth()),
-								y: Object.values(actualTimeByMonth())
-
+								y: Object.values(actualTimeByMonth()),
 							},
 						]}
 						layout={{
