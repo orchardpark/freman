@@ -29,13 +29,13 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const getDateDayStr = (d: Date) => {
 		let monthNames = ["January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November", "December"];
-		return monthNames[d.getMonth() + 1] + " " + d.getDay()
+		return monthNames[d.getMonth()] + " " + d.getDay()
 	}
 
 	const getDateMonthStr = (d: Date) => {
 		let monthNames = ["January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November", "December"];
-		return monthNames[d.getMonth() + 1]
+		return monthNames[d.getMonth()]
 	}
 
 	/**
