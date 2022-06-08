@@ -27,12 +27,17 @@ function AccountContainer({ token, handleFetchError, logOut }: Props) {
             .catch(handleFetchError)
     }
 
+    const getCreatedDate = () => {
+        if (accountData.created_at === undefined) return ""
+        else return accountData.created_at.split('T')[0]
+    }
+
     useEffect(getAccountData, [token])
 
     return (
         <AccountContainerDisplay
             name={accountData.name}
-            createdDate={accountData.created_at.split('T')[0]}
+            createdDate={getCreatedDate()}
             token={APIToken}
             getAPIToken={getAPIToken}
             logOut={logOut}
