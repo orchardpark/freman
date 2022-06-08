@@ -31,7 +31,6 @@ function GithubRedirect({ setToken }: Props) {
                 }
                 )
                 .then(data => {
-                    console.log('token returned ' + data)
                     setToken(data)
 
                 })
