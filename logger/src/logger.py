@@ -48,4 +48,6 @@ if __name__ == '__main__':
                 tracked = {}
             time_of_last_update = time.time()
 
+        time.sleep(1)
+
 
