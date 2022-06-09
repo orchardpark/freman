@@ -168,7 +168,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 						]}
 						layout={{
 							title: "Unbooked time (minutes) by date",
-							width: 800,
+							width: 400,
 							height: 400
 						}}
 					/>

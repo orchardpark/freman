@@ -1,4 +1,3 @@
-import React from "react"
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import './sidenavcontainer.css'
 import 'font-awesome/css/font-awesome.min.css';
