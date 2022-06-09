@@ -33,8 +33,8 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	}
 
 	const getDateMonthStr = (d: Date) => {
-		let monthNames = ["January", "February", "March", "April", "May",
-			"June", "July", "August", "September", "October", "November", "December"];
+		//let monthNames = ["January", "February", "March", "April", "May",
+		//	"June", "July", "August", "September", "October", "November", "December"];
 		return d.getFullYear() + "--" + d.getMonth()
 	}
 
@@ -67,12 +67,12 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 			}, startMap)
 		const filterVal = Object.values(timeByApplication).sort((a, b) => b - a).slice(0, 7).at(-1)
 		if (filterVal !== undefined) {
-			const filteredTimeByApplication = Object.entries(timeByApplication)
-				.filter(([k, v]) => v >= filterVal).map(([k, v]) => ({ [k]: v }))
+			const filteredTimeByApplication = Object.fromEntries(Object.entries(timeByApplication)
+				.filter(([k, v]) => v >= filterVal))
 			return filteredTimeByApplication
 		}
 		else {
-			return timeByApplication;
+			return timeByApplication
 		}
 	}
 
