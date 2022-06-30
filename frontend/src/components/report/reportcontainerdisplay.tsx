@@ -76,6 +76,10 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 		}
 	}
 
+	/**
+	 * 
+	 * @returns The expected time to complete the tasks ordered by month
+	 */
 	const expectedTimeByMonth = () => {
 		var startMap: { [monthString: string]: number } = {}
 		const expectedTimeByMonth = tasks.reduce((timeSoFar, { deadline, estimated_time_minutes }) => {
@@ -88,6 +92,10 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 
 	}
 
+	/**
+	 * 
+	 * @returns The actual time booked on tasks ordered by month
+	 */
 	const actualTimeByMonth = () => {
 		var startMap: { [monthString: string]: number } = {}
 		const bookedTimeByMonth = booked
@@ -101,12 +109,18 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 		return bookedTimeByMonth
 	}
 
+	/**
+	 * Total time logged on tasks
+	 */
 	const productiveTime = booked
 		.filter(item => item.task_id !== UNPRODUCTIVE)
 		.reduce((bookedTime, { logged_time_seconds }) => {
 			return bookedTime + logged_time_seconds;
 		}, 0)
 
+	/**
+	 * Total time logged on unproductive
+	 */
 	const unProductiveTime = booked
 		.filter(item => item.task_id === UNPRODUCTIVE)
 		.reduce((bookedTime, { logged_time_seconds }) => {
@@ -163,7 +177,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 							{
 								type: 'bar',
 								x: Object.keys(loggedByDate()),
-								y: Object.values(loggedByDate()).map((item: number) => Math.round(item))
+								y: Object.values(loggedByDate()).map((item: number) => Math.round(item)),
 							}
 						]}
 						layout={{
