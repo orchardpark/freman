@@ -35,7 +35,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const getDateMonthStr = (d: Date) => {
 		//let monthNames = ["January", "February", "March", "April", "May",
 		//	"June", "July", "August", "September", "October", "November", "December"];
-		return d.getFullYear() + "--" + d.getMonth()
+		return d.getFullYear() + "-" + d.getMonth()
 	}
 
 	/**
@@ -94,7 +94,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 
 	/**
 	 * 
-	 * @returns The actual time booked on tasks ordered by month
+	 * @returns The actual time booked ordered by month.
 	 */
 	const actualTimeByMonth = () => {
 		var startMap: { [monthString: string]: number } = {}
@@ -210,14 +210,14 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 					<Plot
 						data={[
 							{
-								mode: 'lines+markers',
+								type: 'bar',
 								name: 'expected',
 								x: Object.keys(expectedTimeByMonth()),
 								y: Object.values(expectedTimeByMonth())
 
 							},
 							{
-								mode: 'lines+markers',
+								type: 'bar',
 								name: 'actual',
 								x: Object.keys(actualTimeByMonth()),
 								y: Object.values(actualTimeByMonth()),
