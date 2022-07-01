@@ -22,3 +22,5 @@ The Windows version should run with Python3 and requirements installed.
 Rename the `config-example.py` file to `config.py` and fill in the configuration details.
 
 On Linux run the `launch.sh` script to start the logger.
+
+In order to run in development mode. Navigate to the `src` folder and run using `python logger.py --development`.
