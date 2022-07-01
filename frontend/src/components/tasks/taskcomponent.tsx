@@ -57,7 +57,7 @@ function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id,
         sameDay: function (d1: Date, d2: Date) {
             return (d1.getFullYear() === d2.getFullYear()
                 && d1.getMonth() === d2.getMonth()
-                && d1.getDate === d2.getDate)
+                && d1.getDate() === d2.getDate())
         }
     }
 
@@ -67,15 +67,15 @@ function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id,
      */
     const deadlineText = () => {
         // check if more than a month overdue
-        if (DateDiff.inDays(new Date(), deadline) > 30) return <p style={{ color: "#ff0000" }}>Overdue: 30+ days</p>
+        if (DateDiff.inDays(new Date(), deadline) > 30) return <p style={{ color: "#00ff80" }}>Due in 30+ days</p>
         // check if due in more than a month
-        else if (DateDiff.inDays(deadline, new Date()) > 30) return <p style={{ color: "#00ff80" }}>Due in 30+ days</p>
+        else if (DateDiff.inDays(deadline, new Date()) > 30) return <p style={{ color: "#ff0000" }}>Overdue: 30+ days</p>
         // check if on the same day
         else if (DateDiff.sameDay(deadline, new Date())) return <p style={{ color: "#ff8000" }}>Due today</p>
         // diff in days
         else {
             const dayDiff = DateDiff.inDays(deadline, new Date())
-            if (dayDiff >= 0) return <p style={{ color: "#00ff00" }}>{"Due in " + dayDiff + " days"}</p>
+            if (dayDiff < 0) return <p style={{ color: "#00ff00" }}>{"Due in " + -dayDiff + " days"}</p>
             else return <p style={{ color: "#ff4000" }}>{"Overdue: " + dayDiff + " days"}</p>
         }
     }
