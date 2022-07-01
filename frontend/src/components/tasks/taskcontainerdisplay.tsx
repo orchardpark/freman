@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import NewTaskModal from "./newtaskmodal"
 import CheckBox from "./checkbox"
 import TaskComponent from "./taskcomponent"
@@ -18,8 +18,8 @@ type Props = {
 
 function TaskContainerDisplay({ tasks, loading, toggleCompleteTask, deleteTask, isCompletedChecked, toggleCompletedFilter, addNewTask }: Props) {
 
-    const target = React.useRef<HTMLDivElement>(null)
-    const [taskModalOpen, setTaskModalOpen] = React.useState(false)
+    const target = useRef<HTMLDivElement>(null)
+    const [taskModalOpen, setTaskModalOpen] = useState(false)
 
     /**
      * 
@@ -108,7 +108,11 @@ function TaskContainerDisplay({ tasks, loading, toggleCompleteTask, deleteTask, 
                 <Row className='taskrow'>
                     <Col></Col>
                     <Col>
-                        <NewTaskModal addNewTask={addNewTask} taskModalOpen={taskModalOpen} setTaskModalOpen={(isOpen: boolean) => setTaskModalOpen(isOpen)} />
+                        <NewTaskModal
+                            addNewTask={addNewTask}
+                            taskModalOpen={taskModalOpen}
+                            setTaskModalOpen={(isOpen: boolean) => setTaskModalOpen(isOpen)}
+                        />
                     </Col>
                     <Col></Col>
                 </Row>

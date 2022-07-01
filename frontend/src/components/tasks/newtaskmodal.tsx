@@ -1,6 +1,6 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import DatePicker from "react-datepicker";
-import {Overlay, Tooltip, Modal} from 'react-bootstrap'
+import { Overlay, Tooltip, Modal } from 'react-bootstrap'
 import "./datepicker.css"
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,11 +11,11 @@ type Props = {
     setTaskModalOpen: (isOpen: boolean) => void,
 }
 
-function NewTaskModal({addNewTask, taskModalOpen, setTaskModalOpen}: Props){
-    const [title, setTitle] = React.useState("")
-    const [description, setDescription] = React.useState("")
-    const [estimatedTimeMinutes, setEstimatedTimeMinutes] = React.useState(0)
-    const [deadline, setDeadline] = React.useState(new Date())
+function NewTaskModal({ addNewTask, taskModalOpen, setTaskModalOpen }: Props) {
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [estimatedTimeMinutes, setEstimatedTimeMinutes] = useState(0)
+    const [deadline, setDeadline] = useState(new Date())
     const [showTooltip, setShowTooltip] = useState(false)
     const target = useRef(null);
 

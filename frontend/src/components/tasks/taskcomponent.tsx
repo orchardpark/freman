@@ -8,7 +8,8 @@ type Props = {
     deleteTask: (id: number) => void,
     title: string,
     id: number,
-    deadline: Date
+    deadline: Date,
+    description: string
 }
 
 /**
@@ -17,9 +18,10 @@ type Props = {
  * @param param0 
  * @returns The task component
  */
-function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id, deadline }: Props) {
+function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id, deadline, description }: Props) {
 
-    const [showTooltip, setShowTooltip] = React.useState(false)
+    const [showButtonTooltip, setShowButtonTooltip] = React.useState(false)
+    const [showTaskTooltip, setShowTaskTooltip] = React.useState(false)
     const [toolTipText, setToolTipText] = React.useState("")
     const isCompleted = is_finished
     const todoClass = (isCompleted) ? 'completed-task' : 'task'
@@ -82,7 +84,14 @@ function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id,
 
     return (
         <div className={todoClass} ref={target}>
-            <Overlay target={target.current} show={showTooltip} placement='right'>
+            <Overlay target={target.current} show={showButtonTooltip} placement='right'>
+                {(props) => (
+                    <Tooltip id="overlay-tooltip" {...props}>
+                        {toolTipText}
+                    </Tooltip>
+                )}
+            </Overlay>
+            <Overlay target={target} show={!showButtonTooltip && showTaskTooltip} placement='top'>
                 {(props) => (
                     <Tooltip id="overlay-tooltip" {...props}>
                         {toolTipText}
@@ -92,16 +101,22 @@ function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id,
             <div className={'task-field-left'}>
                 {deadlineText()}
             </div>
-            <p className={'task-field-left-2'}>{title}</p>
+            <p
+                className={'task-field-left-2'}
+                onMouseEnter={() => { setToolTipText(description); setShowTaskTooltip(true) }}
+                onMouseLeave={() => { setShowTaskTooltip(false) }}
+            >
+                {title}
+            </p>
             <button style={{ float: "right", color: "green" }} className={'fa  fa-check'}
                 onClick={e => toggleCompleteTask(id)}
-                onMouseEnter={() => { setToolTipText("Mark task as completed"); setShowTooltip(true) }}
-                onMouseLeave={() => { setShowTooltip(false) }}
+                onMouseEnter={() => { setToolTipText("Mark task as completed"); setShowButtonTooltip(true) }}
+                onMouseLeave={() => { setShowButtonTooltip(false) }}
             />
             <button style={{ float: 'right', color: "red" }} className={'fa fa-times'}
                 onClick={e => deleteTask(id)}
-                onMouseEnter={() => { setToolTipText("Delete task"); setShowTooltip(true) }}
-                onMouseLeave={() => { setShowTooltip(false) }}
+                onMouseEnter={() => { setToolTipText("Delete task"); setShowButtonTooltip(true) }}
+                onMouseLeave={() => { setShowButtonTooltip(false) }}
             />
         </div>
     )
