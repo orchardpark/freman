@@ -11,6 +11,12 @@ type Props = {
     deadline: Date
 }
 
+/**
+ * The task component represents a single to-do item in a list. In particular, it has
+ * an id, title and deadline.
+ * @param param0 
+ * @returns The task component
+ */
 function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id, deadline }: Props) {
 
     const [showTooltip, setShowTooltip] = React.useState(false)
@@ -55,6 +61,10 @@ function TaskComponent({ is_finished, toggleCompleteTask, deleteTask, title, id,
         }
     }
 
+    /**
+     * 
+     * @returns Text on the task component describing when the task has to be finished.
+     */
     const deadlineText = () => {
         // check if more than a month overdue
         if (DateDiff.inDays(new Date(), deadline) > 30) return <p style={{ color: "#ff0000" }}>Overdue: 30+ days</p>
