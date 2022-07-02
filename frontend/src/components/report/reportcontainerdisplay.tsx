@@ -11,6 +11,11 @@ type Props = {
 	booked: Booked[]
 }
 
+/**
+ * Displays the report of the logged hours
+ * @param param0 
+ * @returns 
+ */
 function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	const openTasks = tasks.filter(task => !task.is_finished)
 	const yesterday = new Date()
