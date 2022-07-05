@@ -9,6 +9,8 @@ Features
 * Book time on tasks
 * View reports on your productivity
 
+ ![Reports](reports.png)
+
 ## How to run
 
 Freman consists of three programs, `frontend`, `backend` and `logger`, prodiving the user interface, back-end and logging functionality respectively. Instructions for installing and running these programs can be found in their respective directories.
