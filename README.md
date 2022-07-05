@@ -9,8 +9,10 @@ Features
 * Book time on tasks
 * View reports on your productivity
 
- ![Reports](reports.png)
+<img src="reports.png" alt="report" width="600"/>
+
 
 ## How to run
 
-Freman consists of three programs, `frontend`, `backend` and `logger`, prodiving the user interface, back-end and logging functionality respectively. Instructions for installing and running these programs can be found in their respective directories.
+Freman consists of three programs, `frontend`, `backend` and `logger`. These tools provide the user interface, back-end and logging functionality respectively.
+Instructions for installing and running these programs can be found in their respective directories.
