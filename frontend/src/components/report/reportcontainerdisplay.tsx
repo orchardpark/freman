@@ -2,8 +2,9 @@ import Logged from "../logged/logged"
 import Task from "../tasks/task"
 import Booked from "./booked"
 import Plot from 'react-plotly.js'
-import { Container, Row, Col } from 'react-bootstrap'
-import { UNPRODUCTIVE } from '../app/constants'
+import {Col, Container, Row} from 'react-bootstrap'
+import {UNPRODUCTIVE} from '../app/constants'
+import React from "react";
 
 type Props = {
 	logged: Logged[]
@@ -48,14 +49,13 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	 * @returns Logged time by date
 	 */
 	const loggedByDate = () => {
-		var startMap: { [dayString: string]: number } = {}
-		const loggedByDateSeconds = logged.reduce((loggedSoFar, { created_at, logged_time_seconds }) => {
+		const startMap: { [dayString: string]: number } = {};
+		return logged.reduce((loggedSoFar, {created_at, logged_time_seconds}) => {
 			const dayString = getDateDayStr(created_at)
 			if (!loggedSoFar[dayString]) loggedSoFar[dayString] = 0;
 			loggedSoFar[dayString] += logged_time_seconds / 60
 			return loggedSoFar;
 		}, startMap)
-		return loggedByDateSeconds
 	}
 
 	/**
@@ -63,7 +63,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	 * @returns Total time by application (booked + logged), for the top 7 apps
 	 */
 	const timeByApplication = () => {
-		var startMap: { [application_name: string]: number } = {}
+		const startMap: { [application_name: string]: number } = {};
 		const timeByApplication = [...logged, ...booked]
 			.reduce((timeSoFar, { application_name, logged_time_seconds }) => {
 				if (!timeSoFar[application_name]) timeSoFar[application_name] = 0
@@ -72,9 +72,8 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 			}, startMap)
 		const filterVal = Object.values(timeByApplication).sort((a, b) => b - a).slice(0, 7).at(-1)
 		if (filterVal !== undefined) {
-			const filteredTimeByApplication = Object.fromEntries(Object.entries(timeByApplication)
-				.filter(([k, v]) => v >= filterVal))
-			return filteredTimeByApplication
+			return Object.fromEntries(Object.entries(timeByApplication)
+				.filter(([, v]) => v >= filterVal))
 		}
 		else {
 			return timeByApplication
@@ -86,14 +85,13 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	 * @returns The expected time to complete the tasks ordered by month
 	 */
 	const expectedTimeByMonth = () => {
-		var startMap: { [monthString: string]: number } = {}
-		const expectedTimeByMonth = tasks.reduce((timeSoFar, { deadline, estimated_time_minutes }) => {
+		const startMap: { [monthString: string]: number } = {};
+		return tasks.reduce((timeSoFar, {deadline, estimated_time_minutes}) => {
 			const monthString = getDateMonthStr(new Date(deadline))
 			if (!timeSoFar[monthString]) timeSoFar[monthString] = 0
 			timeSoFar[monthString] += estimated_time_minutes
 			return timeSoFar;
-		}, startMap)
-		return expectedTimeByMonth;
+		}, startMap);
 
 	}
 
@@ -102,16 +100,15 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 	 * @returns The actual time booked ordered by month.
 	 */
 	const actualTimeByMonth = () => {
-		var startMap: { [monthString: string]: number } = {}
-		const bookedTimeByMonth = booked
+		const startMap: { [monthString: string]: number } = {};
+		return booked
 			.filter(item => item.task_id !== UNPRODUCTIVE)
-			.reduce((loggedSoFar, { created_at, logged_time_seconds }) => {
+			.reduce((loggedSoFar, {created_at, logged_time_seconds}) => {
 				const monthStr = getDateMonthStr(new Date(created_at))
 				if (!loggedSoFar[monthStr]) loggedSoFar[monthStr] = 0
 				loggedSoFar[monthStr] += logged_time_seconds / 60
 				return loggedSoFar;
 			}, startMap)
-		return bookedTimeByMonth
 	}
 
 	/**
@@ -133,7 +130,7 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 		}, 0)
 
 	return (
-		<Container fluid>
+		<Container>
 			<Row>
 				<Col>
 					<Plot
@@ -193,8 +190,6 @@ function ReportContainerDisplay({ logged, tasks, booked }: Props) {
 					/>
 				</Col>
 
-			</Row>
-			<Row>
 				<Col>
 					<Plot
 						data={[

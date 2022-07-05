@@ -13,6 +13,17 @@ type Props = {
     bookTime: (application_name: string, task_id: number) => void
 }
 
+/**
+ * BookModal is a component that displays a modal that allows the user to book time for a logged item.
+ * @param modalIsOpen
+ * @param application_name
+ * @param number_minutes
+ * @param date_logged
+ * @param tasks
+ * @param closeModal
+ * @param bookTime
+ * @constructor
+ */
 function BookModal({ modalIsOpen, application_name, number_minutes, date_logged, tasks, closeModal, bookTime }: Props) {
     const [task, setTask] = React.useState(-1)
 
