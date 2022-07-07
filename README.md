@@ -14,5 +14,4 @@ Features
 
 ## How to run
 
-Freman consists of three programs, `frontend`, `backend` and `logger`. These tools provide the user interface, back-end and logging functionality respectively.
-Instructions for installing and running these programs can be found in their respective directories.
+Freman consists of three programs, [frontend](https://github.com/orchardpark/freman/tree/master/frontend), [backend](https://github.com/orchardpark/freman/tree/master/backend) and [logger](https://github.com/orchardpark/freman/tree/master/logger). These tools provide the user interface, back-end and logging functionality respectively. Instructions for installing and running these programs can be found in their respective directories.
