@@ -9,7 +9,18 @@ Features
 * Book time on tasks
 * View reports on your productivity
 
-<img src="reports.png" alt="report" width="600"/>
+
+Example of reporting:  
+  
+<img src="reports.png" alt="report" width="450"/>
+  
+  
+  
+  
+Automatic detection of type of activity.  
+  
+<img src="prediction.gif" alt="predict"/>
+
 
 
 ## How to run
