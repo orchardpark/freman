@@ -36,10 +36,12 @@ def predict():
             img = np.asarray(img.resize((160, 160)))
             img = img.reshape(1, 160, 160, 3)
             x = tf.convert_to_tensor(img, dtype=tf.float32)
-            print(infer(x)['dense'].numpy())
+            output_layer_name = 'dense_5'
+            print(infer(x))
+            print(infer(x)[output_layer_name].numpy())
 
-            logits = infer(x)['dense'].numpy()
-            activity = labels[np.argmax(infer(x)['dense'].numpy())]
+            logits = infer(x)[output_layer_name].numpy()
+            activity = labels[np.argmax(infer(x)[output_layer_name].numpy())]
             probability = np.exp(np.max(logits)) / np.sum(np.exp(logits))
 
             label['text'] = f'Predicted activity: {activity}. Probability: {probability*100:.2f}%'
