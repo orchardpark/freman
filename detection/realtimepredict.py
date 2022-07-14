@@ -42,7 +42,7 @@ def predict():
             activity = labels[np.argmax(infer(x)['dense'].numpy())]
             probability = np.exp(np.max(logits)) / np.sum(np.exp(logits))
 
-            label['text'] = f'Precticted activity: {activity}, probability: {probability*100:.2f}%'
+            label['text'] = f'Predicted activity: {activity}. Probability: {probability*100:.2f}%'
             time.sleep(2)
 
             if cv2.waitKey(33) & 0xFF in (
